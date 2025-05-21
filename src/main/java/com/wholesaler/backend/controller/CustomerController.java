@@ -16,7 +16,7 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // GET /cars/all - get all customers
+    // GET /customers/all - get all customers
     @GetMapping("/all")
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
