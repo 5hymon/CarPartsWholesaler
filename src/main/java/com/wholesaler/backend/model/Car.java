@@ -2,6 +2,8 @@ package com.wholesaler.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Cars")
 public class Car {
@@ -27,6 +29,9 @@ public class Car {
 
     @Column(name = "engineType")
     private String engineType;
+
+    @OneToMany(mappedBy = "car")
+    private List<PartCompatibility> compatibilities;
 
     public Integer getCarId() {
         return carId;
@@ -82,5 +87,13 @@ public class Car {
 
     public void setEngineType(String engineType) {
         this.engineType = engineType;
+    }
+
+    public List<PartCompatibility> getCompatibilities() {
+        return compatibilities;
+    }
+
+    public void setCompatibilities(List<PartCompatibility> compatibilities) {
+        this.compatibilities = compatibilities;
     }
 }

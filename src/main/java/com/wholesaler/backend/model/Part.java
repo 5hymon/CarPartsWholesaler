@@ -2,6 +2,8 @@ package com.wholesaler.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Parts")
 public class Part {
@@ -31,6 +33,12 @@ public class Part {
     @ManyToOne
     @JoinColumn(name = "categoryId")
     private Category category;
+
+    @OneToMany(mappedBy = "part")
+    private List<PartCompatibility> compatibilities;
+
+    @OneToMany(mappedBy = "part")
+    private List<OrderDetail> orderDetails;
 
     public Integer getPartId() {
         return partId;
@@ -94,5 +102,21 @@ public class Part {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<PartCompatibility> getCompatibilities() {
+        return compatibilities;
+    }
+
+    public void setCompatibilities(List<PartCompatibility> compatibilities) {
+        this.compatibilities = compatibilities;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }

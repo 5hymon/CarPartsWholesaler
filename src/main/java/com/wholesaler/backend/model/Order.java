@@ -3,6 +3,7 @@ package com.wholesaler.backend.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Orders")
@@ -28,6 +29,9 @@ public class Order {
 
     @Column(name = "paymentMethod")
     private String paymentMethod;
+
+    @OneToMany(mappedBy = "order")
+    List<OrderDetail> orderDetails;
 
     public Integer getOrderId() {
         return orderId;
@@ -75,5 +79,13 @@ public class Order {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }
