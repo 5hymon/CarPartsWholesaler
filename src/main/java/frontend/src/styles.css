@@ -1,1 +1,215 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================================================
+   1. ZMIENNE I RESET
+   ========================================================================== */
+:root {
+  --primary-color: #007bff;
+  --accent-color: #ffcc00;
+  --header-bg:    #1a2634;
+  --footer-bg:    #212529;
+  --page-bg:      #f2f2f2;
+  --header-height: 60px;
+  --font-family:  'Montserrat', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   2. UKŁAD STRONY (FLEX)
+   ========================================================================== */
+/* Pełna wysokość i flex-kolumna */
+html, body, app-root {
+  height: 100vh;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--page-bg);
+  font-family: var(--font-family);
+  color: #333;
+}
+
+/* ==========================================================================
+   3. NAGŁÓWEK (NAVBAR)
+   ========================================================================== */
+.custom-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: 1000;
+  background: var(--header-bg) !important;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  flex-shrink: 0;
+  overflow: visible; /* pozwala dropdownowi widnieć ponad content */
+}
+
+.custom-navbar .navbar-brand {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.custom-navbar .navbar-toggler {
+  border-color: rgba(255,255,255,0.5);
+}
+.custom-navbar .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* Poziome menu */
+.custom-navbar .navbar-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  list-style: none;
+}
+
+.custom-navbar .nav-item {
+  margin: 0 0.75rem;
+  position: relative; /* punkt odniesienia dla dropdown */
+}
+
+.custom-navbar .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+  padding: 0.5rem;
+  transition: color .2s, background .2s;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+  color: var(--accent-color) !important;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 0.25rem;
+}
+
+/* Dropdown menu (pozycjonowane absolutnie) */
+.custom-navbar .dropdown-menu {
+  position: absolute !important;
+  top: 100%;
+  left: 0;
+  margin: 0.5rem 0 0; /* minimalny odstęp od przycisku */
+  padding: 0;
+  background: var(--header-bg);
+  border: none;
+  z-index: 1050;
+}
+
+.custom-navbar .dropdown-item {
+  color: #fff;
+  padding: 0.5rem 1rem;
+  transition: background .2s;
+}
+
+.custom-navbar .dropdown-item:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+
+/* ==========================================================================
+   4. GŁÓWNA ZAWARTOŚĆ (MAIN)
+   ========================================================================== */
+main {
+  flex: 1 0 auto;     /* rośnie do wypełnienia przestrzeni */
+  overflow: visible;  /* dropdown nie jest obcinany */
+  padding: 2rem 1rem;
+  background: var(--page-bg);
+  padding-top: calc(var(--header-height) + 1rem);
+}
+
+main h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--header-bg);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Siatka kart części */
+.row.g-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Style pojedynczej karty */
+.card {
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card img {
+  width: 100%;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Przycisk w karcie */
+.btn-primary {
+  background: var(--primary-color);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: filter .2s;
+}
+
+.btn-primary:hover {
+  filter: brightness(0.9);
+}
+
+
+/* ==========================================================================
+   5. STOPKA (FOOTER)
+   ========================================================================== */
+footer {
+  background: var(--footer-bg);
+  color: #ddd;
+  text-align: center;
+  padding: 2rem 1rem;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #fff;
+  text-decoration: underline;
+  transition: color .2s;
+}
+
+footer a:hover {
+  color: var(--accent-color);
+}
+
+footer p {
+  margin: 0.5rem 0;
+}
