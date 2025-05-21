@@ -2,13 +2,15 @@ package com.wholesaler.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoryId")
-    private int categoryId;
+    private Integer categoryId;
 
     @Column(name = "categoryName")
     private String categoryName;
@@ -16,11 +18,14 @@ public class Category {
     @Column(name = "categoryDescription")
     private String categoryDescription;
 
+    @OneToMany
+    private List<Part> parts;
+
     public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -38,5 +43,13 @@ public class Category {
 
     public void setCategoryDescription(String categoryDescription) {
         this.categoryDescription = categoryDescription;
+    }
+
+    public List<Part> getParts() {
+        return parts;
+    }
+
+    public void setParts(List<Part> parts) {
+        this.parts = parts;
     }
 }
