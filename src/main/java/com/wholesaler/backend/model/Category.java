@@ -18,7 +18,7 @@ public class Category {
     @Column(name = "categoryDescription")
     private String categoryDescription;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     private List<Part> parts;
 
     public int getCategoryId() {

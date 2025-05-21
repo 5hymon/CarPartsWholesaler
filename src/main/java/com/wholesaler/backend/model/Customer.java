@@ -2,6 +2,8 @@ package com.wholesaler.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Customers")
 public class Customer {
@@ -33,6 +35,9 @@ public class Customer {
 
     @Column(name = "country")
     private String country;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
 
     public Integer getCustomerId() {
         return customerId;
@@ -104,5 +109,13 @@ public class Customer {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
