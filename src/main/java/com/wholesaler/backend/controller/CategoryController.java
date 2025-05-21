@@ -43,9 +43,9 @@ public class CategoryController {
     // PUT - update category by ID
     @PutMapping("/{categoryId}")
     public ResponseEntity<Category> updateCategory(@PathVariable("categoryId") Integer categoryId, @RequestBody Category updatedCategory) {
-        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
-        if (optionalCategory.isPresent()) {
-            Category category = optionalCategory.get();
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        if (categoryOptional.isPresent()) {
+            Category category = categoryOptional.get();
             category.setCategoryName(updatedCategory.getCategoryName());
             category.setCategoryDescription(updatedCategory.getCategoryDescription());
             return ResponseEntity.ok(categoryRepository.save(category));
@@ -57,8 +57,8 @@ public class CategoryController {
     // DELETE - delete category by ID
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<Void> deleteCategory(@PathVariable("categoryId") Integer categoryId) {
-        Optional<Category> category = categoryRepository.findById(categoryId);
-        if (category.isPresent()) {
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        if (categoryOptional.isPresent()) {
             categoryRepository.deleteById(categoryId);
             return ResponseEntity.ok().build();
         } else {

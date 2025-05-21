@@ -42,9 +42,9 @@ public class CarController {
     // PUT - update car by ID
     @PutMapping("/{carId}")
     public ResponseEntity<Car> updateCar(@PathVariable("carId") Integer carId, @RequestBody Car updatedCar) {
-        Optional<Car> carOpt = carRepository.findById(carId);
-        if (carOpt.isPresent()) {
-            Car car = carOpt.get();
+        Optional<Car> carOptional = carRepository.findById(carId);
+        if (carOptional.isPresent()) {
+            Car car = carOptional.get();
             car.setCarMake(updatedCar.getCarMake());
             car.setCarModel(updatedCar.getCarModel());
             car.setProductionYears(updatedCar.getProductionYears());
@@ -60,8 +60,8 @@ public class CarController {
     // DELETE — delete car by ID
     @DeleteMapping("/{carId}")
     public ResponseEntity<Void> deleteCar(@PathVariable("carId") Integer carId) {
-        Optional<Car> carOpt = carRepository.findById(carId);
-        if (carOpt.isPresent()) {
+        Optional<Car> carOptional = carRepository.findById(carId);
+        if (carOptional.isPresent()) {
             carRepository.deleteById(carId);
             return ResponseEntity.ok().build();
         } else {
