@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 interface Part {
   name: string;
@@ -9,6 +10,8 @@ interface Part {
 
 @Component({
   selector: 'app-main-page',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })

@@ -91,6 +91,43 @@ body {
   border-radius: 0.25rem;
 }
 
+/* Pozycjonowanie dropdownu wewnątrz nav-item */
+.navbar-nav .nav-item.dropdown {
+  position: relative;
+}
+
+/* .dropdown-content – początkowo ukryte */
+.navbar-nav .dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;        /* poniżej ikony */
+  right: 0;         /* wyrównanie do prawej */
+  background-color: var(--header-bg); /* ten sam kolor co navbar */
+  min-width: 140px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Pozycje w dropdown */
+.navbar-nav .dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color .2s;
+}
+.navbar-nav .dropdown-item:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* Pokaż dropdown przy najechaniu na cały nav-item */
+.navbar-nav .nav-item.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
 /* Dropdown menu (pozycjonowane absolutnie) */
 .custom-navbar .dropdown-menu {
   position: absolute !important;
