@@ -1,5 +1,6 @@
 package com.wholesaler.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class Category {
     @Column(name = "categoryDescription")
     private String categoryDescription;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Part> parts;
 
     public int getCategoryId() {

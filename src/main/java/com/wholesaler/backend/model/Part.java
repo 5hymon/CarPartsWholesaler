@@ -1,5 +1,7 @@
 package com.wholesaler.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -31,14 +33,18 @@ public class Part {
     private String partDescription;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "categoryId", foreignKey = @ForeignKey(name = "FK_PART_CATEGORY"))
+    @JsonBackReference
     private Category category;
 
-    @OneToMany(mappedBy = "part")
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<PartCompatibility> compatibilities;
+//    @OneToMany(mappedBy = "part")
+//    private List<PartCompatibility> compatibilities;
 
-    @OneToMany(mappedBy = "part")
-    private List<OrderDetail> orderDetails;
+//    @OneToMany(mappedBy = "part")
+//    private List<OrderDetail> orderDetails;
 
     public Integer getPartId() {
         return partId;
@@ -112,11 +118,11 @@ public class Part {
         this.compatibilities = compatibilities;
     }
 
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
+//    public List<OrderDetail> getOrderDetails() {
+//        return orderDetails;
+//    }
 
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
+//    public void setOrderDetails(List<OrderDetail> orderDetails) {
+//        this.orderDetails = orderDetails;
+//    }
 }
