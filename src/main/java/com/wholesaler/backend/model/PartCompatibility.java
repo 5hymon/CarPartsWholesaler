@@ -1,7 +1,6 @@
 package com.wholesaler.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,7 +18,6 @@ public class PartCompatibility {
     @ManyToOne
     @MapsId("carId")
     @JoinColumn(name = "carId", foreignKey = @ForeignKey(name = "FK_COMPATIBILITY_CAR"))
-    @JsonIgnoreProperties("compatibilities")
     private Car car;
 
     @ManyToOne

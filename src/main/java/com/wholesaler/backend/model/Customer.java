@@ -36,8 +36,8 @@ public class Customer {
     @Column(name = "country")
     private String country;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+//    @OneToMany(mappedBy = "customer")
+//    private List<Order> orders;
 
     public Integer getCustomerId() {
         return customerId;
@@ -111,11 +111,11 @@ public class Customer {
         this.country = country;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
+//    public List<Order> getOrders() {
+//        return orders;
+//    }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+//    public void setOrders(List<Order> orders) {
+//        this.orders = orders;
+//    }
 }

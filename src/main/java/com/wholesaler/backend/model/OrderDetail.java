@@ -1,20 +1,30 @@
 package com.wholesaler.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
+@IdClass(OrderDetailId.class)
 @Table(name = "OrderDetails")
 public class OrderDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer detailId;
+    @Column(name = "orderId")
+    private Integer orderId;
+
+    @Id
+    @Column(name = "partId")
+    private Integer partId;
 
     @ManyToOne
-    @JoinColumn(name = "orderId")
+    @MapsId("orderId")
+    @JoinColumn(name = "orderId", foreignKey = @ForeignKey(name = "FK_DETAILS_ORDER"))
+    @JsonBackReference
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "partId")
+    @MapsId("partId")
+    @JoinColumn(name = "partId", foreignKey = @ForeignKey(name = "FK_DETAILS_PART"))
+    @JsonBackReference
     private Part part;
 
     @Column(name = "unitPrice")
@@ -26,12 +36,33 @@ public class OrderDetail {
     @Column(name = "discount")
     private Double discount;
 
-    public Integer getDetailId() {
-        return detailId;
+    public OrderDetail() {
     }
 
-    public void setDetailId(Integer detailId) {
-        this.detailId = detailId;
+    public OrderDetail(Integer orderId, Integer partId, Order order, Part part, Double unitPrice, Integer quantity, Double discount) {
+        this.orderId = orderId;
+        this.partId = partId;
+        this.order = order;
+        this.part = part;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.discount = discount;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Integer getPartId() {
+        return partId;
+    }
+
+    public void setPartId(Integer partId) {
+        this.partId = partId;
     }
 
     public Order getOrder() {

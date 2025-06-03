@@ -1,11 +1,12 @@
 package com.wholesaler.backend.controller;
 
+import com.wholesaler.backend.model.Car;
 import com.wholesaler.backend.model.Order;
-import com.wholesaler.backend.repository.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.wholesaler.backend.dto.OrderDTO;
+import com.wholesaler.backend.service.OrderService;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +14,22 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     // GET /orders/all - get all orders
     @GetMapping("/all")
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<OrderDTO> getAllOrders() {
+        return orderService.getAllOrdersAsDTO();
     }
 
     // GET /orders/{orderId} - get order by ID
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getOrder(@PathVariable("orderId") Integer orderId) {
-        Optional<Order> order = orderRepository.findById(orderId);
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable("orderId") Integer orderId) {
+        Optional<OrderDTO> order = orderService.getOrderByIdAsDTO(orderId);
         if (order.isPresent()) {
             return new ResponseEntity<>(order.get(), HttpStatus.OK);
         } else {
@@ -36,21 +40,16 @@ public class OrderController {
     // POST - add new order
     @PostMapping
     public Order addOrder(@RequestBody Order order) {
-        return orderRepository.save(order);
+        return orderService.saveOrder(order);
     }
 
     // PUT - update order by ID
     @PutMapping("/{orderId}")
     public ResponseEntity<Order> updateOrder(@PathVariable("orderId") Integer orderId, @RequestBody Order updatedOrder) {
-        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        Optional<Order> orderOptional = orderService.updateOrder(orderId, updatedOrder);
         if (orderOptional.isPresent()) {
             Order order = orderOptional.get();
-            order.setEmployee(updatedOrder.getEmployee());
-            order.setCustomer(updatedOrder.getCustomer());
-            order.setOrderDate(updatedOrder.getOrderDate());
-            order.setOrderStatus(updatedOrder.getOrderStatus());
-            order.setPaymentMethod(updatedOrder.getPaymentMethod());
-            return ResponseEntity.ok(orderRepository.save(order));
+            return ResponseEntity.ok(orderService.saveOrder(order));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -58,10 +57,10 @@ public class OrderController {
 
     // DELETE - delete order by ID
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<Order> deleteOrder(@PathVariable("orderId") Integer orderId) {
-        Optional<Order> orderOptional = orderRepository.findById(orderId);
+    public ResponseEntity<Void> deleteOrder(@PathVariable("orderId") Integer orderId) {
+        Optional<OrderDTO> orderOptional = orderService.getOrderByIdAsDTO(orderId);
         if (orderOptional.isPresent()) {
-            orderRepository.deleteById(orderId);
+            orderService.deleteOrder(orderId);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
