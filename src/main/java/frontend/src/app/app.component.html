@@ -36,28 +36,24 @@
         </ul>
       </li>
       <li class="nav-item dropdown mx-2">
-        <!-- Jeśli NIE jesteśmy zalogowani: ikona przenosi do /login -->
-        <a *ngIf="!isLoggedIn"
-           class="nav-link text-white"
-           routerLink="/login"
-           title="Zaloguj się">
-          <!-- Tu możesz użyć swojego obrazka w /assets/login.png: -->
-          👤
-        </a>
-
-        <!-- Jeśli JESTEŚMY zalogowani: pokaz dropdown przy najechaniu -->
-        <a *ngIf="isLoggedIn"
-           href="javascript:void(0)"
-           class="nav-link dropdown-toggle text-white"
+        <a class="nav-link dropdown-toggle text-white"
+           href="#"
            id="userDropdown"
            role="button"
-           title="Moje konto">
-          👤
+           data-bs-toggle="dropdown"
+           aria-expanded="false">👤
         </a>
-        <div *ngIf="isLoggedIn" class="dropdown-content">
-          <a routerLink="/orders" class="dropdown-item">Zamówienia</a>
-          <a href="javascript:void(0)" class="dropdown-item" (click)="logout()">Wyloguj</a>
-        </div>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li *ngIf="!isLoggedIn">
+            <a class="dropdown-item" routerLink="/login">Zaloguj się</a>
+          </li>
+          <li *ngIf="isLoggedIn">
+            <a class="dropdown-item" routerLink="/orders">Zamówienia</a>
+          </li>
+          <li *ngIf="isLoggedIn">
+            <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">Wyloguj</a>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
