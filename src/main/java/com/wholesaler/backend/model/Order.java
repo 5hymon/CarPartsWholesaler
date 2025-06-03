@@ -30,8 +30,6 @@ public class Order {
     @Column(name = "paymentMethod")
     private String paymentMethod;
 
-    //    @OneToMany(mappedBy = "order")
-    //    List<OrderDetail> orderDetails;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails;
 

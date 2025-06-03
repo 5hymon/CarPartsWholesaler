@@ -1,6 +1,5 @@
 package com.wholesaler.backend.controller;
 
-import com.wholesaler.backend.model.Car;
 import com.wholesaler.backend.model.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
