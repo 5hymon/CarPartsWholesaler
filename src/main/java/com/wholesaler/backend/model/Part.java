@@ -40,8 +40,6 @@ public class Part {
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<PartCompatibility> compatibilities;
-//    @OneToMany(mappedBy = "part")
-//    private List<PartCompatibility> compatibilities;
 
 //    @OneToMany(mappedBy = "part")
 //    private List<OrderDetail> orderDetails;

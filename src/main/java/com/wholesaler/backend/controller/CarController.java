@@ -1,11 +1,11 @@
 package com.wholesaler.backend.controller;
 
 import com.wholesaler.backend.model.Car;
-import com.wholesaler.backend.repository.CarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.wholesaler.backend.dto.CarDTO;
+import com.wholesaler.backend.service.CarService;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +13,22 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/cars")
 public class CarController {
-    @Autowired
-    private CarRepository carRepository;
+    private final CarService carService;
+
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
 
     // GET /cars/all - get all cars
     @GetMapping("/all")
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
+    public List<CarDTO> getAllCars() {
+        return carService.getAllCarsAsDTO();
     }
 
     // GET /cars/{carId} - get car by ID
     @GetMapping("{carId}")
-    public ResponseEntity<Car> getCar(@PathVariable("carId") Integer carId) {
-        Optional<Car> car = carRepository.findById(carId);
+    public ResponseEntity<CarDTO> getCar(@PathVariable("carId") Integer carId) {
+        Optional<CarDTO> car = carService.getCarByIdAsDTO(carId);
         if (car.isPresent()) {
             return new ResponseEntity<>(car.get(), HttpStatus.OK);
         } else {
@@ -36,22 +39,16 @@ public class CarController {
     // POST - add new car
     @PostMapping
     public Car addCar(@RequestBody Car car) {
-        return carRepository.save(car);
+        return carService.saveCar(car);
     }
 
     // PUT - update car by ID
     @PutMapping("/{carId}")
     public ResponseEntity<Car> updateCar(@PathVariable("carId") Integer carId, @RequestBody Car updatedCar) {
-        Optional<Car> carOptional = carRepository.findById(carId);
+        Optional<Car> carOptional = carService.updateCar(carId, updatedCar);
         if (carOptional.isPresent()) {
             Car car = carOptional.get();
-            car.setCarMake(updatedCar.getCarMake());
-            car.setCarModel(updatedCar.getCarModel());
-            car.setProductionYears(updatedCar.getProductionYears());
-            car.setBodyType(updatedCar.getBodyType());
-            car.setFuelType(updatedCar.getFuelType());
-            car.setEngineType(updatedCar.getEngineType());
-            return ResponseEntity.ok(carRepository.save(car));
+            return ResponseEntity.ok(carService.saveCar(car));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -60,9 +57,9 @@ public class CarController {
     // DELETE — delete car by ID
     @DeleteMapping("/{carId}")
     public ResponseEntity<Void> deleteCar(@PathVariable("carId") Integer carId) {
-        Optional<Car> carOptional = carRepository.findById(carId);
+        Optional<CarDTO> carOptional = carService.getCarByIdAsDTO(carId);
         if (carOptional.isPresent()) {
-            carRepository.deleteById(carId);
+            carService.deleteCar(carId);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();

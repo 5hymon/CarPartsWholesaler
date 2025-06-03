@@ -1,28 +1,55 @@
 package com.wholesaler.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
+@IdClass(PartCompatibilityId.class)
 @Table(name = "PartCompatibility")
 public class PartCompatibility {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer compatibilityId;
+    @Column(name = "carId")
+    private Integer carId;
+
+    @Id
+    @Column(name = "partId")
+    private Integer partId;
 
     @ManyToOne
-    @JoinColumn(name = "carId")
+    @MapsId("carId")
+    @JoinColumn(name = "carId", foreignKey = @ForeignKey(name = "FK_COMPATIBILITY_CAR"))
+    @JsonIgnoreProperties("compatibilities")
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name = "partId")
+    @MapsId("partId")
+    @JoinColumn(name = "partId", foreignKey = @ForeignKey(name = "FK_COMPATIBILITY_PART"))
+    @JsonBackReference
     private Part part;
 
-    public Integer getCompatibilityId() {
-        return compatibilityId;
+    public PartCompatibility() {
     }
 
-    public void setCompatibilityId(Integer compatibilityId) {
-        this.compatibilityId = compatibilityId;
+    public PartCompatibility(Integer partId, Integer carId) {
+        this.partId = partId;
+        this.carId = carId;
+    }
+
+    public Integer getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Integer carId) {
+        this.carId = carId;
+    }
+
+    public Integer getPartId() {
+        return partId;
+    }
+
+    public void setPartId(Integer partId) {
+        this.partId = partId;
     }
 
     public Car getCar() {

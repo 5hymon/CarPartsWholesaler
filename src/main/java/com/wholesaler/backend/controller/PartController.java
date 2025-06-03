@@ -1,11 +1,11 @@
 package com.wholesaler.backend.controller;
 
 import com.wholesaler.backend.model.Part;
-import com.wholesaler.backend.repository.PartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.wholesaler.backend.dto.PartDTO;
+import com.wholesaler.backend.service.PartService;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +13,22 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/parts")
 public class PartController {
-    @Autowired
-    private PartRepository partRepository;
+    private final PartService partService;
+
+    public PartController(PartService partService) {
+        this.partService = partService;
+    }
 
     // GET /parts/all - get all parts
     @GetMapping("/all")
-    public List<Part> getAllParts() {
-        return partRepository.findAll();
+    public List<PartDTO> getAllParts() {
+        return partService.getAllPartsAsDTO();
     }
 
     // GET /parts/{partId} - get part by ID
     @GetMapping("/{partId}")
-    public ResponseEntity<Part> getPart(@PathVariable("partId") Integer partId) {
-        Optional<Part> part = partRepository.findById(partId);
+    public ResponseEntity<PartDTO> getPart(@PathVariable("partId") Integer partId) {
+        Optional<PartDTO> part = partService.getPartByIdAsDTO(partId);
         if (part.isPresent()) {
             return new ResponseEntity<>(part.get(), HttpStatus.OK);
         } else {
@@ -36,23 +39,16 @@ public class PartController {
     // POST - add new part
     @PostMapping
     public Part addPart(@RequestBody Part part) {
-        return partRepository.save(part);
+        return partService.savePart(part);
     }
 
     // PUT - update part by ID
     @PutMapping("/{partId}")
-    public ResponseEntity<Part> updatePart(@PathVariable("partId") Integer partId, @RequestBody Part updatedOrder) {
-        Optional<Part> partOptional = partRepository.findById(partId);
+    public ResponseEntity<Part> updatePart(@PathVariable("partId") Integer partId, @RequestBody Part updatedPart) {
+        Optional<Part> partOptional = partService.updatePart(partId, updatedPart);
         if (partOptional.isPresent()) {
             Part part = partOptional.get();
-            part.setPartName(updatedOrder.getPartName());
-            part.setUnitPrice(updatedOrder.getUnitPrice());
-            part.setQuantityPerUnit(updatedOrder.getQuantityPerUnit());
-            part.setLeftOnStock(updatedOrder.getLeftOnStock());
-            part.setAvailable(updatedOrder.getAvailable());
-            part.setPartDescription(updatedOrder.getPartDescription());
-            part.setCategory(updatedOrder.getCategory());
-            return ResponseEntity.ok(partRepository.save(part));
+            return ResponseEntity.ok(partService.savePart(part));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -61,9 +57,9 @@ public class PartController {
     // DELETE - delete part by ID
     @DeleteMapping("/{partId}")
     public ResponseEntity<Part> deleteOrder(@PathVariable("partId") Integer partId) {
-        Optional<Part> partOptional = partRepository.findById(partId);
+        Optional<PartDTO> partOptional = partService.getPartByIdAsDTO(partId);
         if (partOptional.isPresent()) {
-            partRepository.deleteById(partId);
+            partService.deletePartById(partId);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
