@@ -1,266 +1,52 @@
-<h1 class="mb-4 text-center">Nasze Części</h1>
-<br>
+<section class="hero">
+  <div class="hero-content">
+    <h1>Najlepsze Części do Twojego Samochodu</h1>
+    <p>Od filtrów oleju po hamulce – wszystko, czego potrzebujesz, w jednym miejscu.</p>
+    <button class="btn-cta" onclick="location.href='/parts'">Przeglądaj Katalog</button>
+  </div>
+</section>
 
-<ul class="menu">
-  <li class="dropdown">
-    <a href="#" onclick="filter('Silnik')">Silnik</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Filtr oleju Bosch P3270')">Filtr oleju Bosch P3270</a>
-      <a href="#" onclick="filter('Zestaw uszczelek')">Zestaw uszczelek</a>
-      <a href="#" onclick="filter('Pasek rozrządu')">Pasek rozrządu</a>
-      <a href="#" onclick="filter('Cewka zapłonowa')">Cewka zapłonowa</a>
-      <a href="#" onclick="filter('Czujnik wału')">Czujnik wału</a>
-      <a href="#" onclick="filter('Wał korbowy')">Wał korbowy</a>
-      <a href="#" onclick="filter('Świeca zapłonowa')">Świeca zapłonowa</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Zawieszenie')">Zawieszenie</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Amortyzator przód')">Amortyzator przód</a>
-      <a href="#" onclick="filter('Sprężyna zawieszenia')">Sprężyna zawieszenia</a>
-      <a href="#" onclick="filter('Sworzeń wahacza')">Sworzeń wahacza</a>
-      <a href="#" onclick="filter('Wahacz')">Wahacz</a>
-      <a href="#" onclick="filter('Łącznik stabilizatora')">Łącznik stabilizatora</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Karoseria')">Karoseria</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Lusterko boczne prawe VW Golf VI')">Lusterko boczne prawe VW Golf VI</a>
-      <a href="#" onclick="filter('Zderzak przedni')">Zderzak przedni</a>
-      <a href="#" onclick="filter('Błotnik lewy')">Błotnik lewy</a>
-      <a href="#" onclick="filter('Maska silnika')">Maska silnika</a>
-      <a href="#" onclick="filter('Lusterko boczne')">Lusterko boczne</a>
-      <a href="#" onclick="filter('Szyba tylna')">Szyba tylna</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Felgi')">Felgi</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Felga stalowa 16\'')">Felga stalowa 16'</a>
-      <a href="#" onclick="filter('Felga aluminiowa 17\'')">Felga aluminiowa 17'</a>
-      <a href="#" onclick="filter('Kołpak 15\'')">Kołpak 15'</a>
-      <a href="#" onclick="filter('Zestaw śrub do felg')">Zestaw śrub do felg</a>
-      <a href="#" onclick="filter('Pierścień centrujący 4x443')">Pierścień centrujący 4x443</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Filtry')">Filtry</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Filtr oleju M2002')">Filtr oleju M2002</a>
-      <a href="#" onclick="filter('Filtr powietrza G32')">Filtr powietrza G32</a>
-      <a href="#" onclick="filter('Filtr kabinowy')">Filtr kabinowy</a>
-      <a href="#" onclick="filter('Filtr paliwa FF2')">Filtr paliwa FF2</a>
-      <a href="#" onclick="filter('Filtr gazu')">Filtr gazu</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Oleje')">Oleje</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Olej silnikowy 5W30')">Olej silnikowy 5W30</a>
-      <a href="#" onclick="filter('Olej przekładniowy')">Olej przekładniowy</a>
-      <a href="#" onclick="filter('Olej hydrauliczny')">Olej hydrauliczny</a>
-      <a href="#" onclick="filter('Dodatek do oleju')">Dodatek do oleju</a>
-      <a href="#" onclick="filter('Olej silnikowy 10W40')">Olej silnikowy 10W40</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Płyny i chemia')">Płyny i chemia</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Płyn do chłodnicy')">Płyn do chłodnicy</a>
-      <a href="#" onclick="filter('Płyn hamulcowy DOT4')">Płyn hamulcowy DOT4</a>
-      <a href="#" onclick="filter('Płyn do spryskiwaczy')">Płyn do spryskiwaczy</a>
-      <a href="#" onclick="filter('Odrdzewiacz')">Odrdzewiacz</a>
-      <a href="#" onclick="filter('Odgrzybiacz klimatyzacji')">Odgrzybiacz klimatyzacji</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Oświetlenie')">Oświetlenie</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Żarówka H7')">Żarówka H7</a>
-      <a href="#" onclick="filter('Lampa tylna')">Lampa tylna</a>
-      <a href="#" onclick="filter('Reflektor przedni')">Reflektor przedni</a>
-      <a href="#" onclick="filter('Oświetlenie tablicy')">Oświetlenie tablicy</a>
-      <a href="#" onclick="filter('Lampa przeciwmgielna')">Lampa przeciwmgielna</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Układ chłodzenia')">Układ chłodzenia</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Chłodnica cieczy')">Chłodnica cieczy</a>
-      <a href="#" onclick="filter('Wentylator chłodnicy')">Wentylator chłodnicy</a>
-      <a href="#" onclick="filter('Termostat')">Termostat</a>
-      <a href="#" onclick="filter('Zbiornik wyrównawczy')">Zbiornik wyrównawczy</a>
-      <a href="#" onclick="filter('Pompa wody')">Pompa wody</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Układ elektryczny')">Układ elektryczny</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Alternator')">Alternator</a>
-      <a href="#" onclick="filter('Rozrusznik')">Rozrusznik</a>
-      <a href="#" onclick="filter('Przekaźnik')">Przekaźnik</a>
-      <a href="#" onclick="filter('Akumulator 60Ah')">Akumulator 60Ah</a>
-      <a href="#" onclick="filter('Bezpiecznik 10A')">Bezpiecznik 10A</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Układ hamulcowy')">Układ hamulcowy</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Klocki hamulcowe przód')">Klocki hamulcowe przód</a>
-      <a href="#" onclick="filter('Tarcze hamulcowe tył')">Tarcze hamulcowe tył</a>
-      <a href="#" onclick="filter('Zacisk hamulcowy')">Zacisk hamulcowy</a>
-      <a href="#" onclick="filter('Przewód hamulcowy')">Przewód hamulcowy</a>
-      <a href="#" onclick="filter('Płyn hamulcowy')">Płyn hamulcowy</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Układ kierowniczy')">Układ kierowniczy</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Przekładnia kierownicza')">Przekładnia kierownicza</a>
-      <a href="#" onclick="filter('Drążek kierowniczy')">Drążek kierowniczy</a>
-      <a href="#" onclick="filter('Końcówka drążka')">Końcówka drążka</a>
-      <a href="#" onclick="filter('Pompa wspomagania')">Pompa wspomagania</a>
-      <a href="#" onclick="filter('Osłona przekładni')">Osłona przekładni</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Układ klimatyzacji')">Układ klimatyzacji</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Kompresor klimatyzacji')">Kompresor klimatyzacji</a>
-      <a href="#" onclick="filter('Skraplacz')">Skraplacz</a>
-      <a href="#" onclick="filter('Osuszacz')">Osuszacz</a>
-      <a href="#" onclick="filter('Wentylator nawiewu')">Wentylator nawiewu</a>
-      <a href="#" onclick="filter('Przewód klimatyzacji')">Przewód klimatyzacji</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Układ napędowy')">Układ napędowy</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Półos napędowa')">Półos napędowa</a>
-      <a href="#" onclick="filter('Przegub napędowy')">Przegub napędowy</a>
-      <a href="#" onclick="filter('Wał napędowy')">Wał napędowy</a>
-      <a href="#" onclick="filter('Podpora wału')">Podpora wału</a>
-      <a href="#" onclick="filter('Łożysko półosi')">Łożysko półosi</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Układ paliwowy')">Układ paliwowy</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Pompa paliwa')">Pompa paliwa</a>
-      <a href="#" onclick="filter('Filtr paliwa')">Filtr paliwa</a>
-      <a href="#" onclick="filter('Wtryskiwacz')">Wtryskiwacz</a>
-      <a href="#" onclick="filter('Zbiornik paliwa')">Zbiornik paliwa</a>
-      <a href="#" onclick="filter('Przewód paliwowy')">Przewód paliwowy</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Układ wydechowy')">Układ wydechowy</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Tłumik końcowy')">Tłumik końcowy</a>
-      <a href="#" onclick="filter('Katalizator')">Katalizator</a>
-      <a href="#" onclick="filter('Rura wydechowa')">Rura wydechowa</a>
-      <a href="#" onclick="filter('Uszczelka wydechu')">Uszczelka wydechu</a>
-      <a href="#" onclick="filter('Zawiesie tłumika')">Zawiesie tłumika</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Wycieraczki')">Wycieraczki</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Pióro wycieraczki')">Pióro wycieraczki</a>
-      <a href="#" onclick="filter('Ramie wycieraczki')">Ramie wycieraczki</a>
-      <a href="#" onclick="filter('Silnik wycieraczek')">Silnik wycieraczek</a>
-      <a href="#" onclick="filter('Spryskiwacz tylni')">Spryskiwacz tylni</a>
-      <a href="#" onclick="filter('Przewód spryskiwacza')">Przewód spryskiwacza</a>
-    </div>
-  </li>
-  <li class="dropdown">
-    <a href="#" onclick="filter('Wyposażenie wnętrza')">Wyposażenie wnętrza</a>
-    <div class="dropdown-content">
-      <a href="#" onclick="filter('Dywaniki gumowe')">Dywaniki gumowe</a>
-      <a href="#" onclick="filter('Pokrowce foteli')">Pokrowce foteli</a>
-      <a href="#" onclick="filter('Gałka zmiany biegów')">Gałka zmiany biegów</a>
-      <a href="#" onclick="filter('Mata bagażnika')">Mata bagażnika</a>
-      <a href="#" onclick="filter('Nakładki progowe')">Nakładki progowe</a>
-    </div>
-  </li>
-</ul>
+<section class="features">
+  <div class="feature-card">
+    <div class="feature-icon">🚚</div>
+    <h3>Szybka Dostawa</h3>
+    <p>Twoje zamówienie dostarczymy do 24h na terenie kraju.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🔧</div>
+    <h3>Gwarancja Jakości</h3>
+    <p>Wyłącznie oryginalne lub renomowane zamienniki od sprawdzonych producentów.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">💬</div>
+    <h3>Wsparcie Techniczne</h3>
+    <p>Nasz zespół fachowców doradzi, jak dobrać część do Twojego auta.</p>
+  </div>
+</section>
 
-
-<br>
-<div class="row g-4">
-  <p>Filtr oleju Bosch P3270<br>Cena: 29.99 - 1 sztuka<br>Pozostało: 120<br>Filtr oleju do silników benzynowych<br>Kompatybilny z: Volkswagen Golf VI, Toyota Avensis, Toyota Corolla</p>
-  <p>Tarcza hamulcowa Brembo 09.7011.14<br>Cena: 199.5 - 1 sztuka<br>Pozostało: 50<br>Tarcza hamulcowa przód, wentylowana<br>Kompatybilny z: Toyota Avensis, Ford Focus Mk2</p>
-  <p>Lusterko boczne prawe VW Golf VI<br>Cena: 149 - 1 sztuka<br>Pozostało: 20<br>Elektryczne, podgrzewane lusterko do VW Golf VI<br>Kompatybilny z: Volkswagen Golf VI, Ford Focus Mk2</p>
-  <p>Zestaw uszczelek<br>Cena: 120.36 - 1 sztuka<br>Pozostało: 50<br>Zestaw uszczelek - wysokiej jakości część kategorii 1<br>Kompatybilny z: Toyota Corolla, Toyota Avensis</p>
-  <p>Pasek rozrządu<br>Cena: 311.09 - 1 litr<br>Pozostało: 71<br>Pasek rozrządu - wysokiej jakości część kategorii 1<br>Kompatybilny z: Volkswagen Golf VI, Toyota Avensis, Ford Focus Mk2</p>
-  <p>Cewka zapłonowa<br>Cena: 752.38 - 1 zestaw<br>Pozostało: 25<br>Cewka zapłonowa - wysokiej jakości część kategorii 1<br>Kompatybilny z: Toyota Avensis, Hyundai i30</p>
-  <p>Czujnik wału<br>Cena: 489.92 - 1 para<br>Pozostało: 64<br>Czujnik wału - wysokiej jakości część kategorii 1<br>Kompatybilny z: Honda Civic</p>
-  <p>Wał korbowy<br>Cena: 51.4 - 1 sztuka<br>Pozostało: 17<br>Wał korbowy - wysokiej jakości część kategorii 1<br>Kompatybilny z: Kia Ceed</p>
-  <p>Świeca zapłonowa<br>Cena: 576.6 - 1 para<br>Pozostało: 66<br>Świeca zapłonowa - wysokiej jakości część kategorii 1<br>Kompatybilny z: Mazda 3</p>
-  <p>Amortyzator przód<br>Cena: 376.45 - 1 zestaw<br>Pozostało: 41<br>Amortyzator przód - wysokiej jakości część kategorii 2<br>Kompatybilny z: Hyundai i30, Kia Ceed</p>
-  <p>Sprężyna zawieszenia<br>Cena: 746.47 - 1 litr<br>Pozostało: 20<br>Sprężyna zawieszenia - wysokiej jakości część kategorii 2<br>Kompatybilny z: Kia Ceed</p>
-  <p>Sworzeń wahacza<br>Cena: 326.5 - 1 litr<br>Pozostało: 75<br>Sworzeń wahacza - wysokiej jakości część kategorii 2<br>Kompatybilny z: Mazda 3</p>
-  <p>Wahacz<br>Cena: 282.37 - 1 para<br>Pozostało: 90<br>Wahacz - wysokiej jakości część kategorii 2<br>Kompatybilny z: Honda Civic</p>
-  <p>Łącznik stabilizatora<br>Cena: 459.08 - 1 para<br>Pozostało: 2<br>Łącznik stabilizatora - wysokiej jakości część kategorii 2<br>Kompatybilny z: Fiat Tipo</p>
-  <p>Zderzak przedni<br>Cena: 307.32 - 1 sztuka<br>Pozostało: 53<br>Zderzak przedni - wysokiej jakości część kategorii 3<br>Kompatybilny z: Seat Leon</p>
-  <p>Błotnik lewy<br>Cena: 475.29 - 1 sztuka<br>Pozostało: 76<br>Błotnik lewy - wysokiej jakości część kategorii 3<br>Kompatybilny z: Audi A3</p>
-  <p>Maska silnika<br>Cena: 390.18 - 1 zestaw<br>Pozostało: 92<br>Maska silnika - wysokiej jakości część kategorii 3<br>Kompatybilny z: BMW 320i</p>
-  <p>Lusterko boczne<br>Cena: 60.06 - 1 para<br>Pozostało: 21<br>Lusterko boczne - wysokiej jakości część kategorii 3<br>Kompatybilny z: Mercedes-Benz C200</p>
-  <p>Szyba tylna<br>Cena: 428.9 - 1 para<br>Pozostało: 18<br>Szyba tylna - wysokiej jakości część kategorii 3<br>Kompatybilny z: Volvo V40</p>
-  <p>Felga stalowa 16'<br>Cena: 660.9 - 1 zestaw<br>Pozostało: 4<br>Felga stalowa 16' - wysokiej jakości część kategorii 4<br>Kompatybilny z: Nissan Qashqai</p>
-  <p>Felga aluminiowa 17'<br>Cena: 466.6 - 1 sztuka<br>Pozostało: 24<br>Felga aluminiowa 17' - wysokiej jakości część kategorii 4<br>Kompatybilny z: Dacia Duster</p>
-  <p>Kołpak 15'<br>Cena: 34.77 - 1 litr<br>Pozostało: 53<br>Kołpak 15' - wysokiej jakości część kategorii 4<br>Kompatybilny z: Subaru Impreza</p>
-  <p>Zestaw śrub do felg<br>Cena: 138.12 - 1 zestaw<br>Pozostało: 52<br>Zestaw śrub do felg - wysokiej jakości część kategorii 4<br>Kompatybilny z: Każdy</p>
-  <p>Pierścień centrujący 4x443<br>Cena: 411.42 - 1 para<br>Pozostało: 94<br>Pierścień centrujący - wysokiej jakości część kategorii 4<br>Kompatybilny z: Każdy</p>
-  <p>Filtr oleju M2002<br>Cena: 587.37 - 1 zestaw<br>Pozostało: 66<br>Filtr oleju - wysokiej jakości część kategorii 5<br>Kompatybilny z: Każdy</p>
-  <p>Filtr powietrza G32<br>Cena: 181.73 - 1 litr<br>Pozostało: 84<br>Filtr powietrza - wysokiej jakości część kategorii 5<<br>Kompatybilny z: Każdy/p>
-  <p>Filtr kabinowy<br>Cena: 393.13 - 1 para<br>Pozostało: 40<br>Filtr kabinowy - wysokiej jakości część kategorii 5<br>Kompatybilny z: Każdy</p>
-  <p>Filtr paliwa FF2<br>Cena: 766.21 - 1 para<br>Pozostało: 68<br>Filtr paliwa - wysokiej jakości część kategorii 5<br>Kompatybilny z: Każdy</p>
-  <p>Filtr gazu<br>Cena: 287.02 - 1 litr<br>Pozostało: 86<br>Filtr gazu - wysokiej jakości część kategorii 5<br>Kompatybilny z: Każdy</p>
-  <p>Olej silnikowy 5W30<br>Cena: 622.15 - 1 litr<br>Pozostało: 78<br>Olej silnikowy 5W30 - wysokiej jakości część kategorii 6<br>Kompatybilny z: Każdy</p>
-  <p>Olej przekładniowy<br>Cena: 397.66 - 1 zestaw<br>Pozostało: 35<br>Olej przekładniowy - wysokiej jakości część kategorii 6<br>Kompatybilny z: Każdy</p>
-  <p>Olej hydrauliczny<br>Cena: 455.31 - 1 zestaw<br>Pozostało: 38<br>Olej hydrauliczny - wysokiej jakości część kategorii 6<br>Kompatybilny z: Każdy</p>
-  <p>Dodatek do oleju<br>Cena: 621.52 - 1 zestaw<br>Pozostało: 88<br>Dodatek do oleju - wysokiej jakości część kategorii 6<br>Kompatybilny z: Każdy</p>
-  <p>Olej silnikowy 10W40<br>Cena: 569.89 - 1 litr<br>Pozostało: 61<br>Olej silnikowy 10W40 - wysokiej jakości część kategorii 6<br>Kompatybilny z: Każdy</p>
-  <p>Akumulator 60Ah<br>Cena: 625.36 - 1 sztuka<br>Pozostało: 65<br>Akumulator 60Ah - wysokiej jakości część kategorii 7<br>Kompatybilny z: Każdy</p>
-  <p>Akumulator 74Ah<br>Cena: 625.25 - 1 sztuka<br>Pozostało: 42<br>Akumulator 74Ah - wysokiej jakości część kategorii 7<br>Kompatybilny z: Każdy</p>
-  <p>Akumulator 100Ah<br>Cena: 513.27 - 1 zestaw<br>Pozostało: 87<br>Akumulator 100Ah - wysokiej jakości część kategorii 7<br>Kompatybilny z: Każdy</p>
-  <p>Żarówka H7<br>Cena: 288.82 - 1 sztuka<br>Pozostało: 1<br>Żarówka H7 - wysokiej jakości część kategorii 8<br>Kompatybilny z: Każdy</p>
-  <p>Żarówka H4<br>Cena: 129.83 - 1 zestaw<br>Pozostało: 81<br>Żarówka H4 - wysokiej jakości część kategorii 8<br>Kompatybilny z: Każdy</p>
-  <p>Żarówka W5W<br>Cena: 516.92 - 1 sztuka<br>Pozostało: 29<br>Żarówka W5W - wysokiej jakości część kategorii 8<br>Kompatybilny z: Każdy</p>
-  <p>Bezpiecznik 10A<br>Cena: 343.59 - 1 sztuka<br>Pozostało: 69<br>Bezpiecznik 10A - wysokiej jakości część kategorii 8<br>Kompatybilny z: Każdy</p>
-  <p>Bezpiecznik 15A<br>Cena: 326.95 - 1 litr<br>Pozostało: 10<br>Bezpiecznik 15A - wysokiej jakości część kategorii 8<br>Kompatybilny z: Każdy</p>
-  <p>Przekaźnik 12V<br>Cena: 197.82 - 1 sztuka<br>Pozostało: 6<br>Przekaźnik 12V - wysokiej jakości część kategorii 8<br>Kompatybilny z: Każdy</p>
-  <p>Klocki hamulcowe przód<br>Cena: 344.45 - 1 zestaw<br>Pozostało: 61<br>Klocki hamulcowe przód - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Klocki hamulcowe tył<br>Cena: 114.86 - 1 zestaw<br>Pozostało: 11<br>Klocki hamulcowe tył - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Tarcz hamulcowa przód<br>Cena: 191.64 - 1 zestaw<br>Pozostało: 7<br>Tarcz hamulcowa przód - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Tarcz hamulcowa tył<br>Cena: 237.91 - 1 zestaw<br>Pozostało: 70<br>Tarcz hamulcowa tył - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Bęben hamulcowy<br>Cena: 709.23 - 1 zestaw<br>Pozostało: 35<br>Bęben hamulcowy - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Szczęki hamulcowe<br>Cena: 296.38 - 1 para<br>Pozostało: 35<br>Szczęki hamulcowe - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Płyn hamulcowy DOT4<br>Cena: 78.58 - 1 litr<br>Pozostało: 16<br>Płyn hamulcowy DOT4 - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Płyn hamulcowy DOT3<br>Cena: 573.71 - 1 litr<br>Pozostało: 24<br>Płyn hamulcowy DOT3 - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Pompa hamulcowa<br>Cena: 381.74 - 1 sztuka<br>Pozostało: 56<br>Pompa hamulcowa - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Pompa ABS<br>Cena: 671.93 - 1 sztuka<br>Pozostało: 56<br>Pompa ABS - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Przewód hamulcowy elastyczny<br>Cena: 212.60 - 1 para<br>Pozostało: 22<br>Przewód hamulcowy elastyczny - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Przewód hamulcowy sztywny<br>Cena: 228.39 - 1 para<br>Pozostało: 39<br>Przewód hamulcowy sztywny - wysokiej jakości część kategorii 9<br>Kompatybilny z: Każdy</p>
-  <p>Tarcza sprzęgła<br>Cena: 643.40 - 1 zestaw<br>Pozostało: 10<br>Tarcza sprzęgła - wysokiej jakości część kategorii 10<br>Kompatybilny z: Każdy</p>
-  <p>Docisk sprzęgła<br>Cena: 584.82 - 1 zestaw<br>Pozostało: 19<br>Docisk sprzęgła - wysokiej jakości część kategorii 10<br>Kompatybilny z: Każdy</p>
-  <p>Łożysko oporowe<br>Cena: 565.11 - 1 sztuka<br>Pozostało: 65<br>Łożysko oporowe - wysokiej jakości część kategorii 10<br>Kompatybilny z: Każdy</p>
-  <p>Linka sprzęgła<br>Cena: 613.62 - 1 sztuka<br>Pozostało: 99<br>Linka sprzęgła - wysokiej jakości część kategorii 10<br>Kompatybilny z: Każdy</p>
-  <p>Pompa sprzęgła<br>Cena: 274.83 - 1 sztuka<br>Pozostało: 7<br>Pompa sprzęgła - wysokiej jakości część kategorii 10<br>Kompatybilny z: Każdy</p>
-  <p>Siłownik sprzęgła<br>Cena: 293.71 - 1 sztuka<br>Pozostało: 19<br>Siłownik sprzęgła - wysokiej jakości część kategorii 10<br>Kompatybilny z: Każdy</p>
-  <p>Zestaw sprzęgła<br>Cena: 107.66 - 1 zestaw<br>Pozostało: 96<br>Zestaw sprzęgła - wysokiej jakości część kategorii 10<br>Kompatybilny z: Każdy</p>
-  <p>Sprężyna zawieszenia przód<br>Cena: 564.29 - 1 para<br>Pozostało: 46<br>Sprężyna zawieszenia przód - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Sprężyna zawieszenia tył<br>Cena: 303.52 - 1 para<br>Pozostało: 23<br>Sprężyna zawieszenia tył - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Amortyzator przód<br>Cena: 150.99 - 1 zestaw<br>Pozostało: 65<br>Amortyzator przód - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Amortyzator tył<br>Cena: 109.44 - 1 zestaw<br>Pozostało: 63<br>Amortyzator tył - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Łącznik stabilizatora<br>Cena: 353.49 - 1 sztuka<br>Pozostało: 36<br>Łącznik stabilizatora - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Tuleja wahacza<br>Cena: 183.86 - 1 sztuka<br>Pozostało: 10<br>Tuleja wahacza - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Wahacz<br>Cena: 676.13 - 1 sztuka<br>Pozostało: 65<br>Wahacz - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Łożysko koła<br>Cena: 259.47 - 1 sztuka<br>Pozostało: 80<br>Łożysko koła - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Piasta koła<br>Cena: 510.16 - 1 sztuka<br>Pozostało: 21<br>Piasta koła - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Przegub napędowy<br>Cena: 447.81 - 1 sztuka<br>Pozostało: 31<br>Przegub napędowy - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-  <p>Osłona przegubu<br>Cena: 179.22 - 1 sztuka<br>Pozostało: 42<br>Osłona przegubu - wysokiej jakości część kategorii 11<br>Kompatybilny z: Każdy</p>
-</div>
+<!-- CATEGORIES SECTION -->
+<section class="categories">
+  <h2>Polecane Kategorie</h2>
+  <div class="categories-list">
+    <div class="category-card" onclick="location.href='/'">
+      <img src="https://images.unsplash.com/photo-1564730465543-e732e7fc9c10?q=80&w=2586&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Silniki">
+      <h4>Silniki</h4>
+    </div>
+    <div class="category-card" onclick="location.href='/'">
+      <img src="https://images.unsplash.com/photo-1643701079732-3b1c7a797e3d?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Zawieszenie">
+      <h4>Zawieszenie</h4>
+    </div>
+    <div class="category-card" onclick="location.href='/'">
+      <img src="https://images.unsplash.com/photo-1659087955143-d1c106b3c241?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Karoseria">
+      <h4>Karoseria</h4>
+    </div>
+    <div class="category-card" onclick="location.href='/'">
+      <img src="https://plus.unsplash.com/premium_photo-1693828616018-0a9aa690c5c1?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Felgi">
+      <h4>Felgi</h4>
+    </div>
+    <div class="category-card" onclick="location.href='/'">
+      <img src="https://images.unsplash.com/photo-1589484771154-d663e839d0be?q=80&w=2673&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Oleje">
+      <h4>Oleje</h4>
+    </div>
+  </div>
+</section>
