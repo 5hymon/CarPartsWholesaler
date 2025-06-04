@@ -1,11 +1,11 @@
 package com.wholesaler.backend.controller;
 
 import com.wholesaler.backend.model.Employee;
-import com.wholesaler.backend.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.wholesaler.backend.dto.EmployeeDTO;
+import com.wholesaler.backend.service.EmployeeService;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +13,22 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     // GET /employees/all - get all employees
     @GetMapping("/all")
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeService.getAllEmployeesAsDTO();
     }
 
     // GET /employees/{employeeId} - get employee by ID
     @GetMapping("/{employeeId}")
-    public ResponseEntity<Employee> getEmployee(@PathVariable("employeeId") Integer employeeId) {
-        Optional<Employee> employee = employeeRepository.findById(employeeId);
+    public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable("employeeId") Integer employeeId) {
+        Optional<EmployeeDTO> employee = employeeService.getEmployeeByIdAsDTO(employeeId);
         if (employee.isPresent()) {
             return new ResponseEntity<>(employee.get(), HttpStatus.OK);
         } else {
@@ -36,24 +39,16 @@ public class EmployeeController {
     // POST - add new employee
     @PostMapping
     public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+        return employeeService.saveEmployee(employee);
     }
 
     // PUT - update employee by ID
     @PutMapping("/{employeeId}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeId") Integer employeeId, @RequestBody Employee updatedEmployee) {
-        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+        Optional<Employee> employeeOptional = employeeService.updateEmployee(employeeId, updatedEmployee);
         if (employeeOptional.isPresent()) {
             Employee employee = employeeOptional.get();
-            employee.setFirstName(updatedEmployee.getFirstName());
-            employee.setLastName(updatedEmployee.getLastName());
-            employee.setEmailAddress(updatedEmployee.getEmailAddress());
-            employee.setPhoneNumber(updatedEmployee.getPhoneNumber());
-            employee.setAddress(updatedEmployee.getAddress());
-            employee.setCity(updatedEmployee.getCity());
-            employee.setPostalCode(updatedEmployee.getPostalCode());
-            employee.setCountry(updatedEmployee.getCountry());
-            return ResponseEntity.ok(employeeRepository.save(employee));
+            return ResponseEntity.ok(employeeService.saveEmployee(employee));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -62,9 +57,9 @@ public class EmployeeController {
     // DELETE - delete employee by ID
     @DeleteMapping("/{employeeId}")
     public ResponseEntity<Employee> deleteEmployee(@PathVariable("employeeId") Integer employeeId) {
-        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+        Optional<EmployeeDTO> employeeOptional = employeeService.getEmployeeByIdAsDTO(employeeId);
         if (employeeOptional.isPresent()) {
-            employeeRepository.deleteById(employeeId);
+            employeeService.deleteEmployee(employeeId);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
