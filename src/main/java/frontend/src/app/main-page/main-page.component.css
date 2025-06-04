@@ -1,52 +1,174 @@
-ul {
-  list-style: none;
-  padding: 0;
+/* --- 1. Zmienne i reset --- */
+:root {
+  --primary-color: #007bff;
+  --accent-color: #ffcc00;
+  --header-bg: #1a2634;
+  --page-bg: #f2f2f2;
+  --font-family: 'Montserrat', sans-serif;
+  --text-color: #333;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
-.menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
+body {
+  font-family: var(--font-family);
+  background-color: var(--page-bg);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
   max-width: 100%;
+  height: auto;
 }
 
-.dropdown {
+/* --- 2. Hero Section --- */
+.hero {
   position: relative;
+  background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1650&q=80')
+  center/cover no-repeat;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
-.dropdown > a {
-  padding: 10px 15px;
-  display: block;
-  background-color: #eee;
-  text-decoration: none;
-  color: black;
-  border-radius: 5px;
-}
-
-.dropdown-content {
-  display: none;
+.hero::after {
+  content: '';
   position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: white;
-  min-width: 160px;
-  border: 1px solid #ccc;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.hero-content {
+  position: relative;
   z-index: 1;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  max-width: 800px;
+  padding: 0 1rem;
+}
+.hero h1 {
+  color: white;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.hero .btn-cta {
+  background-color: var(--accent-color);
+  color: var(--header-bg);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+.hero .btn-cta:hover {
+  filter: brightness(0.9);
 }
 
-.dropdown-content a {
-  padding: 10px;
-  display: block;
-  text-decoration: none;
-  color: black;
+/* --- 3. Sekcja zalet --- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+.feature-card {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.feature-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.feature-card p {
+  font-size: 1rem;
+  color: #555;
 }
 
-.dropdown-content a:hover {
-  background-color: #f2f2f2;
+/* --- 4. Sekcja polecanych kategorii --- */
+.categories {
+  max-width: 1200px;
+  margin: 3rem auto 4rem;
+  padding: 0 1rem;
+}
+.categories h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--header-bg);
+}
+.categories-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+.category-card {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.category-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+.category-card h4 {
+  font-size: 1.2rem;
+  padding: 1rem;
+  text-align: center;
+  color: var(--header-bg);
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
+/* --- 5. Footer spacer --- */
+.footer-spacer {
+  height: 80px; /* rezerwuje miejsce, aby stopka była na dole */
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
 }

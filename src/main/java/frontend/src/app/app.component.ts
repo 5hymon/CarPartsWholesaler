@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent implements OnInit {
   isLoggedIn = false;
+  role = '';
   showUserMenu = false;
 
   constructor(
@@ -22,12 +23,15 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Subskrybuj stan zalogowania
     this.authService.loginStatus$.subscribe(status => {
       this.isLoggedIn = status;
       if (!status) {
+        this.role = '';
         this.showUserMenu = false;
       }
+    });
+    this.authService.role$.subscribe(r => {
+      this.role = r;
     });
   }
 

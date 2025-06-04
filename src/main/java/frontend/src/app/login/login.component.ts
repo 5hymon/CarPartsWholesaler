@@ -24,7 +24,6 @@ export class LoginComponent {
   login() {
     const success = this.authService.login(this.username, this.password);
     if (success) {
-      // Po zalogowaniu przekieruj na stronę główną
       this.router.navigate(['/']);
     } else {
       this.errorMessage = 'Nieprawidłowy login lub hasło!';

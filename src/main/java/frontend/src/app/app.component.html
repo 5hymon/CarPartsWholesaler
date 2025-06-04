@@ -2,12 +2,15 @@
   <div class="container d-flex justify-content-between align-items-center">
     <a class="navbar-brand text-white" routerLink="/main">AutoParts</a>
     <ul class="navbar-nav d-flex flex-row">
+
       <li class="nav-item mx-2">
-        <a class="nav-link text-white" routerLink="/main" routerLinkActive="active">Części</a>
+        <a class="nav-link text-white" routerLink="/main" routerLinkActive="active">Strona Główna</a>
       </li>
+
       <li class="nav-item mx-2">
         <a class="nav-link text-white" routerLink="/cars" routerLinkActive="active">Auta</a>
       </li>
+
       <li class="nav-item dropdown mx-2">
         <a class="nav-link dropdown-toggle text-white" href="#"
            role="button" (click)="$event.preventDefault()"
@@ -15,26 +18,27 @@
            aria-expanded="false">Kategorie
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="categoriesDropdown">
-          <li><a class="dropdown-item" routerLink="/kategorie/silnik">Silnik</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/zawieszenie">Zawieszenie</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/karoseria">Karoseria</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/felgi">Felgi</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/filtry">Filtry</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/Oleje">Oleje</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/płyny_i_chemia">Płyny i chemia</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/oświetlenie">Oświetlenie</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/układ_chłodzenia">Układ chłodzenia</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/układ_elektryczny">Układ elektryczny</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/układ_hamulcowy">Układ hamulcowy</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/układ_kierowniczy">Układ kierowniczy</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/układ_klimatyzacji">Układ klimatyzacji</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/układ_napędowy">Układ napędowy</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/układ_paliwowy">Układ paliwowy</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/układ_wydechowy">Układ wydechowy</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/wycieraczki">Wycieraczki</a></li>
-          <li><a class="dropdown-item" routerLink="/kategorie/wyposażenie_wnętrza">Wyposażenie wnętrza</a></li>
+          <li><a class="dropdown-item" routerLink="/">Silnik</a></li>
+          <li><a class="dropdown-item" routerLink="/">Zawieszenie</a></li>
+          <li><a class="dropdown-item" routerLink="/">Karoseria</a></li>
+          <li><a class="dropdown-item" routerLink="/">Felgi</a></li>
+          <li><a class="dropdown-item" routerLink="/">Filtry</a></li>
+          <li><a class="dropdown-item" routerLink="/">Oleje</a></li>
+          <li><a class="dropdown-item" routerLink="/">Płyny i chemia</a></li>
+          <li><a class="dropdown-item" routerLink="/">Oświetlenie</a></li>
+          <li><a class="dropdown-item" routerLink="/">Układ chłodzenia</a></li>
+          <li><a class="dropdown-item" routerLink="/">Układ elektryczny</a></li>
+          <li><a class="dropdown-item" routerLink="/">Układ hamulcowy</a></li>
+          <li><a class="dropdown-item" routerLink="/">Układ kierowniczy</a></li>
+          <li><a class="dropdown-item" routerLink="/">Układ klimatyzacji</a></li>
+          <li><a class="dropdown-item" routerLink="/">Układ napędowy</a></li>
+          <li><a class="dropdown-item" routerLink="/">Układ paliwowy</a></li>
+          <li><a class="dropdown-item" routerLink="/">Układ wydechowy</a></li>
+          <li><a class="dropdown-item" routerLink="/">Wycieraczki</a></li>
+          <li><a class="dropdown-item" routerLink="/">Wyposażenie wnętrza</a></li>
         </ul>
       </li>
+
       <li class="nav-item dropdown mx-2">
         <a class="nav-link dropdown-toggle text-white"
            href="#"
@@ -47,14 +51,34 @@
           <li *ngIf="!isLoggedIn">
             <a class="dropdown-item" routerLink="/login">Zaloguj się</a>
           </li>
-          <li *ngIf="isLoggedIn">
-            <a class="dropdown-item" routerLink="/orders">Zamówienia</a>
-          </li>
-          <li *ngIf="isLoggedIn">
-            <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">Wyloguj</a>
-          </li>
+
+          <ng-container *ngIf="isLoggedIn && role === 'admin'">
+            <li>
+              <a class="dropdown-item" routerLink="/orders-admin">Zamówienia</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/warehouse">Magazyn</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="dropdown-item" (click)="logout()">Wyloguj</a>
+            </li>
+          </ng-container>
+
+          <ng-container *ngIf="isLoggedIn && role === 'user'">
+            <li>
+              <a class="dropdown-item" routerLink="/account">Konto</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/orders-user">Zamówienia</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="dropdown-item" (click)="logout()">Wyloguj</a>
+            </li>
+          </ng-container>
+
         </ul>
       </li>
+
     </ul>
   </div>
 </nav>
