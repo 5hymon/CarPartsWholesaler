@@ -1,43 +1,35 @@
-package com.wholesaler.backend.model;
-
-import jakarta.persistence.*;
+package com.wholesaler.backend.dto;
 
 import java.util.List;
 
-@Entity
-@Table(name = "Customers")
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customerId")
+public class CustomerDTO {
     private Integer customerId;
-
-    @Column(name = "firstName")
     private String firstName;
-
-    @Column(name = "lastName")
     private String lastName;
-
-    @Column(name = "emailAddress")
     private String emailAddress;
-
-    @Column(name = "phoneNumber")
     private String phoneNumber;
-
-    @Column(name = "address")
     private String address;
-
-    @Column(name = "city")
     private String city;
-
-    @Column(name = "postalCode")
     private String postalCode;
-
-    @Column(name = "country")
     private String country;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
+    private List<OrderSimpleDTO> orders;
+
+    public CustomerDTO() {
+    }
+
+    public CustomerDTO(Integer customerId, String firstName, String lastName, String emailAddress, String phoneNumber, String address, String city, String postalCode, String country, List<OrderSimpleDTO> orders) {
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.orders = orders;
+    }
 
     public Integer getCustomerId() {
         return customerId;
@@ -111,11 +103,11 @@ public class Customer {
         this.country = country;
     }
 
-    public List<Order> getOrders() {
+    public List<OrderSimpleDTO> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<OrderSimpleDTO> orders) {
         this.orders = orders;
     }
 }
