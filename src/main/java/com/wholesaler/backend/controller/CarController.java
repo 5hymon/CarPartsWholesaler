@@ -22,7 +22,6 @@ public class CarController {
         this.carService = carService;
     }
 
-
     // GET /cars/all - get all cars
     @GetMapping("/all")
     @Operation(summary = "Pobierz wszystkie samochody")

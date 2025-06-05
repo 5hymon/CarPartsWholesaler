@@ -1,6 +1,8 @@
 package com.wholesaler.backend.controller;
 
 import com.wholesaler.backend.model.Customer;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/customers")
+@Tag(name = "Customers", description = "Zarządzanie klientami i ich zamówieniami")
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -21,12 +24,14 @@ public class CustomerController {
 
     // GET /customers/all - get all customers
     @GetMapping("/all")
+    @Operation(summary = "Pobierz wszystkich klientów")
     public List<CustomerDTO> getAllCustomers() {
         return customerService.getAllCustomersAsDTO();
     }
 
     // GET /customers/{customerId} - get customer by ID
     @GetMapping("/{customerId}")
+    @Operation(summary = "Pobierz klienta po ID")
     public ResponseEntity<CustomerDTO> getCustomer(@PathVariable("customerId") Integer customerId) {
         Optional<CustomerDTO> customer = customerService.getCustomerByIdAsDTO(customerId);
         if (customer.isPresent()) {
@@ -38,12 +43,14 @@ public class CustomerController {
 
     // POST - add new customer
     @PostMapping
+    @Operation(summary = "Dodaj nowego klienta")
     public Customer addCustomer(@RequestBody Customer customer) {
         return customerService.saveCustomer(customer);
     }
 
     // PUT - update customer by ID
     @PutMapping("/{customerId}")
+    @Operation(summary = "Aktualizuj klienta o podanym ID")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("customerId") Integer customerId, @RequestBody Customer updatedCustomer) {
         Optional<Customer> customerOptional = customerService.updateCustomer(customerId, updatedCustomer);
         if (customerOptional.isPresent()) {
@@ -56,6 +63,7 @@ public class CustomerController {
 
     // DELETE - delete customer by ID
     @DeleteMapping("/{customerId}")
+    @Operation(summary = "Usuń klienta o podanym ID")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable("customerId") Integer customerId) {
         Optional<CustomerDTO> customerOptional = customerService.getCustomerByIdAsDTO(customerId);
         if (customerOptional.isPresent()) {
