@@ -9,8 +9,9 @@ import { tap, map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CarsService {
-  private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/cars';
+
+  constructor(private http: HttpClient) {}
 
   getAllCars(): Observable<CarDTO[]> {
     return this.http.get<CarDTO[]>(`${this.baseUrl}/all`);

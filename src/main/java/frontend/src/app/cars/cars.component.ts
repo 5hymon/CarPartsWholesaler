@@ -1,15 +1,16 @@
 // src/app/cars/cars.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule }       from '@angular/common';
+import { FormsModule }        from '@angular/forms';
 
 import { CarsService } from '../services/cars.service';
-import { CarDTO } from '../models/car-dto.model';
+import { CarDTO }      from '../models/car-dto.model';
 
 @Component({
   selector: 'app-cars',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './cars.component.html',
   styleUrls: ['./cars.component.css']
 })
@@ -23,7 +24,11 @@ export class CarsComponent implements OnInit {
   activeMake: string | null = null;
   activeModel: string | null = null;
 
-  constructor(private carService: CarsService) { }
+  // Używane do edycji
+  editingCarId: number | null = null;
+  editedCar: CarDTO | null = null;
+
+  constructor(private carService: CarsService) {}
 
   ngOnInit(): void {
     this.loadCars();
@@ -38,7 +43,7 @@ export class CarsComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error(err);
+        console.error('Błąd przy pobieraniu samochodów:', err);
         this.errorMessage = 'Nie udało się pobrać listy samochodów.';
         this.loading = false;
       }
@@ -52,15 +57,12 @@ export class CarsComponent implements OnInit {
     this.carService.deleteCar(id).subscribe({
       next: () => this.loadCars(),
       error: (err) => {
-        console.error(err);
-        alert('Błąd podczas usuwania samochodu.');
+        console.error('Błąd podczas usuwania samochodu:', err);
+        alert('Nie udało się usunąć samochodu.');
       }
     });
   }
 
-  /**
-   * Grupuje listę cars według pola carMake.
-   */
   groupByMake(): { make: string; cars: CarDTO[] }[] {
     const map: Record<string, CarDTO[]> = {};
     this.cars.forEach(car => {
@@ -76,12 +78,8 @@ export class CarsComponent implements OnInit {
     }));
   }
 
-  /**
-   * Kliknięcie w markę — filtr po samej marce.
-   */
   selectByMake(make: string): void {
     if (this.activeMake === make && this.activeModel === null) {
-      // Jeśli kliknięto tę samą markę ponownie, reset
       this.filteredCars = [...this.cars];
       this.activeMake = null;
       this.activeModel = null;
@@ -92,12 +90,8 @@ export class CarsComponent implements OnInit {
     }
   }
 
-  /**
-   * Kliknięcie w model — filtr po marce i modelu.
-   */
   selectMakeModel(make: string, model: string): void {
     if (this.activeMake === make && this.activeModel === model) {
-      // Reset filtrów
       this.filteredCars = [...this.cars];
       this.activeMake = null;
       this.activeModel = null;
@@ -108,5 +102,38 @@ export class CarsComponent implements OnInit {
         car.carMake === make && car.carModel === model
       );
     }
+  }
+
+  /** Rozpoczynamy edycję: ustawiamy editedCar na kopię obiektu */
+  startEdit(car: CarDTO): void {
+    this.editingCarId = car.carId!;
+    // Płytka kopia – żeby formularz nie nadpisywał od razu oryginału
+    this.editedCar = { ...car };
+  }
+
+  /** Anulujemy edycję i ukrywamy formularz */
+  cancelEdit(): void {
+    this.editingCarId = null;
+    this.editedCar = null;
+  }
+
+  /** Zapisujemy zmiany: wysyłamy PUT, a po sukcesie odświeżamy listę */
+  saveEdit(): void {
+    if (!this.editedCar || this.editingCarId === null) {
+      return;
+    }
+
+    this.carService.updateCar(this.editingCarId, this.editedCar).subscribe({
+      next: (updated: CarDTO) => {
+        // Po udanej aktualizacji odświeżamy całość
+        this.editingCarId = null;
+        this.editedCar = null;
+        this.loadCars();
+      },
+      error: (err) => {
+        console.error('Błąd podczas aktualizacji samochodu:', err);
+        alert('Nie udało się zaktualizować danych.');
+      }
+    });
   }
 }

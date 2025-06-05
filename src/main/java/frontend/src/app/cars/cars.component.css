@@ -93,6 +93,12 @@ ul.menu {
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
 }
 
+.car-card form {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
+
 .car-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
@@ -106,6 +112,53 @@ ul.menu {
 /* Przycisk usuwania */
 .car-card .btn {
   margin-top: 0.5rem;
+}
+
+/* Przycisk Edytuj */
+.btn-edit {
+  background-color: var(--accent-color);
+  border: none;
+  color: #fff;
+  /* Wzorzec z Bootstrap btn-sm */
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+  transition: filter 0.2s;
+}
+
+.btn-edit:hover {
+  filter: brightness(0.9);
+}
+
+/* Przycisk Zapisz */
+.btn-save {
+  background-color: var(--accent-color);
+  border: none;
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+  transition: filter 0.2s;
+}
+
+.btn-save:hover {
+  filter: brightness(0.9);
+}
+
+.car-card .form-label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.car-card .form-control {
+  width: 100%;
+  padding: 0.4rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
 
 /* --- 5. Responsywność dropdownów --- */

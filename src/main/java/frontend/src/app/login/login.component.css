@@ -3,8 +3,10 @@
   margin: 50px auto;
   border: 1px solid #ccc;
   padding: 20px;
-  border-radius: 4px;
-  background: #f9f9f9;
+  border-radius: 20px;
+  box-shadow: 0 7px 15px rgba(0,0,0,0.23);
+  background: var(--header-bg);
+  color: var(--page-bg);
 }
 .login-container h2 {
   margin-bottom: 20px;
@@ -17,5 +19,6 @@
 }
 .login-container .btn {
   width: 100%;
-  background: #1a2634;
+  color: var(--header-bg);
+  background: var(--accent-color);
 }

@@ -10,16 +10,14 @@
     {{ errorMessage }}
   </div>
 
-  <!-- Dropdown: marki i modele -->
+  <!-- Dropdown marek i modeli -->
   <ul class="menu">
     <li *ngFor="let group of groupByMake()" class="nav-item dropdown">
-      <!-- Kliknięcie w markę filtrowane przez selectByMake -->
       <a href="javascript:void(0)"
          class="dropdown-toggle"
          (click)="selectByMake(group.make)">
         {{ group.make }}
       </a>
-      <!-- Menu modeli pojawiające się przy hoverze (CSS) -->
       <ul class="dropdown-menu">
         <li *ngFor="let car of group.cars">
           <a class="dropdown-item"
@@ -34,27 +32,100 @@
 
   <br />
 
-  <!-- Kafelki samochodów -->
+  <!-- Grid z kafelkami / formularzami -->
   <div class="row g-4">
     <ng-container *ngFor="let car of filteredCars">
       <div>
-        <div class="car-card">
+        <!-- Jeżeli nie edytujemy tego auta – pokaż kartę -->
+        <div *ngIf="editingCarId !== car.carId" class="car-card p-3">
           <p>
-            <strong>{{ car.carMake }}:</strong><br />
-            {{ car.carModel }}<br />
-            {{ car.productionYears }}<br />
-            {{ car.bodyType }}<br />
-            {{ car.fuelType }}<br />
-            {{ car.engineType }}
+            <strong>{{ car.carMake }} {{ car.carModel }}</strong><br />
+            {{ car.productionYears }} | {{ car.bodyType }}<br />
+            {{ car.fuelType }} | {{ car.engineType }}
           </p>
+          <button class="btn btn-sm btn-edit me-2" (click)="startEdit(car)">
+            Edytuj
+          </button>
           <button class="btn btn-sm btn-danger" (click)="deleteCar(car.carId!)">
             Usuń
           </button>
         </div>
+
+        <!-- Jeżeli edytujemy to auto – pokaż formularz edycji -->
+        <div *ngIf="editingCarId === car.carId && editedCar" class="car-card p-3">
+          <h5 class="mb-3">Edytuj dane samochodu</h5>
+          <form (ngSubmit)="saveEdit()" #editForm="ngForm">
+            <div class="mb-2">
+              <label for="make-{{car.carId}}" class="form-label">Marka:</label>
+              <input id="make-{{car.carId}}"
+                     name="carMake"
+                     type="text"
+                     class="form-control"
+                     [(ngModel)]="editedCar.carMake"
+                     required />
+            </div>
+            <div class="mb-2">
+              <label for="model-{{car.carId}}" class="form-label">Model:</label>
+              <input id="model-{{car.carId}}"
+                     name="carModel"
+                     type="text"
+                     class="form-control"
+                     [(ngModel)]="editedCar.carModel"
+                     required />
+            </div>
+            <div class="mb-2">
+              <label for="years-{{car.carId}}" class="form-label">Lata produkcji:</label>
+              <input id="years-{{car.carId}}"
+                     name="productionYears"
+                     type="text"
+                     class="form-control"
+                     [(ngModel)]="editedCar.productionYears"
+                     required />
+            </div>
+            <div class="mb-2">
+              <label for="body-{{car.carId}}" class="form-label">Nadwozie:</label>
+              <input id="body-{{car.carId}}"
+                     name="bodyType"
+                     type="text"
+                     class="form-control"
+                     [(ngModel)]="editedCar.bodyType"
+                     required />
+            </div>
+            <div class="mb-2">
+              <label for="fuel-{{car.carId}}" class="form-label">Rodzaj paliwa:</label>
+              <input id="fuel-{{car.carId}}"
+                     name="fuelType"
+                     type="text"
+                     class="form-control"
+                     [(ngModel)]="editedCar.fuelType"
+                     required />
+            </div>
+            <div class="mb-3">
+              <label for="engine-{{car.carId}}" class="form-label">Typ silnika:</label>
+              <input id="engine-{{car.carId}}"
+                     name="engineType"
+                     type="text"
+                     class="form-control"
+                     [(ngModel)]="editedCar.engineType"
+                     required />
+            </div>
+
+            <button type="submit"
+                    class="btn btn-sm btn-save me-2"
+                    [disabled]="editForm.invalid">
+              Zapisz
+            </button>
+            <button type="button"
+                    class="btn btn-sm btn-secondary"
+                    (click)="cancelEdit()">
+              Anuluj
+            </button>
+          </form>
+        </div>
       </div>
     </ng-container>
 
-    <!-- Jeśli brak wyników po filtrze -->
+    <!-- Gdy po filtrze brak -->
     <div *ngIf="!loading && filteredCars.length === 0" class="text-center">
       <p>Brak samochodów do wyświetlenia.</p>
     </div>
