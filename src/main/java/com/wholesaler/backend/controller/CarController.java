@@ -6,12 +6,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.wholesaler.backend.dto.CarDTO;
 import com.wholesaler.backend.service.CarService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/cars")
+@Tag(name = "Cars", description = "Zarządzanie samochodami i ich częściami")
 public class CarController {
     private final CarService carService;
 
@@ -19,14 +22,17 @@ public class CarController {
         this.carService = carService;
     }
 
+
     // GET /cars/all - get all cars
     @GetMapping("/all")
+    @Operation(summary = "Pobierz wszystkie samochody")
     public List<CarDTO> getAllCars() {
         return carService.getAllCarsAsDTO();
     }
 
     // GET /cars/{carId} - get car by ID
-    @GetMapping("{carId}")
+    @GetMapping("/{carId}")
+    @Operation(summary = "Pobierz samochód po ID")
     public ResponseEntity<CarDTO> getCar(@PathVariable("carId") Integer carId) {
         Optional<CarDTO> car = carService.getCarByIdAsDTO(carId);
         if (car.isPresent()) {
@@ -38,12 +44,14 @@ public class CarController {
 
     // POST - add new car
     @PostMapping
+    @Operation(summary = "Dodaj nowy samochód")
     public Car addCar(@RequestBody Car car) {
         return carService.saveCar(car);
     }
 
     // PUT - update car by ID
     @PutMapping("/{carId}")
+    @Operation(summary = "Aktualizuj samochód o podanym ID")
     public ResponseEntity<Car> updateCar(@PathVariable("carId") Integer carId, @RequestBody Car updatedCar) {
         Optional<Car> carOptional = carService.updateCar(carId, updatedCar);
         if (carOptional.isPresent()) {
@@ -56,6 +64,7 @@ public class CarController {
 
     // DELETE — delete car by ID
     @DeleteMapping("/{carId}")
+    @Operation(summary = "Usuń samochód o podanym ID")
     public ResponseEntity<Void> deleteCar(@PathVariable("carId") Integer carId) {
         Optional<CarDTO> carOptional = carService.getCarByIdAsDTO(carId);
         if (carOptional.isPresent()) {
