@@ -1,7 +1,9 @@
+// src/app/parts-list/parts-list.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-//import { PartsService } from '../services/parts.service';
+import { PartsService } from '../services/parts.service';
 import { PartDTO } from '../models/part-dto.model';
 
 @Component({
@@ -11,19 +13,13 @@ import { PartDTO } from '../models/part-dto.model';
   templateUrl: './parts-list.component.html',
   styleUrls: ['./parts-list.component.css']
 })
-export class PartsListComponent{}
-
-/*
 export class PartsListComponent implements OnInit {
-  // Pełna lista części pobrana z backendu
   parts: PartDTO[] = [];
-  // Lista, którą faktycznie wyświetlamy (po filtrowaniu)
   filteredParts: PartDTO[] = [];
 
   loading = false;
   errorMessage = '';
 
-  // Aktualnie wybrana kategoria lub kategoria i nazwa części
   activeCategory: string | null = null;
   activePartName: string | null = null;
 
@@ -62,10 +58,10 @@ export class PartsListComponent implements OnInit {
     });
   }
 
-  /!**
+  /**
    * Grupuje listę parts według pola categoryName.
    * Zwraca tablicę obiektów: { category: string; parts: PartDTO[] }
-   *!/
+   */
   groupByCategory(): { category: string; parts: PartDTO[] }[] {
     const map: Record<string, PartDTO[]> = {};
     this.parts.forEach(part => {
@@ -81,9 +77,9 @@ export class PartsListComponent implements OnInit {
     }));
   }
 
-  /!**
+  /**
    * Kliknięcie w samą nazwę kategorii → pokazuje wszystkie części danej kategorii.
-   *!/
+   */
   selectByCategory(category: string): void {
     if (this.activeCategory === category && this.activePartName === null) {
       // Resetuj filtr – pokaż wszystko
@@ -97,9 +93,9 @@ export class PartsListComponent implements OnInit {
     }
   }
 
-  /!**
+  /**
    * Kliknięcie w konkretną nazwę części w menu → filtr po kategorii + nazwie części.
-   *!/
+   */
   selectCategoryPart(category: string, partName: string): void {
     if (this.activeCategory === category && this.activePartName === partName) {
       // Reset filtrów
@@ -115,4 +111,3 @@ export class PartsListComponent implements OnInit {
     }
   }
 }
-*/

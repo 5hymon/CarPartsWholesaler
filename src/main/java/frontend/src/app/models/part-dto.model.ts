@@ -8,6 +8,6 @@ export interface PartDTO {
   leftOnStock: number;
   available: boolean;
   partDescription: string;
-  //categoryName: string; // np. "Silnik", "Hamulce", itd.
+  categoryName: string;
   compatibleParts?: CarDTO[];
 }

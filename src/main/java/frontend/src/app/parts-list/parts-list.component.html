@@ -1,10 +1,8 @@
-<p>parts-list</p>
-<!--
-&lt;!&ndash; src/app/parts-list/parts-list.component.html &ndash;&gt;
+<!-- src/app/parts-list/parts-list.component.html -->
 <div class="container">
   <h1 class="mb-4 text-center">Hurtownia części – lista części</h1>
 
-  &lt;!&ndash; Ładowanie / błąd &ndash;&gt;
+  <!-- Ładowanie / błąd -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
   </div>
@@ -12,16 +10,16 @@
     {{ errorMessage }}
   </div>
 
-  &lt;!&ndash; Dropdown: kategorie i nazwy części &ndash;&gt;
+  <!-- Dropdown: kategorie i nazwy części -->
   <ul class="menu">
     <li *ngFor="let group of groupByCategory()" class="nav-item dropdown">
-      &lt;!&ndash; Kliknięcie w kategorię filtruje po samej kategorii &ndash;&gt;
+      <!-- Kliknięcie w kategorię filtruje po samej kategorii -->
       <a href="javascript:void(0)"
          class="dropdown-toggle"
          (click)="selectByCategory(group.category)">
         {{ group.category }}
       </a>
-      &lt;!&ndash; Menu z częściami w danej kategorii (po hoverze) &ndash;&gt;
+      <!-- Menu z częściami w danej kategorii (po hoverze) -->
       <ul class="dropdown-menu">
         <li *ngFor="let part of group.parts">
           <a class="dropdown-item"
@@ -36,7 +34,7 @@
 
   <br />
 
-  &lt;!&ndash; Kafelki części &ndash;&gt;
+  <!-- Kafelki części -->
   <div class="row g-4">
     <ng-container *ngFor="let part of filteredParts">
       <div>
@@ -54,10 +52,9 @@
       </div>
     </ng-container>
 
-    &lt;!&ndash; Jeżeli po filtrze nic nie ma &ndash;&gt;
+    <!-- Jeżeli po filtrze nic nie ma -->
     <div *ngIf="!loading && filteredParts.length === 0" class="text-center">
       <p>Brak części do wyświetlenia.</p>
     </div>
   </div>
 </div>
--->

@@ -28,13 +28,15 @@ public class SecurityConfig {
                 // 3) Autoryzacja – zezwól (permitAll) na Swagger i publiczne endpointy:
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/cars/**").permitAll()
-                        // specyfikacja OpenAPI w formacie JSON (lub YAML)
+                        .requestMatchers("/parts/**").permitAll()
+                        .requestMatchers("/orders/**").permitAll()
+                        .requestMatchers("/employees/**").permitAll()
+                        .requestMatchers("/details/**").permitAll()
+                        .requestMatchers("/customers/**").permitAll()
+                        .requestMatchers("/compatibilities/**").permitAll()
+                        .requestMatchers("/categories/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
-                        // route do Swagger UI (statyczne zasoby)
                         .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll()
-                        // ewentualnie inne publiczne API endpointy:
-                        .requestMatchers("/cars/all").permitAll()
-                        // wszystkie inne endpointy wymagają zalogowania:
                         .anyRequest().authenticated()
                 )
 

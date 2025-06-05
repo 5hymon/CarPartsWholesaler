@@ -1,19 +1,18 @@
-/*
-!* src/app/parts-list/parts-list.component.css *!
+/* src/app/parts-list/parts-list.component.css */
 
-!* --- 1. Kontener --- *!
+/* --- 1. Kontener --- */
 .container {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
-!* Nagłówek *!
+/* Nagłówek */
 h1 {
   color: var(--header-bg);
 }
 
-!* --- 2. Dropdown: kategorie i części --- *!
+/* --- 2. Dropdown: kategorie i części --- */
 ul.menu {
   list-style: none;
   display: flex;
@@ -42,12 +41,12 @@ ul.menu {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-!* Menu pojawia się przy hoverze na <li> *!
+/* Menu pojawia się przy hoverze na <li> */
 .nav-item.dropdown:hover .dropdown-menu {
   display: block;
 }
 
-!* Domyślnie dropdown ukryte *!
+/* Domyślnie dropdown ukryte */
 .nav-item .dropdown-menu {
   display: none;
   position: absolute;
@@ -74,7 +73,7 @@ ul.menu {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-!* --- 3. Układ grid dla kart części --- *!
+/* --- 3. Układ grid dla kart części --- */
 .row.g-4 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -83,7 +82,7 @@ ul.menu {
   margin: 0 auto;
 }
 
-!* --- 4. Kafelki części --- *!
+/* --- 4. Kafelki części --- */
 .part-card {
   background-color: #fff;
   border-radius: 0.75rem;
@@ -102,12 +101,12 @@ ul.menu {
   font-size: 0.95rem;
 }
 
-!* Przycisk usuwania *!
+/* Przycisk usuwania */
 .part-card .btn {
   margin-top: 0.5rem;
 }
 
-!* --- 5. Responsywność dropdownów --- *!
+/* --- 5. Responsywność dropdownów --- */
 @media (max-width: 768px) {
   .dropdown-toggle {
     font-size: 0.9rem;
@@ -118,4 +117,3 @@ ul.menu {
     font-size: 0.9rem;
   }
 }
-*/
