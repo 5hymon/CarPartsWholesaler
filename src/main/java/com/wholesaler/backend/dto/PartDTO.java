@@ -1,5 +1,7 @@
 package com.wholesaler.backend.dto;
 
+import com.wholesaler.backend.model.Category;
+
 import java.util.List;
 
 public class PartDTO {
@@ -10,12 +12,13 @@ public class PartDTO {
     private Integer leftOnStock;
     private String partDescription;
     private Boolean available;
+    private String categoryName;
     private List<CarDTO> compatibleCars;
 
     public PartDTO() {
     }
 
-    public PartDTO(Integer partId, String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, String partDescription, Boolean available, List<CarDTO> compatibleCars) {
+    public PartDTO(Integer partId, String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, String partDescription, Boolean available, String categoryName, List<CarDTO> compatibleCars) {
         this.partId = partId;
         this.partName = partName;
         this.unitPrice = unitPrice;
@@ -23,6 +26,7 @@ public class PartDTO {
         this.leftOnStock = leftOnStock;
         this.partDescription = partDescription;
         this.available = available;
+        this.categoryName = categoryName;
         this.compatibleCars = compatibleCars;
     }
 
@@ -80,6 +84,14 @@ public class PartDTO {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public List<CarDTO> getCompatibleCars() {

@@ -34,6 +34,7 @@ public class PartService {
                 part.getLeftOnStock(),
                 part.getPartDescription(),
                 part.getAvailable(),
+                part.getCategoryName(),
                 compatibleCars
         );
     }

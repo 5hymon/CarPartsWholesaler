@@ -38,6 +38,8 @@ public class Part {
     @JsonBackReference
     private Category category;
 
+    private String categoryName;
+
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<PartCompatibility> compatibilities;
@@ -108,6 +110,14 @@ public class Part {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getCategoryName() {
+        return this.category.getCategoryName();
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public List<PartCompatibility> getCompatibilities() {
