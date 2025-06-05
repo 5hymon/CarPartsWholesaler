@@ -1,61 +1,6 @@
-/*
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-  max-width: 100%;
-}
-
-.dropdown {
-  position: relative;
-}
-
-.dropdown > a {
-  padding: 10px 15px;
-  display: block;
-  background-color: #eee;
-  text-decoration: none;
-  color: black;
-  border-radius: 5px;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: white;
-  min-width: 160px;
-  border: 1px solid #ccc;
-  z-index: 1;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-  padding: 10px;
-  display: block;
-  text-decoration: none;
-  color: black;
-}
-
-.dropdown-content a:hover {
-  background-color: #f2f2f2;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-*/
-
 /* src/app/cars/cars.component.css */
 
-/* Kontener */
+/* --- 1. Kontener --- */
 .container {
   max-width: 1200px;
   margin: 2rem auto;
@@ -67,7 +12,7 @@ h1 {
   color: var(--header-bg);
 }
 
-/* --- Dropdown: menu marek i modeli --- */
+/* --- 2. Dropdown: marki i modele --- */
 ul.menu {
   list-style: none;
   display: flex;
@@ -81,6 +26,7 @@ ul.menu {
   position: relative;
 }
 
+/* Główna nazwa marki (link) */
 .nav-item .dropdown-toggle {
   padding: 0.5rem 1rem;
   background-color: #fff;
@@ -89,13 +35,21 @@ ul.menu {
   font-weight: 500;
   color: var(--header-bg);
   cursor: pointer;
+  display: inline-block;
 }
 
 .nav-item .dropdown-toggle:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
+/* Menu pojawia się przy hoverze na <li> */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Domyślnie dropdown ukryte */
 .nav-item .dropdown-menu {
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -120,11 +74,23 @@ ul.menu {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* --- Kafelki samochodów --- */
+/* --- 3. Układ grid dla kart zamiast Bootstrapa --- */
+.row.g-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* --- 4. Kafelki samochodów --- */
 .car-card {
   background-color: #fff;
   border-radius: 0.75rem;
+  padding: 1rem;
   transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
 }
 
 .car-card:hover {
@@ -142,6 +108,7 @@ ul.menu {
   margin-top: 0.5rem;
 }
 
+/* --- 5. Responsywność dropdownów --- */
 @media (max-width: 768px) {
   .dropdown-toggle {
     font-size: 0.9rem;

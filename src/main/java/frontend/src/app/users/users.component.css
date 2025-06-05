@@ -1,0 +1,68 @@
+/* src/app/users/users.component.css */
+
+/* --- 1. Kontener --- */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Nagłówki */
+h1, h2 {
+  color: var(--header-bg);
+}
+
+/* --- 2. Formularz --- */
+.form-container {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+/* --- 3. Grid dla kart klientów --- */
+.row.g-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* --- 4. Kafelki klientów --- */
+.user-card {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.user-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Przycisk usuwania */
+.user-card .btn {
+  margin-top: 0.5rem;
+}
+
+/* --- 5. Responsywność --- */
+@media (max-width: 600px) {
+  .row.g-4 {
+    grid-template-columns: 1fr;
+  }
+}

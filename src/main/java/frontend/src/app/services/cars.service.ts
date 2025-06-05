@@ -12,39 +12,23 @@ export class CarsService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/cars';
 
-  /** Pobiera listę wszystkich samochodów jako CarDTO[] */
   getAllCars(): Observable<CarDTO[]> {
-    return this.http.get<CarDTO[]>(`${this.baseUrl}/all`, { observe: 'response' })
-      .pipe(
-        tap(response => {
-          console.log('Status:', response.status);
-          console.log('Data:', response.body);
-        }),
-        map(response => response.body as CarDTO[]),
-        catchError(err => {
-          console.error('HTTP error:', err);
-          return throwError(() => new Error('Błąd HTTP: ' + err.message));
-        })
-      );
+    return this.http.get<CarDTO[]>(`${this.baseUrl}/all`);
   }
 
-  /** Opcjonalnie: pobierz pojedynczy samochód po ID */
   getCarById(carId: number): Observable<CarDTO> {
     return this.http.get<CarDTO>(`${this.baseUrl}/${carId}`);
   }
 
-  /** Opcjonalnie: dodaj nowy samochód (przy użyciu encji Car, nie CarDTO) */
-  addCar(car: Partial<CarDTO>) {
+  addCar(car: CarDTO): Observable<CarDTO> {
     return this.http.post<CarDTO>(`${this.baseUrl}`, car);
   }
 
-  /** Opcjonalnie: edytuj samochód */
-  updateCar(carId: number, car: Partial<CarDTO>) {
+  updateCar(carId: number, car: CarDTO): Observable<CarDTO> {
     return this.http.put<CarDTO>(`${this.baseUrl}/${carId}`, car);
   }
 
-  /** Opcjonalnie: usuń samochód */
-  deleteCar(carId: number) {
+  deleteCar(carId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${carId}`);
   }
 }
