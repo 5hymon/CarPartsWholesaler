@@ -36,8 +36,8 @@ public class Employee {
     @Column(name = "country")
     private String country;
 
-//    @OneToMany(mappedBy = "employee")
-//    private List<Order> orders;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders;
 
     public Integer getEmployeeId() {
         return employeeId;
@@ -111,11 +111,11 @@ public class Employee {
         this.country = country;
     }
 
-//    public List<Order> getOrders() {
-//        return orders;
-//    }
+    public List<Order> getOrders() {
+        return orders;
+    }
 
-//    public void setOrders(List<Order> orders) {
-//        this.orders = orders;
-//    }
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }

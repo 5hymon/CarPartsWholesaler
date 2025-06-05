@@ -56,11 +56,6 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    // get by id
-    public Optional<Order> getOrderEntityById(Integer id) {
-        return orderRepository.findById(id);
-    }
-
     // get mapped by id
     public Optional<OrderDTO> getOrderByIdAsDTO(Integer id) {
         return orderRepository.findById(id).map(this::convertOrderToDTO);
