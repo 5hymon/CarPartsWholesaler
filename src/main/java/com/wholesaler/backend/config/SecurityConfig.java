@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -19,13 +20,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // 1) Włącz obsługę CORS, przekazując nasz CorsConfigurationSource
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
-
-                // 2) Wyłącz CSRF (REST API zwykle nie potrzebuje CSRF, zwłaszcza przy tokenach)
-                .csrf(csrf -> csrf.disable())
-
-                // 3) Autoryzacja – zezwól (permitAll) na Swagger i publiczne endpointy:
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/cars/**").permitAll()
                         .requestMatchers("/parts/**").permitAll()
@@ -38,10 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
-                )
-
-                // 4) Włącz HTTP Basic (lub możesz tu podstawić inny Customizer dla JWT itd.)
-                .httpBasic(Customizer.withDefaults());
+                ).httpBasic(Customizer.withDefaults());
 
         return http.build();
     }

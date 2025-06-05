@@ -1,6 +1,8 @@
 package com.wholesaler.backend.controller;
 
 import com.wholesaler.backend.model.Employee;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/employees")
+@Tag(name = "Employees", description = "Zarządzanie pracownikami i ich zamówieniami")
 public class EmployeeController {
     private final EmployeeService employeeService;
 
@@ -21,12 +24,14 @@ public class EmployeeController {
 
     // GET /employees/all - get all employees
     @GetMapping("/all")
+    @Operation(summary = "Pobierz wszystkich pracowników")
     public List<EmployeeDTO> getAllEmployees() {
         return employeeService.getAllEmployeesAsDTO();
     }
 
     // GET /employees/{employeeId} - get employee by ID
     @GetMapping("/{employeeId}")
+    @Operation(summary = "Pobierz pracownika po ID")
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable("employeeId") Integer employeeId) {
         Optional<EmployeeDTO> employee = employeeService.getEmployeeByIdAsDTO(employeeId);
         if (employee.isPresent()) {
@@ -38,12 +43,14 @@ public class EmployeeController {
 
     // POST - add new employee
     @PostMapping
+    @Operation(summary = "Dodaj nowego pracownika")
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeService.saveEmployee(employee);
     }
 
     // PUT - update employee by ID
     @PutMapping("/{employeeId}")
+    @Operation(summary = "Aktualizuj pracownika o podanym ID")
     public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeId") Integer employeeId, @RequestBody Employee updatedEmployee) {
         Optional<Employee> employeeOptional = employeeService.updateEmployee(employeeId, updatedEmployee);
         if (employeeOptional.isPresent()) {
@@ -56,6 +63,7 @@ public class EmployeeController {
 
     // DELETE - delete employee by ID
     @DeleteMapping("/{employeeId}")
+    @Operation(summary = "Usuń pracownika o podanym ID")
     public ResponseEntity<Employee> deleteEmployee(@PathVariable("employeeId") Integer employeeId) {
         Optional<EmployeeDTO> employeeOptional = employeeService.getEmployeeByIdAsDTO(employeeId);
         if (employeeOptional.isPresent()) {

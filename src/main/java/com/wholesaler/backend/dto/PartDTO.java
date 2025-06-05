@@ -1,7 +1,5 @@
 package com.wholesaler.backend.dto;
 
-import com.wholesaler.backend.model.Category;
-
 import java.util.List;
 
 public class PartDTO {

@@ -1,6 +1,8 @@
 package com.wholesaler.backend.controller;
 
 import com.wholesaler.backend.model.Order;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/orders")
+@Tag(name = "Orders", description = "Zarządzanie zamówieniami")
 public class OrderController {
     private final OrderService orderService;
 
@@ -21,12 +24,14 @@ public class OrderController {
 
     // GET /orders/all - get all orders
     @GetMapping("/all")
+    @Operation(summary = "Pobierz wszystkie zamówienia")
     public List<OrderDTO> getAllOrders() {
         return orderService.getAllOrdersAsDTO();
     }
 
     // GET /orders/{orderId} - get order by ID
     @GetMapping("/{orderId}")
+    @Operation(summary = "Pobierz zamówienie po ID")
     public ResponseEntity<OrderDTO> getOrder(@PathVariable("orderId") Integer orderId) {
         Optional<OrderDTO> order = orderService.getOrderByIdAsDTO(orderId);
         if (order.isPresent()) {
@@ -38,12 +43,14 @@ public class OrderController {
 
     // POST - add new order
     @PostMapping
+    @Operation(summary = "Dodaj nowe zamówienie")
     public Order addOrder(@RequestBody Order order) {
         return orderService.saveOrder(order);
     }
 
     // PUT - update order by ID
     @PutMapping("/{orderId}")
+    @Operation(summary = "Aktualizuj zamówienie o podanym ID")
     public ResponseEntity<Order> updateOrder(@PathVariable("orderId") Integer orderId, @RequestBody Order updatedOrder) {
         Optional<Order> orderOptional = orderService.updateOrder(orderId, updatedOrder);
         if (orderOptional.isPresent()) {
@@ -56,6 +63,7 @@ public class OrderController {
 
     // DELETE - delete order by ID
     @DeleteMapping("/{orderId}")
+    @Operation(summary = "Usuń zamówienie o podanym ID")
     public ResponseEntity<Void> deleteOrder(@PathVariable("orderId") Integer orderId) {
         Optional<OrderDTO> orderOptional = orderService.getOrderByIdAsDTO(orderId);
         if (orderOptional.isPresent()) {

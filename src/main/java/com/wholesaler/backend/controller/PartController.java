@@ -1,6 +1,8 @@
 package com.wholesaler.backend.controller;
 
 import com.wholesaler.backend.model.Part;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/parts")
+@Tag(name = "Parts", description = "Zarządzanie częściami")
 public class PartController {
     private final PartService partService;
 
@@ -21,12 +24,14 @@ public class PartController {
 
     // GET /parts/all - get all parts
     @GetMapping("/all")
+    @Operation(summary = "Pobierz wszystkie części")
     public List<PartDTO> getAllParts() {
         return partService.getAllPartsAsDTO();
     }
 
     // GET /parts/{partId} - get part by ID
     @GetMapping("/{partId}")
+    @Operation(summary = "Pobierz część po ID")
     public ResponseEntity<PartDTO> getPart(@PathVariable("partId") Integer partId) {
         Optional<PartDTO> part = partService.getPartByIdAsDTO(partId);
         if (part.isPresent()) {
@@ -38,12 +43,14 @@ public class PartController {
 
     // POST - add new part
     @PostMapping
+    @Operation(summary = "Dodaj nową część")
     public Part addPart(@RequestBody Part part) {
         return partService.savePart(part);
     }
 
     // PUT - update part by ID
     @PutMapping("/{partId}")
+    @Operation(summary = "Aktualizuj część o podanym ID")
     public ResponseEntity<Part> updatePart(@PathVariable("partId") Integer partId, @RequestBody Part updatedPart) {
         Optional<Part> partOptional = partService.updatePart(partId, updatedPart);
         if (partOptional.isPresent()) {
@@ -56,6 +63,7 @@ public class PartController {
 
     // DELETE - delete part by ID
     @DeleteMapping("/{partId}")
+    @Operation(summary = "Usuń część o podanym ID")
     public ResponseEntity<Part> deleteOrder(@PathVariable("partId") Integer partId) {
         Optional<PartDTO> partOptional = partService.getPartByIdAsDTO(partId);
         if (partOptional.isPresent()) {
