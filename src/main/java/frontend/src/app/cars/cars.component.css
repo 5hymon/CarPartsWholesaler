@@ -1,3 +1,4 @@
+/*
 ul {
   list-style: none;
   padding: 0;
@@ -49,4 +50,105 @@ ul {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+*/
+
+/* src/app/cars/cars.component.css */
+
+/* Kontener */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Nagłówek */
+h1 {
+  color: var(--header-bg);
+}
+
+/* --- Dropdown: menu marek i modeli --- */
+ul.menu {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-left: 0;
+}
+
+.nav-item.dropdown {
+  position: relative;
+}
+
+.nav-item .dropdown-toggle {
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  color: var(--header-bg);
+  cursor: pointer;
+}
+
+.nav-item .dropdown-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nav-item .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 160px;
+  padding: 0.5rem 0;
+}
+
+.nav-item .dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-item .dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* --- Kafelki samochodów --- */
+.car-card {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.car-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.car-card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Przycisk usuwania */
+.car-card .btn {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .dropdown-toggle {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .dropdown-item {
+    font-size: 0.9rem;
+  }
 }

@@ -8,9 +8,11 @@ import { OrdersAdminComponent } from './orders-admin/orders-admin.component';
 import { OrdersUserComponent } from './orders-user/orders-user.component';
 import { AccountComponent } from './account/account.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
+import { UsersComponent } from './users/users.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'parts', pathMatch: 'full' },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'main', component: MainPageComponent },
   { path: 'parts', component: PartsListComponent },
   { path: 'login', component: LoginComponent },
@@ -20,5 +22,7 @@ export const routes: Routes = [
   { path: 'orders-user', component: OrdersUserComponent },
   { path: 'account', component: AccountComponent },
   { path: 'warehouse', component: WarehouseComponent },
+  { path: 'users', component: UsersComponent },
+  { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: '**', redirectTo: 'main' }
 ];
