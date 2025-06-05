@@ -1,52 +1,121 @@
-ul {
+/*
+!* src/app/parts-list/parts-list.component.css *!
+
+!* --- 1. Kontener --- *!
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+!* Nagłówek *!
+h1 {
+  color: var(--header-bg);
+}
+
+!* --- 2. Dropdown: kategorie i części --- *!
+ul.menu {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-left: 0;
 }
 
-.menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-  max-width: 100%;
-}
-
-.dropdown {
+.nav-item.dropdown {
   position: relative;
 }
 
-.dropdown > a {
-  padding: 10px 15px;
-  display: block;
-  background-color: #eee;
-  text-decoration: none;
-  color: black;
-  border-radius: 5px;
+.nav-item .dropdown-toggle {
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  color: var(--header-bg);
+  cursor: pointer;
+  display: inline-block;
 }
 
-.dropdown-content {
+.nav-item .dropdown-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+!* Menu pojawia się przy hoverze na <li> *!
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+!* Domyślnie dropdown ukryte *!
+.nav-item .dropdown-menu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: white;
-  min-width: 160px;
+  background-color: #fff;
+  margin-top: 0.25rem;
   border: 1px solid #ccc;
-  z-index: 1;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 200px;
+  padding: 0.5rem 0;
 }
 
-.dropdown-content a {
-  padding: 10px;
+.nav-item .dropdown-item {
   display: block;
+  padding: 0.5rem 1rem;
+  color: #333;
   text-decoration: none;
-  color: black;
 }
 
-.dropdown-content a:hover {
-  background-color: #f2f2f2;
+.nav-item .dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
+!* --- 3. Układ grid dla kart części --- *!
+.row.g-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
 }
+
+!* --- 4. Kafelki części --- *!
+.part-card {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.part-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.part-card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+!* Przycisk usuwania *!
+.part-card .btn {
+  margin-top: 0.5rem;
+}
+
+!* --- 5. Responsywność dropdownów --- *!
+@media (max-width: 768px) {
+  .dropdown-toggle {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .dropdown-item {
+    font-size: 0.9rem;
+  }
+}
+*/

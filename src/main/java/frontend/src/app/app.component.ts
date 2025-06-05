@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   role = '';
   showUserMenu = false;
+  errorMessage = '';
 
   constructor(
     private authService: AuthService,
@@ -43,5 +44,6 @@ export class AppComponent implements OnInit {
     this.authService.logout();
     this.showUserMenu = false;
     this.router.navigate(['/']);
+    this.errorMessage = 'Wylogowano z konta!';
   }
 }

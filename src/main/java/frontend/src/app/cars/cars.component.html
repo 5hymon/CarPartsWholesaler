@@ -1,37 +1,62 @@
-<div *ngIf="loading" class="loading">
-  Ładowanie samochodów…
+<!-- src/app/cars/cars.component.html -->
+<div class="container">
+  <h1 class="mb-4 text-center">Samochody do których znajdziesz części</h1>
+
+  <!-- Ładowanie / błąd -->
+  <div *ngIf="loading" class="text-center">
+    <p>Ładowanie danych…</p>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Dropdown: marki i modele -->
+  <ul class="menu">
+    <li *ngFor="let group of groupByMake()" class="nav-item dropdown">
+      <!-- Kliknięcie w markę filtrowane przez selectByMake -->
+      <a href="javascript:void(0)"
+         class="dropdown-toggle"
+         (click)="selectByMake(group.make)">
+        {{ group.make }}
+      </a>
+      <!-- Menu modeli pojawiające się przy hoverze (CSS) -->
+      <ul class="dropdown-menu">
+        <li *ngFor="let car of group.cars">
+          <a class="dropdown-item"
+             href="javascript:void(0)"
+             (click)="selectMakeModel(group.make, car.carModel)">
+            {{ car.carModel }}
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <br />
+
+  <!-- Kafelki samochodów -->
+  <div class="row g-4">
+    <ng-container *ngFor="let car of filteredCars">
+      <div>
+        <div class="car-card">
+          <p>
+            <strong>{{ car.carMake }}:</strong><br />
+            {{ car.carModel }}<br />
+            {{ car.productionYears }}<br />
+            {{ car.bodyType }}<br />
+            {{ car.fuelType }}<br />
+            {{ car.engineType }}
+          </p>
+          <button class="btn btn-sm btn-danger" (click)="deleteCar(car.carId!)">
+            Usuń
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Jeśli brak wyników po filtrze -->
+    <div *ngIf="!loading && filteredCars.length === 0" class="text-center">
+      <p>Brak samochodów do wyświetlenia.</p>
+    </div>
+  </div>
 </div>
-
-<div *ngIf="error" class="error">
-  {{ error }}
-</div>
-
-<table *ngIf="!loading && !error && cars.length > 0" class="cars-table">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Marka</th>
-    <th>Model</th>
-    <th>Lata produkcji</th>
-    <th>Typ nadwozia</th>
-    <th>Rodzaj paliwa</th>
-    <th>Typ silnika</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let car of cars">
-    <td>{{ car.carId }}</td>
-    <td>{{ car.carMake }}</td>
-    <td>{{ car.carModel }}</td>
-    <td>{{ car.productionYears }}</td>
-    <td>{{ car.bodyType }}</td>
-    <td>{{ car.fuelType }}</td>
-    <td>{{ car.engineType }}</td>
-  </tr>
-  </tbody>
-</table>
-
-<div *ngIf="!loading && !error && cars.length === 0" class="no-data">
-  Brak samochodów w bazie.
-</div>
-
