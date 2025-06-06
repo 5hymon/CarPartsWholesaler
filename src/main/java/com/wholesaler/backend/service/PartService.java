@@ -4,8 +4,10 @@ import com.wholesaler.backend.dto.CarDTO;
 import com.wholesaler.backend.dto.PartDTO;
 import com.wholesaler.backend.model.Car;
 import com.wholesaler.backend.model.Part;
+import com.wholesaler.backend.model.Category;
 import com.wholesaler.backend.model.PartCompatibility;
 import com.wholesaler.backend.repository.PartRepository;
+import com.wholesaler.backend.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -16,9 +18,11 @@ import java.util.stream.Collectors;
 @Service
 public class PartService {
     private final PartRepository partRepository;
+    private final CategoryRepository categoryRepository;
 
-    public PartService(PartRepository partRepository) {
+    public PartService(PartRepository partRepository, CategoryRepository categoryRepository) {
         this.partRepository = partRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     private PartDTO convertPartToDTO(Part part) {
@@ -68,15 +72,21 @@ public class PartService {
 
     // post new part
     public Part addPart(String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, Boolean isAvailable, String partDescription, String categoryName) {
-        Part part = new Part();
-        part.setPartName(partName);
-        part.setUnitPrice(unitPrice);
-        part.setQuantityPerUnit(quantityPerUnit);
-        part.setLeftOnStock(leftOnStock);
-        part.setAvailable(isAvailable);
-        part.setPartDescription(partDescription);
-        part.setCategoryName(categoryName);
-        return partRepository.save(part);
+        Optional<Category> optionalCategory = categoryRepository.findByCategoryName(categoryName);
+        if (optionalCategory.isPresent()) {
+            Part part = new Part();
+            part.setPartName(partName);
+            part.setUnitPrice(unitPrice);
+            part.setQuantityPerUnit(quantityPerUnit);
+            part.setLeftOnStock(leftOnStock);
+            part.setAvailable(isAvailable);
+            part.setPartDescription(partDescription);
+            part.setCategoryName(categoryName);
+            part.setCategory(optionalCategory.get());
+            return partRepository.save(part);
+        } else {
+            return null;
+        }
     }
 
     // post updated part
@@ -86,16 +96,22 @@ public class PartService {
 
     // put
     public Optional<Part> updatePart(Integer id, String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, Boolean isAvailable, String partDescription, String categoryName) {
-        return partRepository.findById(id).map(part -> {
-            part.setPartName(partName);
-            part.setUnitPrice(unitPrice);
-            part.setQuantityPerUnit(quantityPerUnit);
-            part.setLeftOnStock(leftOnStock);
-            part.setAvailable(isAvailable);
-            part.setPartDescription(partDescription);
-            part.setCategoryName(categoryName);
-            return partRepository.save(part);
-        });
+        Optional<Category> optionalCategory = categoryRepository.findByCategoryName(categoryName);
+        if (optionalCategory.isPresent()) {
+            return partRepository.findById(id).map(part -> {
+                part.setPartName(partName);
+                part.setUnitPrice(unitPrice);
+                part.setQuantityPerUnit(quantityPerUnit);
+                part.setLeftOnStock(leftOnStock);
+                part.setAvailable(isAvailable);
+                part.setPartDescription(partDescription);
+                part.setCategoryName(categoryName);
+                part.setCategory(optionalCategory.get());
+                return partRepository.save(part);
+            });
+        } else {
+            return Optional.empty();
+        }
     }
 
     // delete
