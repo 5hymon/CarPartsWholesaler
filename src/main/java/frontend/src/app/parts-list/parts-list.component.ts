@@ -38,6 +38,9 @@ export class PartsListComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.categoryFromUrl = params['category'] || null;
+      this.activeCategory = this.categoryFromUrl;
+      this.activePartName = null;
+      this.applyFilter();
     });
 
     this.loadParts();
@@ -51,7 +54,9 @@ export class PartsListComponent implements OnInit {
         this.filteredParts = [...data];
 
         if (this.categoryFromUrl) {
-          this.selectByCategory(this.categoryFromUrl);
+          this.activeCategory = this.categoryFromUrl;
+          this.activePartName = null;
+          this.applyFilter();
         }
 
         this.loading = false;
@@ -64,6 +69,28 @@ export class PartsListComponent implements OnInit {
     });
   }
 
+  // Ta metoda agreguje wszystkie warunki filtrowania:
+  private applyFilter(): void {
+    // Jeśli nie ma części załadowanych, nic nie rób
+    if (!this.parts || this.parts.length === 0) {
+      return;
+    }
+
+    let result = [...this.parts];
+
+    // 1) Najpierw ograniczamy po kategorii, jeżeli jest ustawiona
+    if (this.activeCategory) {
+      result = result.filter(part => part.categoryName === this.activeCategory);
+    }
+
+    // 2) Następnie, jeżeli ktoś wybrał konkretną nazwę części,
+    //    możemy jeszcze dodatkowo filtrować:
+    if (this.activePartName) {
+      result = result.filter(part => part.partName === this.activePartName);
+    }
+
+    this.filteredParts = result;
+  }
 
   deletePart(id: number): void {
     if (!confirm('Czy na pewno chcesz usunąć tę część?')) {
@@ -96,20 +123,18 @@ export class PartsListComponent implements OnInit {
   selectByCategory(category: string): void {
     this.activeCategory = category;
     this.activePartName = null;
-    this.filteredParts = this.parts.filter(part => part.categoryName === category);
+    this.applyFilter();
   }
 
   selectCategoryPart(category: string, partName: string): void {
     if (this.activeCategory === category && this.activePartName === partName) {
-      this.filteredParts = [...this.parts];
       this.activeCategory = null;
       this.activePartName = null;
+      this.filteredParts = [...this.parts];
     } else {
       this.activeCategory = category;
       this.activePartName = partName;
-      this.filteredParts = this.parts.filter(part =>
-        part.categoryName === category && part.partName === partName
-      );
+      this.applyFilter();
     }
   }
 
@@ -132,7 +157,7 @@ export class PartsListComponent implements OnInit {
       .set('unitPrice', this.editedPart.unitPrice.toString())
       .set('quantityPerUnit', this.editedPart.quantityPerUnit)
       .set('leftOnStock', this.editedPart.leftOnStock.toString())
-      .set('available', this.editedPart.available.toString())
+      .set('isAvailable', (this.editedPart.isAvailable = this.editedPart.leftOnStock > 0).toString())
       .set('partDescription', this.editedPart.partDescription)
       .set('categoryName', this.editedPart.categoryName);
 
@@ -152,7 +177,9 @@ export class PartsListComponent implements OnInit {
       },
       error: err => {
         console.error('Błąd podczas aktualizacji części:', err);
-        alert('Nie udało się zaktualizować części.');
+        this.editingPartId = null;
+        this.editedPart = null;
+        this.loadParts();
       }
     });
   }

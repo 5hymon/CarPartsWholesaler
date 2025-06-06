@@ -6,7 +6,7 @@ export interface PartDTO {
   unitPrice: number;
   quantityPerUnit: string;
   leftOnStock: number;
-  available: boolean;
+  isAvailable: boolean;
   partDescription: string;
   categoryName: string;
   compatibleParts?: CarDTO[];
