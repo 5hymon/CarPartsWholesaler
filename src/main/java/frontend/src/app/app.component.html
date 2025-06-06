@@ -18,7 +18,7 @@
            aria-expanded="false">Kategorie
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="categoriesDropdown">
-          <li><a class="dropdown-item" onclick="location.href='/parts'">Wszystkie</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/parts']">Wszystkie</a></li>
           <li><a class="dropdown-item" [routerLink]="['/parts']" [queryParams]="{ category: 'Silnik' }">Silnik</a></li>
           <li><a class="dropdown-item" [routerLink]="['/parts']" [queryParams]="{ category: 'Zawieszenie' }">Zawieszenie</a></li>
           <li><a class="dropdown-item" [routerLink]="['/parts']" [queryParams]="{ category: 'Karoseria' }">Karoseria</a></li>
