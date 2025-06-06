@@ -58,7 +58,15 @@ public class CategoryService {
         return categoryRepository.findById(categoryId).map(this::convertCategoryToDTO);
     }
 
-    // post
+    // post new category
+    public Category addCategory(String categoryName, String categoryDescription) {
+        Category category = new Category();
+        category.setCategoryName(categoryName);
+        category.setCategoryDescription(categoryDescription);
+        return categoryRepository.save(category);
+    }
+
+    // post updated category
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
     }

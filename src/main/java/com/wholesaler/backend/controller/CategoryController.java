@@ -44,8 +44,9 @@ public class CategoryController {
     // POST - add new category
     @PostMapping
     @Operation(summary = "Dodaj nową kategorię")
-    public Category addCategory(@RequestBody Category category) {
-        return categoryService.saveCategory(category);
+    public Category addCategory(
+            @RequestParam("categoryName") String categoryName, @RequestParam("categoryDescription") String categoryDescription) {
+        return categoryService.addCategory(categoryName, categoryDescription);
     }
 
     // PUT - update category by ID
