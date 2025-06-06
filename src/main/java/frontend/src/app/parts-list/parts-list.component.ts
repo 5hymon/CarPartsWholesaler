@@ -157,7 +157,7 @@ export class PartsListComponent implements OnInit {
       .set('unitPrice', this.editedPart.unitPrice.toString())
       .set('quantityPerUnit', this.editedPart.quantityPerUnit)
       .set('leftOnStock', this.editedPart.leftOnStock.toString())
-      .set('available', this.editedPart.available.toString())
+      .set('isAvailable', (this.editedPart.isAvailable = this.editedPart.leftOnStock > 0).toString())
       .set('partDescription', this.editedPart.partDescription)
       .set('categoryName', this.editedPart.categoryName);
 
@@ -177,7 +177,9 @@ export class PartsListComponent implements OnInit {
       },
       error: err => {
         console.error('Błąd podczas aktualizacji części:', err);
-        alert('Nie udało się zaktualizować części.');
+        this.editingPartId = null;
+        this.editedPart = null;
+        this.loadParts();
       }
     });
   }
