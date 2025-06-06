@@ -1,5 +1,5 @@
-export interface UserDTO {
-  customerId?: number;
+export interface EmployeeDTO{
+  employeeId: number;
   firstName: string;
   lastName: string;
   emailAddress: string;

@@ -38,6 +38,11 @@ h1 {
   transition: filter 0.2s;
 }
 
+.btn-primary:active {
+  background-color: var(--accent-color);
+  filter: brightness(0.8);
+}
+
 .btn-primary:hover {
   filter: brightness(0.9);
 }
@@ -66,6 +71,7 @@ ul.menu {
   color: var(--header-bg);
   cursor: pointer;
   display: inline-block;
+  text-decoration: none;
 }
 
 .nav-item .dropdown-toggle:hover {
