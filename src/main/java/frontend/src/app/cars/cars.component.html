@@ -1,8 +1,12 @@
 <div class="container">
   <h1 class="mb-4 text-center">Samochody do których znajdziesz części</h1>
 
+  <div class="mb-3 text-center">
+    <button class="btn btn-primary" (click)="startAdd()">Dodaj samochód</button>
+  </div>
+
   <!-- Backdrop for dimming -->
-  <div class="backdrop" [class.active]="editingCarId !== null"></div>
+  <div class="backdrop" [class.active]="editingCarId !== null || addingCar"></div>
 
   <!-- Ładowanie / błąd -->
   <div *ngIf="loading" class="text-center">
@@ -131,4 +135,73 @@
       <p>Brak samochodów do wyświetlenia.</p>
     </div>
   </div>
+
+  <div *ngIf="addingCar" class="car-card extended">
+    <h5 class="mb-3">Dodaj nowy samochód</h5>
+    <form (ngSubmit)="saveAdd()" #addForm="ngForm">
+      <div class="mb-2">
+        <label for="make-new" class="form-label">Marka:</label>
+        <input id="make-new"
+               name="carMake"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newCar.carMake"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="model-new" class="form-label">Model:</label>
+        <input id="model-new"
+               name="carModel"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newCar.carModel"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="years-new" class="form-label">Lata produkcji:</label>
+        <input id="years-new"
+               name="productionYears"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newCar.productionYears"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="body-new" class="form-label">Nadwozie:</label>
+        <input id="body-new"
+               name="bodyType"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newCar.bodyType"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="fuel-new" class="form-label">Rodzaj paliwa:</label>
+        <input id="fuel-new"
+               name="fuelType"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newCar.fuelType"
+               required />
+      </div>
+      <div class="mb-3">
+        <label for="engine-new" class="form-label">Typ silnika:</label>
+        <input id="engine-new"
+               name="engineType"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newCar.engineType"
+               required />
+      </div>
+      <div class="btn-container">
+        <button type="submit" class="btn btn-sm btn-save" [disabled]="addForm.invalid">
+          Utwórz
+        </button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelAdd()">
+          Anuluj
+        </button>
+      </div>
+    </form>
+  </div>
+
 </div>

@@ -1,5 +1,3 @@
-// src/app/cars/cars.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,9 +23,20 @@ export class CarsComponent implements OnInit {
   activeMake: string | null = null;
   activeModel: string | null = null;
 
-  // Używane do edycji
   editingCarId: number | null = null;
   editedCar: CarDTO | null = null;
+
+  addingCar = false;
+  newCar: CarDTO = {
+    carId: 0,
+    carMake: '',
+    carModel: '',
+    productionYears: '',
+    bodyType: '',
+    fuelType: '',
+    engineType: '',
+    compatibleParts: []
+  };
 
   constructor(private carService: CarsService, private http: HttpClient) { }
 
@@ -151,7 +160,70 @@ export class CarsComponent implements OnInit {
       },
       error: err => {
         console.error('Błąd przy aktualizacji:', err);
-        alert('Nie udało się zaktualizować.');
+        this.editingCarId = null;
+        this.editedCar = null;
+        this.loadCars();
+      }
+    });
+  }
+
+  startAdd(): void {
+    this.addingCar = true;
+    this.newCar = {
+      carId: 0,
+      carMake: '',
+      carModel: '',
+      productionYears: '',
+      bodyType: '',
+      fuelType: '',
+      engineType: '',
+      compatibleParts: []
+    };
+  }
+
+  cancelAdd(): void {
+    this.addingCar = false;
+  }
+
+  saveAdd(): void {
+    // Sprawdźmy, czy wszystkie wymagane pola są wypełnione
+    if (!this.newCar.carMake ||
+      !this.newCar.carModel ||
+      !this.newCar.productionYears ||
+      !this.newCar.bodyType ||
+      !this.newCar.fuelType ||
+      !this.newCar.engineType) {
+      return;
+    }
+
+    // 1) Budujemy body jako application/x-www-form-urlencoded
+    const body = new HttpParams()
+      .set('carMake', this.newCar.carMake)
+      .set('carModel', this.newCar.carModel)
+      .set('productionYears', this.newCar.productionYears)
+      .set('bodyType', this.newCar.bodyType)
+      .set('fuelType', this.newCar.fuelType)
+      .set('engineType', this.newCar.engineType);
+
+    // 2) Ustawiamy odpowiedni nagłówek
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    // 3) Wysyłamy POST do Springa (endpoint: /cars)
+    this.http.post<CarDTO>(
+      'http://localhost:8080/cars',
+      body.toString(),
+      { headers }
+    ).subscribe({
+      next: created => {
+        // Po sukcesie: zamknij formularz i odśwież listę
+        this.addingCar = false;
+        this.loadCars();
+      },
+      error: err => {
+        console.error('Błąd przy tworzeniu nowego samochodu:', err);
+        alert('Nie udało się dodać nowego samochodu.');
       }
     });
   }
