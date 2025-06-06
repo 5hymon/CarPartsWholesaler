@@ -67,14 +67,14 @@ public class CarService {
     }
 
     // put
-    public Optional<Car> updateCar(Integer id, Car updatedCar) {
+    public Optional<Car> updateCar(Integer id, String carMake, String carModel, String productionYears, String bodyType, String fuelType, String engineType) {
         return carRepository.findById(id).map(car -> {
-            car.setCarMake(updatedCar.getCarMake());
-            car.setCarModel(updatedCar.getCarModel());
-            car.setProductionYears(updatedCar.getProductionYears());
-            car.setBodyType(updatedCar.getBodyType());
-            car.setFuelType(updatedCar.getFuelType());
-            car.setEngineType(updatedCar.getEngineType());
+            car.setCarMake(carMake);
+            car.setCarModel(carModel);
+            car.setProductionYears(productionYears);
+            car.setBodyType(bodyType);
+            car.setFuelType(fuelType);
+            car.setEngineType(engineType);
             return carRepository.save(car);
         });
     }

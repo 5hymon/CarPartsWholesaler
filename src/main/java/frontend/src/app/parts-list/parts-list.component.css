@@ -2,9 +2,26 @@
 
 /* --- 1. Kontener --- */
 .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 2rem auto;
   padding: 0 1rem;
+  position: relative;
+}
+
+/* Backdrop for dimming the background */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  display: none;
+}
+
+.backdrop.active {
+  display: block;
 }
 
 /* Nagłówek */
@@ -12,7 +29,7 @@ h1 {
   color: var(--header-bg);
 }
 
-/* --- 2. Dropdown: kategorie i części --- */
+/* --- 2. Dropdown: kategorie i nazwy części --- */
 ul.menu {
   list-style: none;
   display: flex;
@@ -26,6 +43,7 @@ ul.menu {
   position: relative;
 }
 
+/* Główna nazwa kategorii (link) */
 .nav-item .dropdown-toggle {
   padding: 0.5rem 1rem;
   background-color: #fff;
@@ -58,7 +76,7 @@ ul.menu {
   border-radius: 0.5rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  min-width: 200px;
+  min-width: 160px;
   padding: 0.5rem 0;
 }
 
@@ -73,23 +91,75 @@ ul.menu {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* --- 3. Układ grid dla kart części --- */
+/* --- 3. Układ grid dla kart zamiast Bootstrapa --- */
 .row.g-4 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 0.75rem;
   width: 100%;
   margin: 0 auto;
+  align-items: start;
 }
 
 /* --- 4. Kafelki części --- */
 .part-card {
   background-color: #fff;
+  border: 1px solid #ccc; /* Obramowanie */
   border-radius: 0.75rem;
-  padding: 1rem;
+  padding: 0.75rem;
   transition: transform 0.2s, box-shadow 0.2s;
   width: 100%;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure buttons are at the bottom */
+}
+
+.hr-line {
+  display: block;
+  border-bottom: 1px solid #ccc;
+  margin: 0.5rem 0;
+}
+
+.edit-form {
+  position: fixed;
+  width: 400px; /* 2x normal card width */
+  max-width: 90vw;
+  background-color: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+
+.edit-form:hover {
+  transform: translate(-50%, -50%); /* Prevent movement on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.edit-form form {
+  background-color: #f9f9f9;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.part-card .btn-container, .edit-form .btn-container {
+  display: flex;
+  gap: 0.5rem; /* Consistent spacing for all button containers */
+  flex-wrap: wrap;
+  margin-top: auto; /* Push buttons to the bottom in part-card */
 }
 
 .part-card:hover {
@@ -100,14 +170,77 @@ ul.menu {
 .part-card p {
   margin: 0;
   font-size: 0.95rem;
+  flex-grow: 1; /* Allow text to take available space */
 }
 
-/* Przycisk usuwania */
-.part-card .btn {
-  margin-top: 0.5rem;
+/* Przyciski */
+.part-card .btn, .edit-form .btn {
+  padding: 0.2rem 0.4rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  border-radius: 0.2rem;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.2s;
 }
 
-/* --- 5. Responsywność dropdownów --- */
+/* Przycisk Edytuj */
+.btn-edit {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.btn-edit:hover {
+  filter: brightness(0.9);
+}
+
+/* Przycisk Zapisz */
+.btn-save {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.btn-save:hover {
+  filter: brightness(0.9);
+}
+
+/* Przycisk Anuluj */
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  filter: brightness(0.9);
+}
+
+/* Przycisk Usuń */
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  filter: brightness(0.9);
+}
+
+.edit-form .form-label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.edit-form .form-control {
+  width: 100%;
+  padding: 0.3rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+
+/* --- 5. Responsywność --- */
 @media (max-width: 768px) {
   .dropdown-toggle {
     font-size: 0.9rem;
@@ -116,5 +249,24 @@ ul.menu {
 
   .dropdown-item {
     font-size: 0.9rem;
+  }
+
+  .edit-form {
+    width: 90vw;
+    max-width: 300px;
+  }
+
+  .row.g-4 {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .part-card {
+    min-height: 100px;
+  }
+
+  .part-card .btn, .edit-form .btn {
+    padding: 0.15rem 0.3rem;
+    font-size: 0.75rem;
   }
 }

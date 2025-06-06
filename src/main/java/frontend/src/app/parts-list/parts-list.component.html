@@ -1,8 +1,10 @@
-<!-- src/app/parts-list/parts-list.component.html -->
 <div class="container">
   <h1 class="mb-4 text-center">Hurtownia części – lista części</h1>
 
-  <!-- Ładowanie / błąd -->
+  <!-- Backdrop for dimming -->
+  <div class="backdrop" [class.active]="editingPartId !== null"></div>
+
+  <!-- Loading / Error -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
   </div>
@@ -10,16 +12,14 @@
     {{ errorMessage }}
   </div>
 
-  <!-- Dropdown: kategorie i nazwy części -->
+  <!-- Dropdown: Categories and Part Names -->
   <ul class="menu">
     <li *ngFor="let group of groupByCategory()" class="nav-item dropdown">
-      <!-- Kliknięcie w kategorię filtruje po samej kategorii -->
       <a href="javascript:void(0)"
          class="dropdown-toggle"
          (click)="selectByCategory(group.category)">
         {{ group.category }}
       </a>
-      <!-- Menu z częściami w danej kategorii (po hoverze) -->
       <ul class="dropdown-menu">
         <li *ngFor="let part of group.parts">
           <a class="dropdown-item"
@@ -34,17 +34,21 @@
 
   <br />
 
-  <!-- Kafelki części -->
+  <!-- Part Cards -->
   <div class="row g-4">
     <ng-container *ngFor="let part of filteredParts">
-      <div>
-        <div class="part-card">
-          <p>
-            <strong>{{ part.partName }}</strong><br />
-            Cena: {{ part.unitPrice }} – {{ part.quantityPerUnit }}<br />
-            Pozostało: {{ part.leftOnStock }}<br />
-            {{ part.partDescription }}
-          </p>
+      <div class="part-card">
+        <p>
+          <strong>{{ part.partName }}</strong><br />
+          Cena: {{ part.unitPrice }} – {{ part.quantityPerUnit }}<br />
+          Pozostało: {{ part.leftOnStock }}
+          <span class="hr-line"></span>
+          {{ part.partDescription }}
+        </p>
+        <div class="btn-container">
+          <button class="btn btn-sm btn-edit" (click)="startEdit(part)">
+            Edytuj
+          </button>
           <button class="btn btn-sm btn-danger" (click)="deletePart(part.partId)">
             Usuń
           </button>
@@ -52,9 +56,69 @@
       </div>
     </ng-container>
 
-    <!-- Jeżeli po filtrze nic nie ma -->
+    <!-- No Parts Message -->
     <div *ngIf="!loading && filteredParts.length === 0" class="text-center">
       <p>Brak części do wyświetlenia.</p>
     </div>
+  </div>
+
+  <!-- Edit Form -->
+  <div *ngIf="editingPartId !== null && editedPart" class="edit-form">
+    <h5 class="mb-3">Edytuj dane części</h5>
+    <form (ngSubmit)="saveEdit()" #editForm="ngForm">
+      <input type="hidden" name="_method" value="PUT" />
+      <div class="mb-2">
+        <label [attr.for]="'name-' + editingPartId" class="form-label">Nazwa części:</label>
+        <input [attr.id]="'name-' + editingPartId"
+               name="partName"
+               type="text"
+               class="form-control"
+               [(ngModel)]="editedPart.partName"
+               required />
+      </div>
+      <div class="mb-2">
+        <label [attr.for]="'price-' + editingPartId" class="form-label">Cena jednostkowa:</label>
+        <input [attr.id]="'price-' + editingPartId"
+               name="unitPrice"
+               type="number"
+               class="form-control"
+               [(ngModel)]="editedPart.unitPrice"
+               required />
+      </div>
+      <div class="mb-2">
+        <label [attr.for]="'quantity-' + editingPartId" class="form-label">Ilość w jednostce:</label>
+        <input [attr.id]="'quantity-' + editingPartId"
+               name="quantityPerUnit"
+               type="text"
+               class="form-control"
+               [(ngModel)]="editedPart.quantityPerUnit"
+               required />
+      </div>
+      <div class="mb-2">
+        <label [attr.for]="'stock-' + editingPartId" class="form-label">Pozostało na magazynie:</label>
+        <input [attr.id]="'stock-' + editingPartId"
+               name="leftOnStock"
+               type="number"
+               class="form-control"
+               [(ngModel)]="editedPart.leftOnStock"
+               required />
+      </div>
+      <div class="mb-3">
+        <label [attr.for]="'description-' + editingPartId" class="form-label">Opis części:</label>
+        <textarea [attr.id]="'description-' + editingPartId"
+                  name="partDescription"
+                  class="form-control"
+                  [(ngModel)]="editedPart.partDescription"
+                  rows="3"></textarea>
+      </div>
+      <div class="btn-container">
+        <button type="submit" class="btn btn-sm btn-save" [disabled]="editForm.invalid">
+          Zapisz
+        </button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">
+          Anuluj
+        </button>
+      </div>
+    </form>
   </div>
 </div>

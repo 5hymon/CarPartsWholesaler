@@ -8,5 +8,5 @@ export interface CarDTO {
   bodyType: string;
   fuelType: string;
   engineType: string;
-  compatibleParts: PartDTO[];
+  compatibleParts?: PartDTO[];
 }

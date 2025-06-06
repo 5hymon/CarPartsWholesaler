@@ -49,10 +49,18 @@ public class CarController {
     }
 
     // PUT - update car by ID
-    @PutMapping("/{carId}")
+    @PutMapping(value = "/{carId}")
     @Operation(summary = "Aktualizuj samochód o podanym ID")
-    public ResponseEntity<Car> updateCar(@PathVariable("carId") Integer carId, @RequestBody Car updatedCar) {
-        Optional<Car> carOptional = carService.updateCar(carId, updatedCar);
+    public ResponseEntity<Car> updateCar(
+            @PathVariable Integer carId,
+            @RequestParam("carMake") String carMake,
+            @RequestParam("carModel") String carModel,
+            @RequestParam("productionYears") String productionYears,
+            @RequestParam("bodyType") String bodyType,
+            @RequestParam("fuelType") String fuelType,
+            @RequestParam("engineType") String engineType
+    ) {
+        Optional<Car> carOptional = carService.updateCar(carId, carMake, carModel, productionYears, bodyType, fuelType, engineType);
         if (carOptional.isPresent()) {
             Car car = carOptional.get();
             return ResponseEntity.ok(carService.saveCar(car));

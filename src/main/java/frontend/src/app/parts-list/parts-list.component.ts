@@ -1,7 +1,8 @@
-// src/app/parts-list/parts-list.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { PartsService } from '../services/parts.service';
 import { PartDTO } from '../models/part-dto.model';
@@ -9,7 +10,7 @@ import { PartDTO } from '../models/part-dto.model';
 @Component({
   selector: 'app-parts-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './parts-list.component.html',
   styleUrls: ['./parts-list.component.css']
 })
@@ -23,9 +24,22 @@ export class PartsListComponent implements OnInit {
   activeCategory: string | null = null;
   activePartName: string | null = null;
 
-  constructor(private partsService: PartsService) { }
+  editingPartId: number | null = null;
+  editedPart: PartDTO | null = null;
+
+  private categoryFromUrl: string | null = null; // Store URL category
+
+  constructor(
+    private partsService: PartsService,
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.categoryFromUrl = params['category'] || null;
+    });
+
     this.loadParts();
   }
 
@@ -35,15 +49,21 @@ export class PartsListComponent implements OnInit {
       next: (data: PartDTO[]) => {
         this.parts = data;
         this.filteredParts = [...data];
+
+        if (this.categoryFromUrl) {
+          this.selectByCategory(this.categoryFromUrl);
+        }
+
         this.loading = false;
       },
       error: (err) => {
-        console.error(err);
+        console.error('Błąd przy pobieraniu części:', err);
         this.errorMessage = 'Nie udało się pobrać listy części.';
         this.loading = false;
       }
     });
   }
+
 
   deletePart(id: number): void {
     if (!confirm('Czy na pewno chcesz usunąć tę część?')) {
@@ -52,16 +72,12 @@ export class PartsListComponent implements OnInit {
     this.partsService.deletePart(id).subscribe({
       next: () => this.loadParts(),
       error: (err) => {
-        console.error(err);
+        console.error('Błąd podczas usuwania części:', err);
         alert('Błąd podczas usuwania części.');
       }
     });
   }
 
-  /**
-   * Grupuje listę parts według pola categoryName.
-   * Zwraca tablicę obiektów: { category: string; parts: PartDTO[] }
-   */
   groupByCategory(): { category: string; parts: PartDTO[] }[] {
     const map: Record<string, PartDTO[]> = {};
     this.parts.forEach(part => {
@@ -77,28 +93,14 @@ export class PartsListComponent implements OnInit {
     }));
   }
 
-  /**
-   * Kliknięcie w samą nazwę kategorii → pokazuje wszystkie części danej kategorii.
-   */
   selectByCategory(category: string): void {
-    if (this.activeCategory === category && this.activePartName === null) {
-      // Resetuj filtr – pokaż wszystko
-      this.filteredParts = [...this.parts];
-      this.activeCategory = null;
-      this.activePartName = null;
-    } else {
-      this.activeCategory = category;
-      this.activePartName = null;
-      this.filteredParts = this.parts.filter(part => part.categoryName === category);
-    }
+    this.activeCategory = category;
+    this.activePartName = null;
+    this.filteredParts = this.parts.filter(part => part.categoryName === category);
   }
 
-  /**
-   * Kliknięcie w konkretną nazwę części w menu → filtr po kategorii + nazwie części.
-   */
   selectCategoryPart(category: string, partName: string): void {
     if (this.activeCategory === category && this.activePartName === partName) {
-      // Reset filtrów
       this.filteredParts = [...this.parts];
       this.activeCategory = null;
       this.activePartName = null;
@@ -109,5 +111,49 @@ export class PartsListComponent implements OnInit {
         part.categoryName === category && part.partName === partName
       );
     }
+  }
+
+  startEdit(part: PartDTO): void {
+    this.editingPartId = part.partId;
+    this.editedPart = { ...part };
+  }
+
+  cancelEdit(): void {
+    this.editingPartId = null;
+    this.editedPart = null;
+  }
+
+  saveEdit(): void {
+    if (!this.editedPart || this.editingPartId == null) {
+      return;
+    }
+    let body = new HttpParams()
+      .set('partName', this.editedPart.partName)
+      .set('unitPrice', this.editedPart.unitPrice.toString())
+      .set('quantityPerUnit', this.editedPart.quantityPerUnit)
+      .set('leftOnStock', this.editedPart.leftOnStock.toString())
+      .set('available', this.editedPart.available.toString())
+      .set('partDescription', this.editedPart.partDescription)
+      .set('categoryName', this.editedPart.categoryName);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    this.http.put<PartDTO>(
+      `http://localhost:8080/parts/${this.editingPartId}`,
+      body.toString(),
+      { headers }
+    ).subscribe({
+      next: updated => {
+        this.editingPartId = null;
+        this.editedPart = null;
+        this.loadParts();
+      },
+      error: err => {
+        console.error('Błąd podczas aktualizacji części:', err);
+        alert('Nie udało się zaktualizować części.');
+      }
+    });
   }
 }

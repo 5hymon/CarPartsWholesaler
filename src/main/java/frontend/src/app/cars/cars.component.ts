@@ -1,11 +1,12 @@
 // src/app/cars/cars.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { CommonModule }       from '@angular/common';
-import { FormsModule }        from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { CarsService } from '../services/cars.service';
-import { CarDTO }      from '../models/car-dto.model';
+import { CarDTO } from '../models/car-dto.model';
 
 @Component({
   selector: 'app-cars',
@@ -28,7 +29,7 @@ export class CarsComponent implements OnInit {
   editingCarId: number | null = null;
   editedCar: CarDTO | null = null;
 
-  constructor(private carService: CarsService) {}
+  constructor(private carService: CarsService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadCars();
@@ -119,20 +120,38 @@ export class CarsComponent implements OnInit {
 
   /** Zapisujemy zmiany: wysyłamy PUT, a po sukcesie odświeżamy listę */
   saveEdit(): void {
-    if (!this.editedCar || this.editingCarId === null) {
+    if (!this.editedCar || this.editingCarId == null) {
       return;
     }
+    // Budujemy body jako x-www-form-urlencoded
+    let body = new HttpParams()
+      .set('carMake', this.editedCar.carMake)
+      .set('carModel', this.editedCar.carModel)
+      .set('productionYears', this.editedCar.productionYears)
+      .set('bodyType', this.editedCar.bodyType)
+      .set('fuelType', this.editedCar.fuelType)
+      .set('engineType', this.editedCar.engineType);
 
-    this.carService.updateCar(this.editingCarId, this.editedCar).subscribe({
-      next: (updated: CarDTO) => {
-        // Po udanej aktualizacji odświeżamy całość
+    // Ustawiamy nagłówek
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    // Wysyłamy PUT do Springa
+    this.http.put<CarDTO>(
+      `http://localhost:8080/cars/${this.editingCarId}`,
+      body.toString(),
+      { headers }
+    ).subscribe({
+      next: updated => {
+        // Po sukcesie odświeżamy listę i zamykamy formularz
         this.editingCarId = null;
         this.editedCar = null;
         this.loadCars();
       },
-      error: (err) => {
-        console.error('Błąd podczas aktualizacji samochodu:', err);
-        alert('Nie udało się zaktualizować danych.');
+      error: err => {
+        console.error('Błąd przy aktualizacji:', err);
+        alert('Nie udało się zaktualizować.');
       }
     });
   }

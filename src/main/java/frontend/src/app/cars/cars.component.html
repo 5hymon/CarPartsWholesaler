@@ -1,6 +1,8 @@
-<!-- src/app/cars/cars.component.html -->
 <div class="container">
   <h1 class="mb-4 text-center">Samochody do których znajdziesz części</h1>
+
+  <!-- Backdrop for dimming -->
+  <div class="backdrop" [class.active]="editingCarId !== null"></div>
 
   <!-- Ładowanie / błąd -->
   <div *ngIf="loading" class="text-center">
@@ -32,96 +34,95 @@
 
   <br />
 
-  <!-- Grid z kafelkami / formularzami -->
   <div class="row g-4">
     <ng-container *ngFor="let car of filteredCars">
-      <div>
-        <!-- Jeżeli nie edytujemy tego auta – pokaż kartę -->
-        <div *ngIf="editingCarId !== car.carId" class="car-card p-3">
-          <p>
-            <strong>{{ car.carMake }} {{ car.carModel }}</strong><br />
-            {{ car.productionYears }} | {{ car.bodyType }}<br />
-            {{ car.fuelType }} | {{ car.engineType }}
-          </p>
-          <button class="btn btn-sm btn-edit me-2" (click)="startEdit(car)">
+      <div class="car-card" *ngIf="editingCarId !== car.carId">
+        <p>
+          <strong>{{ car.carMake }}<br />
+            {{ car.carModel }}</strong><br />
+          {{ car.productionYears }}<br />
+          {{ car.bodyType }}<br />
+          {{ car.engineType }}<br />
+          {{ car.fuelType }}
+        </p>
+        <div class="btn-container">
+          <button class="btn btn-sm btn-edit" (click)="startEdit(car)">
             Edytuj
           </button>
           <button class="btn btn-sm btn-danger" (click)="deleteCar(car.carId!)">
             Usuń
           </button>
         </div>
+      </div>
 
-        <!-- Jeżeli edytujemy to auto – pokaż formularz edycji -->
-        <div *ngIf="editingCarId === car.carId && editedCar" class="car-card p-3">
-          <h5 class="mb-3">Edytuj dane samochodu</h5>
-          <form (ngSubmit)="saveEdit()" #editForm="ngForm">
-            <div class="mb-2">
-              <label for="make-{{car.carId}}" class="form-label">Marka:</label>
-              <input id="make-{{car.carId}}"
-                     name="carMake"
-                     type="text"
-                     class="form-control"
-                     [(ngModel)]="editedCar.carMake"
-                     required />
-            </div>
-            <div class="mb-2">
-              <label for="model-{{car.carId}}" class="form-label">Model:</label>
-              <input id="model-{{car.carId}}"
-                     name="carModel"
-                     type="text"
-                     class="form-control"
-                     [(ngModel)]="editedCar.carModel"
-                     required />
-            </div>
-            <div class="mb-2">
-              <label for="years-{{car.carId}}" class="form-label">Lata produkcji:</label>
-              <input id="years-{{car.carId}}"
-                     name="productionYears"
-                     type="text"
-                     class="form-control"
-                     [(ngModel)]="editedCar.productionYears"
-                     required />
-            </div>
-            <div class="mb-2">
-              <label for="body-{{car.carId}}" class="form-label">Nadwozie:</label>
-              <input id="body-{{car.carId}}"
-                     name="bodyType"
-                     type="text"
-                     class="form-control"
-                     [(ngModel)]="editedCar.bodyType"
-                     required />
-            </div>
-            <div class="mb-2">
-              <label for="fuel-{{car.carId}}" class="form-label">Rodzaj paliwa:</label>
-              <input id="fuel-{{car.carId}}"
-                     name="fuelType"
-                     type="text"
-                     class="form-control"
-                     [(ngModel)]="editedCar.fuelType"
-                     required />
-            </div>
-            <div class="mb-3">
-              <label for="engine-{{car.carId}}" class="form-label">Typ silnika:</label>
-              <input id="engine-{{car.carId}}"
-                     name="engineType"
-                     type="text"
-                     class="form-control"
-                     [(ngModel)]="editedCar.engineType"
-                     required />
-            </div>
-
-            <button type="submit"
-                    class="btn btn-sm btn-save me-2"
-                    [disabled]="editForm.invalid">
+      <!-- Formularz edycji (wysyłany jako x-www-form-urlencoded) -->
+      <div *ngIf="editingCarId === car.carId && editedCar" class="car-card extended">
+        <h5 class="mb-3">Edytuj dane samochodu</h5>
+        <form (ngSubmit)="saveEdit()" #editForm="ngForm">
+          <input type="hidden" name="_method" value="PUT" />
+          <div class="mb-2">
+            <label for="make-{{car.carId}}" class="form-label">Marka:</label>
+            <input id="make-{{car.carId}}"
+                   name="carMake"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedCar.carMake"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="model-{{car.carId}}" class="form-label">Model:</label>
+            <input id="model-{{car.carId}}"
+                   name="carModel"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedCar.carModel"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="years-{{car.carId}}" class="form-label">Lata produkcji:</label>
+            <input id="years-{{car.carId}}"
+                   name="productionYears"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedCar.productionYears"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="body-{{car.carId}}" class="form-label">Nadwozie:</label>
+            <input id="body-{{car.carId}}"
+                   name="bodyType"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedCar.carModel"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="fuel-{{car.carId}}" class="form-label">Rodzaj paliwa:</label>
+            <input id="fuel-{{car.carId}}"
+                   name="fuelType"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedCar.fuelType"
+                   required />
+          </div>
+          <div class="mb-3">
+            <label for="engine-{{car.carId}}" class="form-label">Typ silnika:</label>
+            <input id="engine-{{car.carId}}"
+                   name="engineType"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedCar.engineType"
+                   required />
+          </div>
+          <div class="btn-container">
+            <button type="submit" class="btn btn-sm btn-save" [disabled]="editForm.invalid">
               Zapisz
             </button>
-            <button type="button"
-                    class="btn btn-sm btn-secondary"
-                    (click)="cancelEdit()">
+            <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">
               Anuluj
             </button>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </ng-container>
 
