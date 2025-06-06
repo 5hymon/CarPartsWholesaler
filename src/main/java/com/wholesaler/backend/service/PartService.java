@@ -66,7 +66,20 @@ public class PartService {
         return partRepository.findById(id).map(this::convertPartToDTO);
     }
 
-    // post
+    // post new part
+    public Part addPart(String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, Boolean isAvailable, String partDescription, String categoryName) {
+        Part part = new Part();
+        part.setPartName(partName);
+        part.setUnitPrice(unitPrice);
+        part.setQuantityPerUnit(quantityPerUnit);
+        part.setLeftOnStock(leftOnStock);
+        part.setAvailable(isAvailable);
+        part.setPartDescription(partDescription);
+        part.setCategoryName(categoryName);
+        return partRepository.save(part);
+    }
+
+    // post updated part
     public Part savePart(Part part) {
         return partRepository.save(part);
     }

@@ -44,8 +44,15 @@ public class PartController {
     // POST - add new part
     @PostMapping
     @Operation(summary = "Dodaj nową część")
-    public Part addPart(@RequestBody Part part) {
-        return partService.savePart(part);
+    public Part addPart(
+            @RequestParam("partName") String partName,
+            @RequestParam("unitPrice") Double unitPrice,
+            @RequestParam("quantityPerUnit") String quantityPerUnit,
+            @RequestParam("leftOnStock") Integer leftOnStock,
+            @RequestParam("isAvailable") Boolean isAvailable,
+            @RequestParam("partDescription") String partDescription,
+            @RequestParam("categoryName") String categoryName) {
+        return partService.addPart(partName, unitPrice, quantityPerUnit, leftOnStock, isAvailable, partDescription, categoryName);
     }
 
     // PUT - update part by ID
