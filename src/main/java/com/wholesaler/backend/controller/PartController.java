@@ -51,8 +51,16 @@ public class PartController {
     // PUT - update part by ID
     @PutMapping("/{partId}")
     @Operation(summary = "Aktualizuj część o podanym ID")
-    public ResponseEntity<Part> updatePart(@PathVariable("partId") Integer partId, @RequestBody Part updatedPart) {
-        Optional<Part> partOptional = partService.updatePart(partId, updatedPart);
+    public ResponseEntity<Part> updatePart(
+            @PathVariable("partId") Integer partId,
+            @RequestParam("partName") String partName,
+            @RequestParam("unitPrice") Double unitPrice,
+            @RequestParam("quantityPerUnit") String quantityPerUnit,
+            @RequestParam("leftOnStock") Integer leftOnStock,
+            @RequestParam("isAvailable") Boolean isAvailable,
+            @RequestParam("partDescription") String partDescription,
+            @RequestParam("categoryName") String categoryName) {
+        Optional<Part> partOptional = partService.updatePart(partId, partName, unitPrice, quantityPerUnit, leftOnStock, isAvailable, partDescription, categoryName);
         if (partOptional.isPresent()) {
             Part part = partOptional.get();
             return ResponseEntity.ok(partService.savePart(part));

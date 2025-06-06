@@ -72,15 +72,15 @@ public class PartService {
     }
 
     // put
-    public Optional<Part> updatePart(Integer id, Part updatedData) {
+    public Optional<Part> updatePart(Integer id, String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, Boolean isAvailable, String partDescription, String categoryName) {
         return partRepository.findById(id).map(part -> {
-            part.setPartName(updatedData.getPartName());
-            part.setUnitPrice(updatedData.getUnitPrice());
-            part.setQuantityPerUnit(updatedData.getQuantityPerUnit());
-            part.setLeftOnStock(updatedData.getLeftOnStock());
-            part.setAvailable(updatedData.getAvailable());
-            part.setPartDescription(updatedData.getPartDescription());
-            part.setCategory(updatedData.getCategory());
+            part.setPartName(partName);
+            part.setUnitPrice(unitPrice);
+            part.setQuantityPerUnit(quantityPerUnit);
+            part.setLeftOnStock(leftOnStock);
+            part.setAvailable(isAvailable);
+            part.setPartDescription(partDescription);
+            part.setCategoryName(categoryName);
             return partRepository.save(part);
         });
     }

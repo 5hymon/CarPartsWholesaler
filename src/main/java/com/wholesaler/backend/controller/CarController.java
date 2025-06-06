@@ -58,8 +58,7 @@ public class CarController {
             @RequestParam("productionYears") String productionYears,
             @RequestParam("bodyType") String bodyType,
             @RequestParam("fuelType") String fuelType,
-            @RequestParam("engineType") String engineType
-    ) {
+            @RequestParam("engineType") String engineType) {
         Optional<Car> carOptional = carService.updateCar(carId, carMake, carModel, productionYears, bodyType, fuelType, engineType);
         if (carOptional.isPresent()) {
             Car car = carOptional.get();
