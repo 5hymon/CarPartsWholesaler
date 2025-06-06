@@ -57,34 +57,48 @@ public class EmployeeService {
     }
 
     // get by id
-    public Optional<EmployeeDTO> getEmployeeByIdAsDTO(Integer customerId) {
-        return employeeRepository.findById(customerId).map(this::convertEmployeeToDTO);
+    public Optional<EmployeeDTO> getEmployeeByIdAsDTO(Integer employeeId) {
+        return employeeRepository.findById(employeeId).map(this::convertEmployeeToDTO);
     }
 
-    // post
+    // post new employee
+    public Employee addEmployee(String firstName, String lastName, String emailAddress, String phoneNumber, String address, String city, String postalCode, String country) {
+        Employee employee = new Employee();
+        employee.setFirstName(firstName);
+        employee.setLastName(lastName);
+        employee.setEmailAddress(emailAddress);
+        employee.setPhoneNumber(phoneNumber);
+        employee.setAddress(address);
+        employee.setCity(city);
+        employee.setPostalCode(postalCode);
+        employee.setCountry(country);
+        return employeeRepository.save(employee);
+    }
+
+    // post updated employee
     public Employee saveEmployee(Employee customer) {
         return employeeRepository.save(customer);
     }
 
     // put
-    public Optional<Employee> updateEmployee(Integer customerId, Employee updatedEmployee) {
-        return employeeRepository.findById(customerId).map(customer -> {
-            customer.setFirstName(customer.getFirstName());
-            customer.setLastName(customer.getLastName());
-            customer.setEmailAddress(customer.getEmailAddress());
-            customer.setPhoneNumber(customer.getPhoneNumber());
-            customer.setAddress(customer.getAddress());
-            customer.setCity(customer.getCity());
-            customer.setPostalCode(customer.getPostalCode());
-            customer.setCountry(customer.getCountry());
-            return employeeRepository.save(customer);
+    public Optional<Employee> updateEmployee(Integer employeeId, String firstName, String lastName, String emailAddress, String phoneNumber, String address, String city, String postalCode, String country) {
+        return employeeRepository.findById(employeeId).map(employee -> {
+            employee.setFirstName(firstName);
+            employee.setLastName(lastName);
+            employee.setEmailAddress(emailAddress);
+            employee.setPhoneNumber(phoneNumber);
+            employee.setAddress(address);
+            employee.setCity(city);
+            employee.setPostalCode(postalCode);
+            employee.setCountry(country);
+            return employeeRepository.save(employee);
         });
     }
 
     // delete
-    public void deleteEmployee(Integer customerId) {
-        if (employeeRepository.existsById(customerId)) {
-            employeeRepository.deleteById(customerId);
+    public void deleteEmployee(Integer employeeId) {
+        if (employeeRepository.existsById(employeeId)) {
+            employeeRepository.deleteById(employeeId);
         }
     }
 }

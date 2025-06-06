@@ -44,15 +44,32 @@ public class EmployeeController {
     // POST - add new employee
     @PostMapping
     @Operation(summary = "Dodaj nowego pracownika")
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.saveEmployee(employee);
+    public Employee addEmployee(
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("emailAddress") String emailAddress,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("address") String address,
+            @RequestParam("city") String city,
+            @RequestParam("postalCode") String postalCode,
+            @RequestParam("country") String country) {
+        return employeeService.addEmployee(firstName, lastName, emailAddress, phoneNumber, address, city, postalCode, country);
     }
 
     // PUT - update employee by ID
     @PutMapping("/{employeeId}")
     @Operation(summary = "Aktualizuj pracownika o podanym ID")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeId") Integer employeeId, @RequestBody Employee updatedEmployee) {
-        Optional<Employee> employeeOptional = employeeService.updateEmployee(employeeId, updatedEmployee);
+    public ResponseEntity<Employee> updateEmployee(
+            @PathVariable("employeeId") Integer employeeId,
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("emailAddress") String emailAddress,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("address") String address,
+            @RequestParam("city") String city,
+            @RequestParam("postalCode") String postalCode,
+            @RequestParam("country") String country) {
+        Optional<Employee> employeeOptional = employeeService.updateEmployee(employeeId, firstName, lastName, emailAddress, phoneNumber, address, city, postalCode, country);
         if (employeeOptional.isPresent()) {
             Employee employee = employeeOptional.get();
             return ResponseEntity.ok(employeeService.saveEmployee(employee));
