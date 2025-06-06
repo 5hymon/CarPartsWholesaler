@@ -72,6 +72,7 @@ public class EmployeeService {
         employee.setCity(city);
         employee.setPostalCode(postalCode);
         employee.setCountry(country);
+        employee.setOrders(null);
         return employeeRepository.save(employee);
     }
 
@@ -91,6 +92,7 @@ public class EmployeeService {
             employee.setCity(city);
             employee.setPostalCode(postalCode);
             employee.setCountry(country);
+            employee.setOrders(employee.getOrders());
             return employeeRepository.save(employee);
         });
     }

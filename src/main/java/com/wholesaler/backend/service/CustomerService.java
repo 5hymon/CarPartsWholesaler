@@ -72,6 +72,7 @@ public class CustomerService {
         customer.setCity(city);
         customer.setPostalCode(postalCode);
         customer.setCountry(country);
+        customer.setOrders(null);
         return customerRepository.save(customer);
     }
 
@@ -91,6 +92,7 @@ public class CustomerService {
             customer.setCity(city);
             customer.setPostalCode(postalCode);
             customer.setCountry(country);
+            customer.setOrders(customer.getOrders());
             return customerRepository.save(customer);
         });
     }
