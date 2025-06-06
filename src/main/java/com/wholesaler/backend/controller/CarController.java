@@ -44,8 +44,15 @@ public class CarController {
     // POST - add new car
     @PostMapping
     @Operation(summary = "Dodaj nowy samochód")
-    public Car addCar(@RequestBody Car car) {
-        return carService.saveCar(car);
+    public Car addCar(
+            @RequestParam("carMake") String carMake,
+            @RequestParam("carModel") String carModel,
+            @RequestParam("productionYears") String productionYears,
+            @RequestParam("bodyType") String bodyType,
+            @RequestParam("fuelType") String fuelType,
+            @RequestParam("engineType") String engineType
+    ) {
+        return carService.addCar(carMake, carModel, productionYears, bodyType, fuelType, engineType);
     }
 
     // PUT - update car by ID
