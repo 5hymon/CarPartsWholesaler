@@ -10,6 +10,7 @@ import { AccountComponent } from './account/account.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
 import { UsersComponent } from './users/users.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { EmployeesComponent } from './employees/employees.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -24,5 +25,6 @@ export const routes: Routes = [
   { path: 'warehouse', component: WarehouseComponent },
   { path: 'users', component: UsersComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
+  { path: 'employees', component: EmployeesComponent },
   { path: '**', redirectTo: 'main' }
 ];

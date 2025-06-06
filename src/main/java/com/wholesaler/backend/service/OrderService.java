@@ -40,29 +40,31 @@ public class OrderService {
                 .map(this::convertOrderDetailToDTO)
                 .collect(Collectors.toList());
 
-        return new OrderDTO(
-                order.getOrderId(),
-                order.getOrderDate(),
-                order.getOrderStatus(),
-                order.getPaymentMethod(),
-                order.getEmployee().getEmployeeId(),
-                order.getCustomer().getCustomerId(),
-                detailsDTO
-        );
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderId(order.getOrderId());
+        orderDTO.setOrderDate(order.getOrderDate());
+        orderDTO.setOrderStatus(order.getOrderStatus());
+        orderDTO.setPaymentMethod(order.getPaymentMethod());
+        orderDTO.setCustomerId(order.getCustomer().getCustomerId());
+        orderDTO.setEmployeeId(order.getEmployee().getEmployeeId());
+        orderDTO.setOrderDetails(detailsDTO);
+
+        return orderDTO;
     }
 
     private OrderDetailDTO convertOrderDetailToDTO(OrderDetail detail) {
         var part = detail.getPart();
 
-        return new OrderDetailDTO(
-                detail.getPartId(),
-                part.getPartName(),
-                part.getPartDescription(),
-                part.getUnitPrice(),
-                detail.getQuantity(),
-                detail.getDiscount(),
-                detail.getUnitPrice()
-        );
+        OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
+        orderDetailDTO.setPartId(part.getPartId());
+        orderDetailDTO.setPartName(part.getPartName());
+        orderDetailDTO.setPartDescription(part.getPartDescription());
+        orderDetailDTO.setPartUnitPrice(part.getUnitPrice());
+        orderDetailDTO.setQuantity(detail.getQuantity());
+        orderDetailDTO.setDiscount(detail.getDiscount());
+        orderDetailDTO.setOrderValue(part.getUnitPrice()*detail.getQuantity());
+
+        return orderDetailDTO;
     }
 
     // get all
@@ -78,19 +80,20 @@ public class OrderService {
     }
 
     // post new order
-    public Order addOrder(Integer employeeId, Integer customerId, Date orderDate, String orderStatus, String paymentMethod, Integer partId, Integer quantity, Double discount) {
+    public Order addOrder(Integer employeeId, Integer customerId, String orderStatus, String paymentMethod, Integer partId, Integer quantity, Double discount) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
         Optional<Part> optionalPart = partRepository.findById(partId);
 
         if (optionalEmployee.isPresent() && optionalCustomer.isPresent() && optionalPart.isPresent()) {
+            Date date = new Date();
             Employee employee = optionalEmployee.get();
             Customer customer = optionalCustomer.get();
             Part part = optionalPart.get();
             Order order = new Order();
             order.setEmployee(employee);
             order.setCustomer(customer);
-            order.setOrderDate(orderDate);
+            order.setOrderDate(date);
             order.setOrderStatus(orderStatus);
             order.setPaymentMethod(paymentMethod);
 

@@ -6,7 +6,7 @@
   position: relative;
 }
 
-/* Backdrop do przyciemnienia ekranu podczas formularza */
+/* Backdrop dla przyciemnienia tła podczas formularza */
 .backdrop {
   position: fixed;
   top: 0;
@@ -27,7 +27,7 @@ h1 {
   color: var(--header-bg);
 }
 
-/* --- 2. Układ grid dla kart użytkowników --- */
+/* --- 2. Układ grid dla kart pracowników --- */
 .row.g-4 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -37,7 +37,7 @@ h1 {
   align-items: start;
 }
 
-/* --- 3. Karta użytkownika --- */
+/* --- 3. Karta pracownika --- */
 .user-card {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -73,7 +73,7 @@ h1 {
   margin-top: auto;
 }
 
-/* --- 4. Formularz edycji i dodawania --- */
+/* --- 4. Formularz edycji / dodawania --- */
 .edit-form {
   position: fixed;
   width: 400px;
@@ -106,7 +106,6 @@ h1 {
   gap: 0.5rem;
 }
 
-/* Etykiety i pola formularza */
 .edit-form .form-label {
   font-weight: 500;
   margin-bottom: 0.25rem;

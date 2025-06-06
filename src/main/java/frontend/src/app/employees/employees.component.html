@@ -1,0 +1,209 @@
+<div class="container">
+  <h1 class="mb-4 text-center">Lista Pracowników</h1>
+
+  <!-- Backdrop do przyciemnienia tła podczas formularza -->
+  <div class="backdrop" [class.active]="editingEmployeeId !== null || addingEmployee"></div>
+
+  <!-- Przycisk Dodaj Pracownika -->
+  <div class="mb-3 text-center">
+    <button class="btn btn-primary" (click)="startAdd()">Dodaj Pracownika</button>
+  </div>
+
+  <!-- Loading / Error -->
+  <div *ngIf="loading" class="text-center">
+    <p>Ładowanie danych…</p>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Karty Pracowników -->
+  <div class="row g-4">
+    <ng-container *ngFor="let emp of employees">
+      <div class="user-card" *ngIf="editingEmployeeId !== emp.employeeId">
+        <p>
+          <strong>{{ emp.firstName }} {{ emp.lastName }}</strong><br />
+          {{ emp.emailAddress }}<br />
+          {{ emp.phoneNumber }}<br />
+          {{ emp.address }}, {{ emp.city }}<br />
+          {{ emp.postalCode }}, {{ emp.country }}
+        </p>
+        <div class="btn-container">
+          <button class="btn btn-sm btn-edit" (click)="startEdit(emp)">Edytuj</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteEmployee(emp.employeeId)">Usuń</button>
+        </div>
+      </div>
+
+      <!-- Formularz Edycji -->
+      <div *ngIf="editingEmployeeId === emp.employeeId && editedEmployee" class="edit-form">
+        <h5 class="mb-3">Edytuj Pracownika</h5>
+        <form (ngSubmit)="saveEdit()" #editForm="ngForm">
+          <div class="mb-2">
+            <label for="firstName-{{emp.employeeId}}" class="form-label">Imię:</label>
+            <input id="firstName-{{emp.employeeId}}"
+                   name="firstName"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedEmployee.firstName"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="lastName-{{emp.employeeId}}" class="form-label">Nazwisko:</label>
+            <input id="lastName-{{emp.employeeId}}"
+                   name="lastName"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedEmployee.lastName"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="email-{{emp.employeeId}}" class="form-label">E-mail:</label>
+            <input id="email-{{emp.employeeId}}"
+                   name="emailAddress"
+                   type="email"
+                   class="form-control"
+                   [(ngModel)]="editedEmployee.emailAddress"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="phone-{{emp.employeeId}}" class="form-label">Telefon:</label>
+            <input id="phone-{{emp.employeeId}}"
+                   name="phoneNumber"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedEmployee.phoneNumber"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="address-{{emp.employeeId}}" class="form-label">Adres:</label>
+            <input id="address-{{emp.employeeId}}"
+                   name="address"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedEmployee.address"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="city-{{emp.employeeId}}" class="form-label">Miasto:</label>
+            <input id="city-{{emp.employeeId}}"
+                   name="city"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedEmployee.city"
+                   required />
+          </div>
+          <div class="mb-2">
+            <label for="postal-{{emp.employeeId}}" class="form-label">Kod pocztowy:</label>
+            <input id="postal-{{emp.employeeId}}"
+                   name="postalCode"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedEmployee.postalCode"
+                   required />
+          </div>
+          <div class="mb-3">
+            <label for="country-{{emp.employeeId}}" class="form-label">Kraj:</label>
+            <input id="country-{{emp.employeeId}}"
+                   name="country"
+                   type="text"
+                   class="form-control"
+                   [(ngModel)]="editedEmployee.country"
+                   required />
+          </div>
+          <div class="btn-container">
+            <button type="submit" class="btn btn-sm btn-save" [disabled]="editForm.invalid">Zapisz</button>
+            <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">Anuluj</button>
+          </div>
+        </form>
+      </div>
+    </ng-container>
+
+    <!-- Komunikat, gdy brak pracowników -->
+    <div *ngIf="!loading && employees.length === 0" class="text-center">
+      <p>Brak pracowników do wyświetlenia.</p>
+    </div>
+  </div>
+
+  <!-- Formularz Dodawania Nowego Pracownika -->
+  <div *ngIf="addingEmployee" class="edit-form">
+    <h5 class="mb-3">Dodaj Nowego Pracownika</h5>
+    <form (ngSubmit)="saveAdd()" #addForm="ngForm">
+      <div class="mb-2">
+        <label for="firstName-new" class="form-label">Imię:</label>
+        <input id="firstName-new"
+               name="firstName"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newEmployee.firstName"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="lastName-new" class="form-label">Nazwisko:</label>
+        <input id="lastName-new"
+               name="lastName"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newEmployee.lastName"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="email-new" class="form-label">E-mail:</label>
+        <input id="email-new"
+               name="emailAddress"
+               type="email"
+               class="form-control"
+               [(ngModel)]="newEmployee.emailAddress"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="phone-new" class="form-label">Telefon:</label>
+        <input id="phone-new"
+               name="phoneNumber"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newEmployee.phoneNumber"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="address-new" class="form-label">Adres:</label>
+        <input id="address-new"
+               name="address"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newEmployee.address"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="city-new" class="form-label">Miasto:</label>
+        <input id="city-new"
+               name="city"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newEmployee.city"
+               required />
+      </div>
+      <div class="mb-2">
+        <label for="postal-new" class="form-label">Kod pocztowy:</label>
+        <input id="postal-new"
+               name="postalCode"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newEmployee.postalCode"
+               required />
+      </div>
+      <div class="mb-3">
+        <label for="country-new" class="form-label">Kraj:</label>
+        <input id="country-new"
+               name="country"
+               type="text"
+               class="form-control"
+               [(ngModel)]="newEmployee.country"
+               required />
+      </div>
+      <div class="btn-container">
+        <button type="submit" class="btn btn-sm btn-save" [disabled]="addForm.invalid">Utwórz</button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelAdd()">Anuluj</button>
+      </div>
+    </form>
+  </div>
+</div>

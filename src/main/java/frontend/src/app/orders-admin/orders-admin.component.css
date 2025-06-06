@@ -1,0 +1,232 @@
+/* src/app/orders-admin/orders-admin.component.css */
+
+/* --- 1. Kontener --- */
+.container {
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Nagłówek */
+h1 {
+  color: var(--header-bg);
+  margin-bottom: 1.5rem;
+}
+
+/* --- 2. Grid kart --- */
+.row.g-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  gap: 1rem;
+}
+
+/* --- 3. Karta zamówienia --- */
+.order-card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* --- 4. Podsumowanie zamówienia (tryb „read‐only”) --- */
+.order-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-summary div {
+  font-size: 0.95rem;
+}
+
+.btn-container {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* „Pokaż/U­kryj szczegóły” jako link wyglądem */
+.details-toggle {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  padding: 0;
+}
+
+/* --- 5. Tabela szczegółów zamówienia --- */
+.order-details {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.order-details table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-details th,
+.order-details td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.order-details th {
+  background-color: var(--header-bg);
+  color: #fff;
+}
+
+.order-details tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* --- 6. Formularz edycji (klasa .edit-form) --- */
+.edit-form {
+  background-color: #f5f5f5;
+  border: 1px solid #bbb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.edit-form h5 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.edit-form .form-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.edit-form .form-control {
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+}
+
+/* Lista pozycji do edycji – pozycja horizontalna */
+.details-edit-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.details-edit-list li {
+  margin-bottom: 0.5rem;
+}
+
+.detail-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.part-name {
+  flex: 1 1 100%;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.label-inline {
+  font-size: 0.9rem;
+  margin-left: 0.25rem;
+}
+
+.form-control-inline {
+  width: 4rem;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.9rem;
+  margin-right: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+/* Kontener przycisków w edycji */
+.edit-form .btn-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+/* Styl przycisków */
+.btn-edit {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: filter 0.2s;
+}
+
+.btn-edit:hover {
+  filter: brightness(0.9);
+}
+
+.btn-save {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: filter 0.2s;
+}
+
+.btn-save:hover {
+  filter: brightness(0.9);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: filter 0.2s;
+}
+
+.btn-secondary:hover {
+  filter: brightness(0.9);
+}
+
+/* --- 7. Responsywność --- */
+@media (max-width: 600px) {
+  .row.g-4 {
+    grid-template-columns: 1fr;
+  }
+  .order-details th,
+  .order-details td {
+    font-size: 0.8rem;
+    padding: 0.35rem;
+  }
+  .label-inline {
+    font-size: 0.85rem;
+  }
+  .form-control-inline {
+    width: 3rem;
+    font-size: 0.85rem;
+  }
+  .btn-edit,
+  .btn-save,
+  .btn-secondary {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+}

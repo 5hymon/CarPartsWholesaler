@@ -1,13 +1,6 @@
 <div class="container" xmlns="http://www.w3.org/1999/html">
   <h1 class="mb-4 text-center">Hurtownia części – lista części</h1>
 
-  <div class="mb-3 text-center">
-    <button class="btn btn-primary" (click)="startAdd()">Dodaj część</button>
-  </div>
-
-  <!-- Backdrop for dimming -->
-  <div class="backdrop" [class.active]="editingPartId !== null || addingPart"></div>
-
   <!-- Loading / Error -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
@@ -49,14 +42,6 @@
           <span class="hr-line"></span>
           {{ part.partDescription }}
         </p>
-        <div class="btn-container">
-          <button class="btn btn-sm btn-edit" (click)="startEdit(part)">
-            Edytuj
-          </button>
-          <button class="btn btn-sm btn-danger" (click)="deletePart(part.partId)">
-            Usuń
-          </button>
-        </div>
       </div>
     </ng-container>
 
@@ -66,156 +51,4 @@
     </div>
   </div>
 
-  <!-- Edit Form -->
-  <div *ngIf="editingPartId !== null && editedPart" class="edit-form">
-    <h5 class="mb-3">Edytuj dane części</h5>
-    <form (ngSubmit)="saveEdit()" #editForm="ngForm">
-      <input type="hidden" name="_method" value="PUT" />
-      <div class="mb-2">
-        <label [attr.for]="'name-' + editingPartId" class="form-label">Nazwa części:</label>
-        <input [attr.id]="'name-' + editingPartId"
-               name="partName"
-               type="text"
-               class="form-control"
-               [(ngModel)]="editedPart.partName"
-               required />
-      </div>
-      <div class="mb-2">
-        <label [attr.for]="'price-' + editingPartId" class="form-label">Cena jednostkowa:</label>
-        <input [attr.id]="'price-' + editingPartId"
-               name="unitPrice"
-               type="number"
-               class="form-control"
-               [(ngModel)]="editedPart.unitPrice"
-               required />
-      </div>
-      <div class="mb-2">
-        <label [attr.for]="'quantity-' + editingPartId" class="form-label">Ilość w jednostce:</label>
-        <input [attr.id]="'quantity-' + editingPartId"
-               name="quantityPerUnit"
-               type="text"
-               class="form-control"
-               [(ngModel)]="editedPart.quantityPerUnit"
-               required />
-      </div>
-      <div class="mb-2">
-        <label [attr.for]="'stock-' + editingPartId" class="form-label">Pozostało na magazynie:</label>
-        <input [attr.id]="'stock-' + editingPartId"
-               name="leftOnStock"
-               type="number"
-               class="form-control"
-               [(ngModel)]="editedPart.leftOnStock"
-               required />
-      </div>
-      <div class="mb-3">
-        <label [attr.for]="'description-' + editingPartId" class="form-label">Opis części:</label>
-        <textarea [attr.id]="'description-' + editingPartId"
-                  name="partDescription"
-                  class="form-control"
-                  [(ngModel)]="editedPart.partDescription"
-                  rows="3"></textarea>
-      </div>
-      <div class="btn-container">
-        <button type="submit" class="btn btn-sm btn-save" [disabled]="editForm.invalid">
-          Zapisz
-        </button>
-        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">
-          Anuluj
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div *ngIf="addingPart" class="part-card extended">
-    <h5 class="mb-3">Dodaj nową część</h5>
-    <form (ngSubmit)="saveAdd()" #addForm="ngForm">
-      <div class="mb-2">
-        <label for="categoryName-new" class="form-label">Nazwa kategorii:</label>
-        <select id="categoryName-new"
-                name="categoryName"
-                class="form-control"
-                [(ngModel)]="newPart.categoryName"
-                required>
-          <option value="" disabled selected>Wybierz kategorię</option>
-          <option value="Silnik">Silnik</option>
-          <option value="Zawieszenie">Zawieszenie</option>
-          <option value="Karoseria">Karoseria</option>
-          <option value="Felgi">Felgi</option>
-          <option value="Filtry">Filtry</option>
-          <option value="Oleje">Oleje</option>
-          <option value="Płyny i chemia">Płyny i chemia</option>
-          <option value="Oświetlenie">Oświetlenie</option>
-          <option value="Układ chłodzenia">Układ chłodzenia</option>
-          <option value="Układ elektryczny">Układ elektryczny</option>
-          <option value="Układ hamulcowy">Układ hamulcowy</option>
-          <option value="Układ kierowniczy">Układ kierowniczy</option>
-          <option value="Układ klimatyzacji">Układ klimatyzacji</option>
-          <option value="Układ napędowy">Układ napędowy</option>
-          <option value="Układ paliwowy">Układ paliwowy</option>
-          <option value="Układ wydechowy">Układ wydechowy</option>
-          <option value="Wycieraczki">Wycieraczki</option>
-          <option value="Wyposażenie wnętrza">Wyposażenie wnętrza</option>
-        </select>
-      </div>
-      <div class="mb-2">
-        <label for="name-new" class="form-label">Nazwa części:</label>
-        <input id="name-new"
-               name="partName"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newPart.partName"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="unitPrice-new" class="form-label">Cena jednostkowa:</label>
-        <input id="unitPrice-new"
-               name="unitPrice"
-               type="number"
-               class="form-control"
-               [(ngModel)]="newPart.unitPrice"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="quantityPerUnit-new" class="form-label">Ilość w jednostce:</label>
-        <select id="quantityPerUnit-new"
-                name="quantityPerUnit"
-                class="form-control"
-                [(ngModel)]="newPart.categoryName"
-                required>
-          <option value="" disabled selected>Wybierz jednostkę</option>
-          <option value="litr">Litr</option>
-          <option value="para">Para</option>
-          <option value="szt.">Sztuka</option>
-          <option value="zestaw">Zestaw</option>
-        </select>
-      </div>
-      <div class="mb-2">
-        <label for="leftOnStock-new" class="form-label">Pozostało na magazynie:</label>
-        <input id="leftOnStock-new"
-               name="leftOnStock"
-               type="number"
-               class="form-control"
-               [(ngModel)]="newPart.leftOnStock"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="partDescription-new" class="form-label">Opis części:</label>
-        <textarea id="partDescription-new"
-                  name="partDescription"
-                  class="form-control"
-                  [(ngModel)]="newPart.partDescription"
-                  rows="3"
-                  required
-        ></textarea>
-      </div>
-      <div class="btn-container">
-        <button type="submit" class="btn btn-sm btn-save" [disabled]="addForm.invalid">
-          Utwórz
-        </button>
-        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelAdd()">
-          Anuluj
-        </button>
-      </div>
-    </form>
-  </div>
 </div>

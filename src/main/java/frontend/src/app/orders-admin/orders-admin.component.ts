@@ -1,12 +1,93 @@
-import { Component } from '@angular/core';
+// src/app/orders-admin/orders-admin.component.ts
+
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { OrdersService } from '../services/orders.service';
+import { OrderDTO, OrderDetailsDTO } from '../models/order-dto.model';
+
+interface OrderWithFlags extends OrderDTO {
+  isEditing: boolean;
+  showDetails: boolean;
+  editableStatus: string;
+  editablePayment: string;
+  editableDetails: OrderDetailsDTO[];
+}
 
 @Component({
   selector: 'app-orders-admin',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './orders-admin.component.html',
-  styleUrl: './orders-admin.component.css'
+  styleUrls: ['./orders-admin.component.css']
 })
-export class OrdersAdminComponent {
+export class OrdersAdminComponent implements OnInit {
+  public orders: OrderWithFlags[] = [];
+  public loading = false;
+  public errorMessage = '';
 
+  constructor(private ordersService: OrdersService) { }
+
+  ngOnInit(): void {
+    this.loadOrders();
+  }
+
+  private loadOrders(): void {
+    this.loading = true;
+    this.ordersService.getAllOrders().subscribe({
+      next: (data: OrderDTO[]) => {
+        this.orders = data.map(o => ({
+          ...o,
+          isEditing: false,
+          showDetails: false,
+          editableStatus: o.orderStatus,
+          editablePayment: o.paymentMethod,
+          editableDetails: o.orderDetails.map(d => ({ ...d }))
+        }));
+        this.loading = false;
+      },
+      error: err => {
+        console.error('Błąd przy pobieraniu zamówień:', err);
+        this.errorMessage = 'Nie udało się pobrać listy zamówień.';
+        this.loading = false;
+      }
+    });
+  }
+
+  startEdit(order: OrderWithFlags): void {
+    order.isEditing = true;
+    order.editableStatus = order.orderStatus;
+    order.editablePayment = order.paymentMethod;
+    order.editableDetails = order.orderDetails.map(d => ({ ...d }));
+  }
+
+  cancelEdit(order: OrderWithFlags): void {
+    order.isEditing = false;
+  }
+
+  saveEdit(order: OrderWithFlags): void {
+    // Nadpisujemy pola w głównym obiekcie:
+    order.orderStatus = order.editableStatus;
+    order.paymentMethod = order.editablePayment;
+    order.orderDetails = order.editableDetails.map(d => ({ ...d }));
+
+    this.ordersService.updateOrder(order).subscribe({
+      next: updated => {
+        order.orderStatus = updated.orderStatus;
+        order.paymentMethod = updated.paymentMethod;
+        order.orderDetails = updated.orderDetails.map(d => ({ ...d }));
+        order.isEditing = false;
+      },
+      error: err => {
+        console.error('Błąd przy aktualizacji zamówienia:', err);
+        this.errorMessage = 'Nie udało się zaktualizować zamówienia.';
+        order.isEditing = false;
+      }
+    });
+  }
+
+  toggleDetails(order: OrderWithFlags): void {
+    order.showDetails = !order.showDetails;
+  }
 }
