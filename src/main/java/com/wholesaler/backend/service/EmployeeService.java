@@ -73,6 +73,7 @@ public class EmployeeService {
         employee.setPostalCode(postalCode);
         employee.setCountry(country);
         employee.setOrders(null);
+        employee.setFistPassword();
         return employeeRepository.save(employee);
     }
 
