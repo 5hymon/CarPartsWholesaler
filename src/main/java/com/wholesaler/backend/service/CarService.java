@@ -61,7 +61,19 @@ public class CarService {
         return carRepository.findById(id).map(this::convertCarToDTO);
     }
 
-    // post
+    // post new car
+    public Car addCar(String carMake, String carModel, String productionYears, String bodyType, String fuelType, String engineType) {
+        Car car = new Car();
+        car.setCarMake(carMake);
+        car.setCarModel(carModel);
+        car.setProductionYears(productionYears);
+        car.setBodyType(bodyType);
+        car.setFuelType(fuelType);
+        car.setEngineType(engineType);
+        return carRepository.save(car);
+    }
+
+    // post updated car
     public Car saveCar(Car car) {
         return carRepository.save(car);
     }
