@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { PartsService } from '../services/parts.service';
 import { PartDTO } from '../models/part-dto.model';
+import {CarDTO} from '../models/car-dto.model';
 
 @Component({
   selector: 'app-parts-list',
@@ -26,6 +27,19 @@ export class PartsListComponent implements OnInit {
 
   editingPartId: number | null = null;
   editedPart: PartDTO | null = null;
+
+  addingPart = false;
+  newPart: PartDTO = {
+    partId: 0,
+    partName: '',
+    unitPrice: 0,
+    quantityPerUnit: '',
+    leftOnStock: 0,
+    isAvailable: true,
+    partDescription: '',
+    categoryName: '',
+    compatibleCars: []
+  };
 
   private categoryFromUrl: string | null = null; // Store URL category
 
@@ -180,6 +194,69 @@ export class PartsListComponent implements OnInit {
         this.editingPartId = null;
         this.editedPart = null;
         this.loadParts();
+      }
+    });
+  }
+
+  startAdd(): void {
+    this.addingPart = true;
+    this.newPart = {
+      partId: 0,
+      partName: '',
+      unitPrice: 0,
+      quantityPerUnit: '',
+      leftOnStock: 0,
+      isAvailable: true,
+      partDescription: '',
+      categoryName: '',
+      compatibleCars: []
+    };
+  }
+
+  cancelAdd(): void {
+    this.addingPart = false;
+  }
+
+  saveAdd(): void {
+    // Sprawdźmy, czy wszystkie wymagane pola są wypełnione
+    if (!this.newPart.partName ||
+      !this.newPart.unitPrice ||
+      !this.newPart.quantityPerUnit ||
+      !this.newPart.leftOnStock ||
+      !this.newPart.partDescription ||
+      !this.newPart.categoryName) {
+      return;
+    }
+
+    // 1) Budujemy body jako application/x-www-form-urlencoded
+    const body = new HttpParams()
+      .set('partName', this.newPart.partName)
+      .set('unitPrice', this.newPart.unitPrice.toString())
+      .set('quantityPerUnit', this.newPart.quantityPerUnit)
+      .set('leftOnStock', this.newPart.leftOnStock.toString())
+      .set('partDescription', this.newPart.partDescription)
+      .set('categoryName', this.newPart.categoryName)
+      .set('isAvailable', true.toString());
+
+    // 2) Ustawiamy odpowiedni nagłówek
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    // 3) Wysyłamy POST do Springa (endpoint: /cars)
+    this.http.post<PartDTO>(
+      'http://localhost:8080/parts',
+      body.toString(),
+      { headers }
+    ).subscribe({
+      next: created => {
+        // Po sukcesie: zamknij formularz i odśwież listę
+        this.addingPart = false;
+        this.loadParts();
+      },
+      error: err => {
+        console.error('Błąd przy tworzeniu nowej części:', err);
+        alert('Nie udało się dodać nowej części.');
       }
     });
   }

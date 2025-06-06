@@ -9,5 +9,5 @@ export interface PartDTO {
   isAvailable: boolean;
   partDescription: string;
   categoryName: string;
-  compatibleParts?: CarDTO[];
+  compatibleCars?: CarDTO[];
 }
