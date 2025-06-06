@@ -44,15 +44,32 @@ public class CustomerController {
     // POST - add new customer
     @PostMapping
     @Operation(summary = "Dodaj nowego klienta")
-    public Customer addCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
+    public Customer addCustomer(
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("emailAddress") String emailAddress,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("address") String address,
+            @RequestParam("city") String city,
+            @RequestParam("postalCode") String postalCode,
+            @RequestParam("country") String country) {
+        return customerService.addCustomer(firstName, lastName, emailAddress, phoneNumber, address, city, postalCode, country);
     }
 
     // PUT - update customer by ID
     @PutMapping("/{customerId}")
     @Operation(summary = "Aktualizuj klienta o podanym ID")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable("customerId") Integer customerId, @RequestBody Customer updatedCustomer) {
-        Optional<Customer> customerOptional = customerService.updateCustomer(customerId, updatedCustomer);
+    public ResponseEntity<Customer> updateCustomer(
+            @PathVariable("customerId") Integer customerId,
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("emailAddress") String emailAddress,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("address") String address,
+            @RequestParam("city") String city,
+            @RequestParam("postalCode") String postalCode,
+            @RequestParam("country") String country) {
+        Optional<Customer> customerOptional = customerService.updateCustomer(customerId, firstName, lastName, emailAddress, phoneNumber, address, city, postalCode, country);
         if (customerOptional.isPresent()) {
             Customer customer = customerOptional.get();
             return ResponseEntity.ok(customerService.saveCustomer(customer));

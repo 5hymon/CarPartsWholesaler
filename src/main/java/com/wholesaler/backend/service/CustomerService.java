@@ -61,22 +61,36 @@ public class CustomerService {
         return customerRepository.findById(customerId).map(this::convertCustomerToDTO);
     }
 
-    // post
+    // post new customer
+    public Customer addCustomer(String firstName, String lastName, String emailAddress, String phoneNumber, String address, String city, String postalCode, String country) {
+        Customer customer = new Customer();
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setEmailAddress(emailAddress);
+        customer.setPhoneNumber(phoneNumber);
+        customer.setAddress(address);
+        customer.setCity(city);
+        customer.setPostalCode(postalCode);
+        customer.setCountry(country);
+        return customerRepository.save(customer);
+    }
+
+    // post updated customer
     public Customer saveCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
     // put
-    public Optional<Customer> updateCustomer(Integer customerId, Customer updatedCustomer) {
+    public Optional<Customer> updateCustomer(Integer customerId, String firstName, String lastName, String emailAddress, String phoneNumber, String address, String city, String postalCode, String country) {
         return customerRepository.findById(customerId).map(customer -> {
-            customer.setFirstName(customer.getFirstName());
-            customer.setLastName(customer.getLastName());
-            customer.setEmailAddress(customer.getEmailAddress());
-            customer.setPhoneNumber(customer.getPhoneNumber());
-            customer.setAddress(customer.getAddress());
-            customer.setCity(customer.getCity());
-            customer.setPostalCode(customer.getPostalCode());
-            customer.setCountry(customer.getCountry());
+            customer.setFirstName(firstName);
+            customer.setLastName(lastName);
+            customer.setEmailAddress(emailAddress);
+            customer.setPhoneNumber(phoneNumber);
+            customer.setAddress(address);
+            customer.setCity(city);
+            customer.setPostalCode(postalCode);
+            customer.setCountry(country);
             return customerRepository.save(customer);
         });
     }
