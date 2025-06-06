@@ -1,9 +1,7 @@
-// src/app/services/users.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserDTO } from '../models/user-dto.model';
+import { CustomerDTO } from '../models/customer-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +14,13 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   /** GET /customers/all → pobiera wszystkich klientów */
-  getAllUsers(): Observable<UserDTO[]> {
-    return this.http.get<UserDTO[]>(`${this.baseUrl}/all`);
+  getAllUsers(): Observable<CustomerDTO[]> {
+    return this.http.get<CustomerDTO[]>(`${this.baseUrl}/all`);
   }
 
   /** POST /customers → tworzy nowego klienta */
-  createUser(user: UserDTO): Observable<UserDTO> {
-    return this.http.post<UserDTO>(`${this.baseUrl}`, user);
+  createUser(user: CustomerDTO): Observable<CustomerDTO> {
+    return this.http.post<CustomerDTO>(`${this.baseUrl}`, user);
   }
 
   /** DELETE /customers/{id} → usuwa klienta o podanym ID */

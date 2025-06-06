@@ -1,1 +1,146 @@
-<p>orders-admin works!</p>
+<!-- src/app/orders-admin/orders-admin.component.html -->
+
+<div class="container">
+  <h1 class="mb-4 text-center">Zamówienia (panel admin)</h1>
+
+  <!-- Ładowanie / błąd -->
+  <div *ngIf="loading" class="text-center">
+    <p>Ładowanie zamówień…</p>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Główna zawartość (po załadowaniu) -->
+  <div *ngIf="!loading && !errorMessage">
+    <div class="row g-4">
+      <ng-container *ngFor="let order of orders">
+        <div class="order-card">
+          <!-- Jeżeli NIE edytujemy: pokaz podsumowanie i przyciski -->
+          <ng-container *ngIf="!order.isEditing; else editTpl">
+            <div class="order-summary">
+              <div><strong>ID:</strong> {{ order.orderId }}</div>
+              <div><strong>Data:</strong> {{ order.orderDate | date:'short' }}</div>
+              <div><strong>Klient ID:</strong> {{ order.customerId }}</div>
+              <div><strong>Pracownik ID:</strong> {{ order.employeeId }}</div>
+              <div><strong>Status:</strong> {{ order.orderStatus }}</div>
+              <div><strong>Płatność:</strong> {{ order.paymentMethod }}</div>
+
+              <div class="btn-container">
+                <button class="btn btn-sm btn-edit" (click)="startEdit(order)">
+                  Edytuj
+                </button>
+                <button class="btn btn-sm btn-secondary details-toggle"
+                        (click)="toggleDetails(order)">
+                  {{ order.showDetails ? 'Ukryj szczegóły' : 'Pokaż szczegóły' }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Wyświetlanie szczegółów pozycji, jeśli showDetails = true -->
+            <div class="order-details" *ngIf="order.showDetails">
+              <table>
+                <thead>
+                <tr>
+                  <th>ID części</th>
+                  <th>Nazwa</th>
+                  <th>Opis</th>
+                  <th>Cena</th>
+                  <th>Ilość</th>
+                  <th>Rabat</th>
+                  <th>Wartość</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let d of order.orderDetails">
+                  <td>{{ d.partID }}</td>
+                  <td>{{ d.partName }}</td>
+                  <td>{{ d.partDescription }}</td>
+                  <td>{{ d.partUnitPrice | number:'1.2-2' }}</td>
+                  <td>{{ d.quantity }}</td>
+                  <td>{{ d.discount }}%</td>
+                  <td>{{ d.orderValue | number:'1.2-2' }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+
+          <!-- Szablon EDYCJI -->
+          <ng-template #editTpl>
+            <div class="edit-form">
+              <h5 class="mb-3">Edytuj zamówienie #{{ order.orderId }}</h5>
+              <form (ngSubmit)="saveEdit(order)" #formRef="ngForm">
+                <div class="mb-2">
+                  <label for="status-{{ order.orderId }}" class="form-label">Status:</label>
+                  <select id="status-{{ order.orderId }}"
+                          name="orderStatus"
+                          class="form-control"
+                          [(ngModel)]="order.editableStatus"
+                          required>
+                    <option value="Zrealizowane">Zrealizowane</option>
+                    <option value="W trakcie">W trakcie</option>
+                    <option value="Anulowane">Anulowane</option>
+                  </select>
+                </div>
+                <div class="mb-2">
+                  <label for="payment-{{ order.orderId }}" class="form-label">Płatność:</label>
+                  <select id="payment-{{ order.orderId }}"
+                          name="paymentMethod"
+                          class="form-control"
+                          [(ngModel)]="order.editablePayment"
+                          required>
+                    <option value="Karta">Karta</option>
+                    <option value="Przelew">Przelew</option>
+                    <option value="Gotówka">Gotówka</option>
+                  </select>
+                </div>
+
+                <h6 class="mt-3">Szczegóły pozycji (edycja ilości i rabatu)</h6>
+                <ul class="details-edit-list">
+                  <li *ngFor="let d of order.editableDetails; let i = index">
+                    <div class="detail-row">
+                      <span class="part-name">{{ d.partName }}</span>
+                      <span class="label-inline">Ilość:</span>
+                      <input type="number"
+                             min="1"
+                             class="form-control-inline"
+                             [(ngModel)]="order.editableDetails[i].quantity"
+                             name="qty-{{ order.orderId }}-{{ i }}"
+                             required />
+                      <span class="label-inline">Rabat (%):</span>
+                      <input type="number"
+                             min="0" max="100"
+                             class="form-control-inline"
+                             [(ngModel)]="order.editableDetails[i].discount"
+                             name="disc-{{ order.orderId }}-{{ i }}"
+                             required />
+                    </div>
+                  </li>
+                </ul>
+
+                <div class="btn-container">
+                  <button type="submit"
+                          class="btn btn-sm btn-save"
+                          [disabled]="formRef.invalid">
+                    Zapisz
+                  </button>
+                  <button type="button"
+                          class="btn btn-sm btn-secondary"
+                          (click)="cancelEdit(order)">
+                    Anuluj
+                  </button>
+                </div>
+              </form>
+            </div>
+          </ng-template>
+        </div>
+      </ng-container>
+
+      <!-- Komunikat, gdy brak zamówień -->
+      <div *ngIf="!loading && orders.length === 0" class="text-center">
+        <p>Brak zamówień do wyświetlenia.</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -49,13 +49,12 @@ public class OrderController {
     public ResponseEntity<Order> addOrder(
             @RequestParam("employeeId") Integer employeeId,
             @RequestParam("customerId") Integer customerId,
-            @RequestParam("orderDate") Date orderDate,
             @RequestParam("orderStatus") String orderStatus,
             @RequestParam("paymentMethod") String paymentMethod,
             @RequestParam("partId") Integer partId,
             @RequestParam("quantity") Integer quantity,
             @RequestParam("discount") Double discount) {
-        Order order = orderService.addOrder(employeeId, customerId, orderDate, orderStatus, paymentMethod, partId, quantity, discount);
+        Order order = orderService.addOrder(employeeId, customerId, orderStatus, paymentMethod, partId, quantity, discount);
         if (order != null) {
             return ResponseEntity.ok(orderService.saveOrder(order));
         } else {
