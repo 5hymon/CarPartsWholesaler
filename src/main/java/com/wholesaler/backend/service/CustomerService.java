@@ -73,6 +73,7 @@ public class CustomerService {
         customer.setPostalCode(postalCode);
         customer.setCountry(country);
         customer.setOrders(null);
+        customer.setPassword(customer.setFirstPassword());
         return customerRepository.save(customer);
     }
 

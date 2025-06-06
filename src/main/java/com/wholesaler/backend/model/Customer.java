@@ -21,6 +21,9 @@ public class Customer {
     @Column(name = "emailAddress")
     private String emailAddress;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "phoneNumber")
     private String phoneNumber;
 
@@ -69,6 +72,18 @@ public class Customer {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String setFirstPassword() {
+        return this.firstName + this.lastName + this.phoneNumber;
     }
 
     public String getPhoneNumber() {
