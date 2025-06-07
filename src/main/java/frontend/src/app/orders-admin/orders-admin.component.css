@@ -1,5 +1,3 @@
-/* src/app/orders-admin/orders-admin.component.css */
-
 /* --- 1. Kontener --- */
 .container {
   max-width: 100%;
@@ -47,7 +45,7 @@ h1 {
   gap: 0.5rem;
 }
 
-/* „Pokaż/U­kryj szczegóły” jako link wyglądem */
+/* „Pokaż ukryj szczegóły” jako link wyglądem */
 .details-toggle {
   background: none;
   border: none;
