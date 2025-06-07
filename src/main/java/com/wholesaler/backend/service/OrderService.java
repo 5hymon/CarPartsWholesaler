@@ -56,13 +56,15 @@ public class OrderService {
         var part = detail.getPart();
 
         OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
+        orderDetailDTO.setDetailId(detail.getDetailId());
+        orderDetailDTO.setOrderId(detail.getOrderId());
         orderDetailDTO.setPartId(part.getPartId());
         orderDetailDTO.setPartName(part.getPartName());
         orderDetailDTO.setPartDescription(part.getPartDescription());
         orderDetailDTO.setPartUnitPrice(part.getUnitPrice());
         orderDetailDTO.setQuantity(detail.getQuantity());
         orderDetailDTO.setDiscount(detail.getDiscount());
-        orderDetailDTO.setOrderValue(part.getUnitPrice()*detail.getQuantity());
+        orderDetailDTO.setOrderValue(orderDetailDTO.getOrderValue());
 
         return orderDetailDTO;
     }
@@ -98,7 +100,7 @@ public class OrderService {
             order.setPaymentMethod(paymentMethod);
 
             OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setOrderId(order.getOrderId());
+            orderDetail.setOrderId(orderRepository.getLastOrderId() + 1);
             orderDetail.setPartId(partId);
             orderDetail.setUnitPrice(part.getUnitPrice());
             orderDetail.setQuantity(quantity);

@@ -1,6 +1,8 @@
 package com.wholesaler.backend.dto;
 
 public class OrderDetailDTO {
+    private Integer detailId;
+    private Integer orderId;
     private Integer partId;
     private String partName;
     private String partDescription;
@@ -12,7 +14,9 @@ public class OrderDetailDTO {
     public OrderDetailDTO() {
     }
 
-    public OrderDetailDTO(Integer partId, String partName, String partDescription, Double partUnitPrice, Integer quantity, Double discount, Double orderValue) {
+    public OrderDetailDTO(Integer detailId, Integer orderId, Integer partId, String partName, String partDescription, Double partUnitPrice, Integer quantity, Double discount, Double orderValue) {
+        this.detailId = detailId;
+        this.orderId = orderId;
         this.partId = partId;
         this.partName = partName;
         this.partDescription = partDescription;
@@ -20,6 +24,22 @@ public class OrderDetailDTO {
         this.quantity = quantity;
         this.discount = discount;
         this.orderValue = orderValue;
+    }
+
+    public Integer getDetailId() {
+        return detailId;
+    }
+
+    public void setDetailId(Integer detailId) {
+        this.detailId = detailId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public Integer getPartId() {
@@ -72,6 +92,7 @@ public class OrderDetailDTO {
 
     public Double getOrderValue() {
         orderValue = getPartUnitPrice() * getQuantity();
+        orderValue = Math.round(orderValue * 100.0) / 100.0;
         return orderValue;
     }
 

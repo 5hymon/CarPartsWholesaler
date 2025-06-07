@@ -4,14 +4,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-@IdClass(OrderDetailId.class)
 @Table(name = "OrderDetails")
 public class OrderDetail {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "detailId")
+    private Integer detailId;
+
     @Column(name = "orderId")
     private Integer orderId;
 
-    @Id
     @Column(name = "partId")
     private Integer partId;
 
@@ -36,17 +38,12 @@ public class OrderDetail {
     @Column(name = "discount")
     private Double discount;
 
-    public OrderDetail() {
+    public Integer getDetailId() {
+        return detailId;
     }
 
-    public OrderDetail(Integer orderId, Integer partId, Order order, Part part, Double unitPrice, Integer quantity, Double discount) {
-        this.orderId = orderId;
-        this.partId = partId;
-        this.order = order;
-        this.part = part;
-        this.unitPrice = unitPrice;
-        this.quantity = quantity;
-        this.discount = discount;
+    public void setDetailId(Integer detailId) {
+        this.detailId = detailId;
     }
 
     public Integer getOrderId() {

@@ -2,6 +2,7 @@ package com.wholesaler.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -90,6 +91,9 @@ public class Order {
     }
 
     public void addOrderDetail(OrderDetail orderDetail) {
+        if (orderDetails == null) {
+            orderDetails = new ArrayList<>();
+        }
         this.orderDetails.add(orderDetail);
     }
 }

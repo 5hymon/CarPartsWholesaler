@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.wholesaler.backend.dto.OrderDTO;
 import com.wholesaler.backend.service.OrderService;
-import com.wholesaler.backend.model.OrderDetail;
 
 import java.util.Date;
 import java.util.List;
