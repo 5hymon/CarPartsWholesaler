@@ -82,9 +82,9 @@ public class Customer {
         this.password = password;
     }
 
-    public String setFirstPassword() {
-        return this.firstName + this.lastName + this.phoneNumber;
-    }
+//    public String setFirstPassword() {
+//        return this.firstName + this.lastName + this.phoneNumber;
+//    }
 
     public String getPhoneNumber() {
         return phoneNumber;

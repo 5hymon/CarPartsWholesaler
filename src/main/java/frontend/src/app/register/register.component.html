@@ -1,0 +1,81 @@
+<div class="register-container">
+  <h2>Rejestracja</h2>
+
+  <form #f="ngForm" (ngSubmit)="register(f)" novalidate>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Imię</label>
+        <input name="firstName" [(ngModel)]="model.firstName" required />
+      </div>
+      <div class="form-group">
+        <label>Nazwisko</label>
+        <input name="lastName" [(ngModel)]="model.lastName" required />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Adres e-mail</label>
+      <input type="email"
+             name="emailAddress"
+             [(ngModel)]="model.emailAddress"
+             required
+             #email="ngModel" />
+      <div *ngIf="email.invalid && email.touched" class="error">
+        Proszę podać poprawny e-mail.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Hasło</label>
+      <input type="password"
+             name="password"
+             [(ngModel)]="model.password"
+             required
+             minlength="6"
+             #pwd="ngModel" />
+      <div *ngIf="pwd.invalid && pwd.touched" class="error">
+        Hasło musi mieć minimum 6 znaków.
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Telefon</label>
+        <input name="phoneNumber" [(ngModel)]="model.phoneNumber" required />
+      </div>
+      <div class="form-group">
+        <label>Kraj</label>
+        <input name="country" [(ngModel)]="model.country" required />
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label>Ulica</label>
+      <input name="address" [(ngModel)]="model.address" required />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Miasto</label>
+        <input name="city" [(ngModel)]="model.city" required />
+      </div>
+      <div class="form-group">
+        <label>Kod pocztowy</label>
+        <input name="postalCode"
+               [(ngModel)]="model.postalCode"
+               required
+               pattern="\d{2}-\d{3}"
+               #pc="ngModel" />
+        <div *ngIf="pc.invalid && pc.touched" class="error">
+          Kod w formacie 12-345.
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <button type="submit" [disabled]="f.invalid">Zarejestruj</button>
+  </form>
+</div>
