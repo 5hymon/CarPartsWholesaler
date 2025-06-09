@@ -1,7 +1,5 @@
-// src/app/services/orders.service.ts
-
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OrderDTO } from '../models/order-dto.model';
 
@@ -31,6 +29,18 @@ export class OrdersService {
     return this.http.put<OrderDTO>(
       `${this.baseUrl}/${order.orderId}`,
       order
+    );
+  }
+
+  updateOrderFormUrlEncoded(
+    orderId: number,
+    body: string,
+    headers: HttpHeaders
+  ): Observable<OrderDTO> {
+    return this.http.put<OrderDTO>(
+      `${this.baseUrl}/${orderId}`,
+      body,
+      { headers }
     );
   }
 }

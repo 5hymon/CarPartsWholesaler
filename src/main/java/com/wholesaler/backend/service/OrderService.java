@@ -136,28 +136,15 @@ public class OrderService {
     }
 
     // put
-    public Optional<Order> updateOrder(Integer id, Integer employeeId, Integer customerId, Date orderDate, String orderStatus, String paymentMethod, Integer partId, Integer quantity, Double discount) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
-        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        Optional<Part> optionalPart = partRepository.findById(partId);
+    public Optional<Order> updateOrder(Integer id, String orderStatus, String paymentMethod, Integer quantity, Double discount) {
         Optional<OrderDetail> optionalOrderDetail = orderDetailsRepository.findById(id);
-
-        if (optionalEmployee.isPresent() && optionalCustomer.isPresent() && optionalPart.isPresent() && optionalOrderDetail.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            Customer customer = optionalCustomer.get();
-            Part part = optionalPart.get();
+        if (optionalOrderDetail.isPresent()) {
             OrderDetail orderDetail = optionalOrderDetail.get();
 
             return orderRepository.findById(id).map(order -> {
-                order.setEmployee(employee);
-                order.setCustomer(customer);
-                order.setOrderDate(orderDate);
                 order.setOrderStatus(orderStatus);
                 order.setPaymentMethod(paymentMethod);
-                orderDetail.setPartId(part.getPartId());
-                orderDetail.setPart(part);
                 orderDetail.setQuantity(quantity);
-                orderDetail.setUnitPrice(part.getUnitPrice());
                 orderDetail.setDiscount(discount);
                 return orderRepository.save(order);
             });

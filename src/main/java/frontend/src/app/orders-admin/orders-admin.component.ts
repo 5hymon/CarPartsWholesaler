@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { OrdersService } from '../services/orders.service';
 import { OrderDTO, OrderDetailsDTO } from '../models/order-dto.model';
@@ -65,24 +66,30 @@ export class OrdersAdminComponent implements OnInit {
   }
 
   saveEdit(order: OrderWithFlags): void {
-    // Nadpisujemy pola w głównym obiekcie:
-    order.orderStatus = order.editableStatus;
-    order.paymentMethod = order.editablePayment;
-    order.orderDetails = order.editableDetails.map(d => ({ ...d }));
+    let params = new HttpParams()
+      .set('orderStatus', order.editableStatus)
+      .set('paymentMethod', order.editablePayment);
 
-    this.ordersService.updateOrder(order).subscribe({
-      next: updated => {
-        order.orderStatus = updated.orderStatus;
-        order.paymentMethod = updated.paymentMethod;
-        order.orderDetails = updated.orderDetails.map(d => ({ ...d }));
-        order.isEditing = false;
-      },
-      error: err => {
-        console.error('Błąd przy aktualizacji zamówienia:', err);
-        this.errorMessage = 'Nie udało się zaktualizować zamówienia.';
-        order.isEditing = false;
-      }
+    order.editableDetails.forEach(d => {
+      params = params
+        .append('partId', d.partId.toString())
+        .append('quantity', d.quantity.toString())
+        .append('discount', d.discount.toString());
     });
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    this.ordersService.updateOrderFormUrlEncoded(order.orderId, params.toString(), headers)
+      .subscribe({
+        next: updated => {
+          order.orderStatus = updated.orderStatus;
+          order.paymentMethod = updated.paymentMethod;
+          order.orderDetails = updated.orderDetails.map(d => ({ ...d }));
+          order.isEditing = false;
+        }
+      });
   }
 
   toggleDetails(order: OrderWithFlags): void {

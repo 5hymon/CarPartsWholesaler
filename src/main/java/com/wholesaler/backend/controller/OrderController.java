@@ -75,15 +75,11 @@ public class OrderController {
     @Operation(summary = "Aktualizuj zamówienie o podanym ID")
     public ResponseEntity<Order> updateOrder(
             @PathVariable("orderId") Integer orderId,
-            @RequestParam("employeeId") Integer employeeId,
-            @RequestParam("customerId") Integer customerId,
-            @RequestParam("orderDate") Date orderDate,
             @RequestParam("orderStatus") String orderStatus,
             @RequestParam("paymentMethod") String paymentMethod,
-            @RequestParam("partId") Integer partId,
             @RequestParam("quantity") Integer quantity,
             @RequestParam("discount") Double discount) {
-        Optional<Order> orderOptional = orderService.updateOrder(orderId, employeeId, customerId, orderDate, orderStatus, paymentMethod, partId, quantity, discount);
+        Optional<Order> orderOptional = orderService.updateOrder(orderId, orderStatus, paymentMethod, quantity, discount);
         if (orderOptional.isPresent()) {
             Order order = orderOptional.get();
             return ResponseEntity.ok(orderService.saveOrder(order));

@@ -7,7 +7,6 @@ export interface EmployeeDTO {
   employeeId: number;
   firstName: string;
   lastName: string;
-  emailAddress: string;
   password: string;
   phoneNumber: string;
   address: string;
@@ -38,7 +37,6 @@ export class EmployeesComponent implements OnInit {
     employeeId: 0,
     firstName: '',
     lastName: '',
-    emailAddress: '',
     password: '',
     phoneNumber: '',
     address: '',
@@ -102,7 +100,6 @@ export class EmployeesComponent implements OnInit {
     const body = new HttpParams()
       .set('firstName', this.editedEmployee.firstName)
       .set('lastName', this.editedEmployee.lastName)
-      .set('emailAddress', this.editedEmployee.emailAddress)
       .set('phoneNumber', this.editedEmployee.phoneNumber)
       .set('address', this.editedEmployee.address)
       .set('city', this.editedEmployee.city)
@@ -136,7 +133,6 @@ export class EmployeesComponent implements OnInit {
       employeeId: 0,
       firstName: '',
       lastName: '',
-      emailAddress: '',
       password: '',
       phoneNumber: '',
       address: '',
@@ -155,7 +151,6 @@ export class EmployeesComponent implements OnInit {
     if (
       !this.newEmployee.firstName ||
       !this.newEmployee.lastName ||
-      !this.newEmployee.emailAddress ||
       !this.newEmployee.password ||
       !this.newEmployee.phoneNumber ||
       !this.newEmployee.address ||
@@ -169,7 +164,6 @@ export class EmployeesComponent implements OnInit {
     const body = new HttpParams()
       .set('firstName', this.newEmployee.firstName)
       .set('lastName', this.newEmployee.lastName)
-      .set('emailAddress', this.newEmployee.emailAddress)
       .set('password', this.newEmployee.password)
       .set('phoneNumber', this.newEmployee.phoneNumber)
       .set('address', this.newEmployee.address)

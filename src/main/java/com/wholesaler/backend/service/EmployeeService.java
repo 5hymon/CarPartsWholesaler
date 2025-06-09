@@ -66,10 +66,12 @@ public class EmployeeService {
 
     // post new employee
     public Employee addEmployee(String firstName, String lastName, String password, String phoneNumber, String address, String city, String postalCode, String country) {
+        String employeeEmailAddress = firstName.toLowerCase() + "." + lastName.toLowerCase() + (employeeRepository.getLastEmployeeId() + 1) + "@autoparts.pl";
+
         Employee employee = new Employee();
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
-        employee.setDefaultEmailAddress();
+        employee.setEmailAddress(employeeEmailAddress);
         employee.setPassword(passwordEncoder.encode(password));
         employee.setPhoneNumber(phoneNumber);
         employee.setAddress(address);
@@ -86,11 +88,10 @@ public class EmployeeService {
     }
 
     // put
-    public Optional<Employee> updateEmployee(Integer employeeId, String firstName, String lastName, String emailAddress, String phoneNumber, String address, String city, String postalCode, String country) {
+    public Optional<Employee> updateEmployee(Integer employeeId, String firstName, String lastName, String phoneNumber, String address, String city, String postalCode, String country) {
         return employeeRepository.findById(employeeId).map(employee -> {
             employee.setFirstName(firstName);
             employee.setLastName(lastName);
-            employee.setEmailAddress(emailAddress);
             employee.setPhoneNumber(phoneNumber);
             employee.setAddress(address);
             employee.setCity(city);

@@ -63,13 +63,12 @@ public class EmployeeController {
             @PathVariable("employeeId") Integer employeeId,
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
-            @RequestParam("emailAddress") String emailAddress,
             @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("address") String address,
             @RequestParam("city") String city,
             @RequestParam("postalCode") String postalCode,
             @RequestParam("country") String country) {
-        Optional<Employee> employeeOptional = employeeService.updateEmployee(employeeId, firstName, lastName, emailAddress, phoneNumber, address, city, postalCode, country);
+        Optional<Employee> employeeOptional = employeeService.updateEmployee(employeeId, firstName, lastName, phoneNumber, address, city, postalCode, country);
         if (employeeOptional.isPresent()) {
             Employee employee = employeeOptional.get();
             return ResponseEntity.ok(employeeService.saveEmployee(employee));
