@@ -51,7 +51,7 @@ public class CarService {
 
     // get all
     public List<CarDTO> getAllCarsAsDTO() {
-        List<Car> cars = carRepository.findAll();
+        List<Car> cars = carRepository.findByOrderByCarMakeAscCarModelAsc();
         return cars.stream()
                 .map(this::convertCarToDTO)
                 .collect(Collectors.toList());
