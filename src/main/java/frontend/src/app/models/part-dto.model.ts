@@ -1,6 +1,7 @@
 import {CarDTO} from './car-dto.model';
 
 export interface PartDTO {
+  selectedQuantity?: number;
   partId: number;
   partName: string;
   unitPrice: number;

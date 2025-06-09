@@ -18,6 +18,9 @@ export class PartsListComponent implements OnInit {
   parts: PartDTO[] = [];
   filteredParts: PartDTO[] = [];
 
+  showToast = false;
+  toastMessage = '';
+
   loading = false;
   errorMessage = '';
 
@@ -43,12 +46,12 @@ export class PartsListComponent implements OnInit {
     this.loadParts();
   }
 
-  private loadParts(): void {
+    private loadParts(): void {
     this.loading = true;
     this.partsService.getAllParts().subscribe({
       next: (data: PartDTO[]) => {
-        this.parts = data;
-        this.filteredParts = [...data];
+        this.parts = data.map(part => ({ ...part, selectedQuantity: 1 }));
+        this.filteredParts = [...this.parts];
 
         if (this.categoryFromUrl) {
           this.activeCategory = this.categoryFromUrl;
@@ -116,5 +119,35 @@ export class PartsListComponent implements OnInit {
       this.activePartName = partName;
       this.applyFilter();
     }
+  }
+
+  addToCart(part: PartDTO): void {
+    const quantity = part.selectedQuantity || 1;
+
+    // Pobierz aktualny koszyk z localStorage lub stwórz nowy
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // Sprawdź, czy element już istnieje w koszyku
+    const existingItem = cart.find((item: any) => item.partId === part.partId);
+
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      cart.push({
+        partId: part.partId,
+        partName: part.partName,
+        unitPrice: part.unitPrice,
+        quantity: quantity
+      });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    this.toastMessage = `Dodano "${part.partName}" do koszyka (ilość: ${quantity})`;
+    this.showToast = true;
+
+    setTimeout(() => {
+      this.showToast = false;
+    }, 2000);
   }
 }
