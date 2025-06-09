@@ -56,14 +56,15 @@ public class OrderController {
     // POST - add new order
     @PostMapping
     @Operation(summary = "Dodaj nowe zamówienie")
-    public ResponseEntity<Order> addOrder(
+    public ResponseEntity<OrderDTO> addOrder(
             @RequestParam("customerEmailAddress") String customerEmailAddress,
             @RequestParam("paymentMethod") String paymentMethod,
             @RequestParam("partId") List<Integer> partsId,
             @RequestParam("quantity") List<Integer> quantities) {
         Order order = orderService.addOrder(customerEmailAddress, "W trakcie", paymentMethod, partsId, quantities, 0.0);
         if (order != null) {
-            return ResponseEntity.ok(orderService.saveOrder(order));
+            OrderDTO orderDTO = orderService.convertOrderToDTO(orderService.saveOrder(order));
+            return ResponseEntity.ok(orderDTO);
         } else {
             return null;
         }

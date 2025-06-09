@@ -54,6 +54,7 @@
             class="form-control"
             style="width: 70px"
             placeholder="Ilość"
+            (change)="part.selectedQuantity = part.selectedQuantity && (part.selectedQuantity > part.leftOnStock) ? part.leftOnStock : part.selectedQuantity"
           />
           <button class="btn btn-primary" (click)="addToCart(part)">
             Dodaj do koszyka

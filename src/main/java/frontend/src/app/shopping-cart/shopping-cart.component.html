@@ -11,8 +11,8 @@
       <div class="cart-item-info">
         <h4>{{ item.partName }}</h4>
         <p>Ilość: {{ item.quantity }}</p>
-        <p>Cena jednostkowa: {{ item.unitPrice | currency:'PLN' }}</p>
-        <p>Wartość: {{ item.quantity * item.unitPrice | currency:'PLN' }}</p>
+        <p>Cena jednostkowa: {{ item.unitPrice | currency:'PLN ' }}</p>
+        <p>Wartość: {{ item.quantity * item.unitPrice | currency:'PLN ' }}</p>
       </div>
 
       <!-- Prawa kolumna: przyciski -->
@@ -24,12 +24,29 @@
         <button class="btn-remove mt-2" (click)="removeItem(item.partId)">Usuń</button>
       </div>
     </div>
-  </div>
 
-    <div class="total">
-      <strong>Łączna wartość koszyka:</strong>
-      {{ getTotalPrice() | currency:'PLN':'symbol':'1.2-2' }}
+    <div class="order-controls">
+      <div class="total">
+        <strong>Łączna wartość koszyka:</strong>
+        {{ getTotalPrice() | currency:'PLN ':'symbol':'1.2-2' }}
+      </div>
+
+      <div class="method">
+        <label for="payment"><strong>Metoda płatności:</strong></label>
+        <select id="payment" [(ngModel)]="paymentMethod" class="form-control form-control-sm">
+          <option value="Przelew">Przelew</option>
+          <option value="Gotówka">Gotówka</option>
+          <option value="Karta">Karta</option>
+        </select>
+      </div>
+
+
     </div>
-
-    <button class="btn btn-danger mt-3" (click)="clearCart()">Wyczyść koszyk</button>
+    <button class="btn btn-danger mt-3" (click)="clearCart()">
+      Wyczyść koszyk
+    </button><br>
+    <button class="btn btn-primary mt-2" (click)="placeOrder()" [disabled]="cartItems.length===0">
+      Złóż zamówienie
+    </button>
+  </div>
 </div>
