@@ -59,7 +59,7 @@ public class PartService {
 
     // get all
     public List<PartDTO> getAllPartsAsDTO() {
-        List<Part> parts = partRepository.findAll();
+        List<Part> parts = partRepository.findByOrderByPartNameAsc();
         return parts.stream()
                 .map(this::convertPartToDTO)
                 .collect(Collectors.toList());
