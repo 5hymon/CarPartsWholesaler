@@ -45,21 +45,20 @@
           <span class="hr-line"></span>
           {{ part.partDescription }}
         </p>
-        <div class="btn-container">
-          <input
-            type="number"
-            [(ngModel)]="part.selectedQuantity"
-            min="1"
-            [max]="part.leftOnStock"
-            class="form-control"
-            style="width: 70px"
-            placeholder="Ilość"
-            (change)="part.selectedQuantity = part.selectedQuantity && (part.selectedQuantity > part.leftOnStock) ? part.leftOnStock : part.selectedQuantity"
-          />
-          <button class="btn btn-primary" (click)="addToCart(part)">
-            Dodaj do koszyka
-          </button>
-        </div>
+        <ng-container *ngIf="isBrowser && userRole === 'user'">
+          <div class="btn-container">
+            <input type="number"
+                   [(ngModel)]="part.selectedQuantity"
+                   min="1"
+                   [max]="part.leftOnStock"
+                   class="form-control"
+                   style="width:70px;"
+                   placeholder="Ilość" />
+            <button class="btn btn-primary" (click)="addToCart(part)">
+              Dodaj do koszyka
+            </button>
+          </div>
+        </ng-container>
       </div>
     </ng-container>
 

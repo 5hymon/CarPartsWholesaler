@@ -126,6 +126,7 @@
     </form>
   </div>
 
+  <!-- Adding Form -->
   <div *ngIf="addingPart" class="part-card extended">
     <h5 class="mb-3">Dodaj nową część</h5>
     <form (ngSubmit)="saveAdd()" #addForm="ngForm">
@@ -180,7 +181,7 @@
         <select id="quantityPerUnit-new"
                 name="quantityPerUnit"
                 class="form-control"
-                [(ngModel)]="newPart.categoryName"
+                [(ngModel)]="newPart.quantityPerUnit"
                 required>
           <option value="" disabled selected>Wybierz jednostkę</option>
           <option value="litr">Litr</option>

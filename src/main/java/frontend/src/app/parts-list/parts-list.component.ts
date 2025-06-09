@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 import { PartsService } from '../services/parts.service';
 import { PartDTO } from '../models/part-dto.model';
@@ -14,6 +15,7 @@ import { PartDTO } from '../models/part-dto.model';
   templateUrl: './parts-list.component.html',
   styleUrls: ['./parts-list.component.css']
 })
+
 export class PartsListComponent implements OnInit {
   parts: PartDTO[] = [];
   filteredParts: PartDTO[] = [];
@@ -27,13 +29,22 @@ export class PartsListComponent implements OnInit {
   activeCategory: string | null = null;
   activePartName: string | null = null;
 
-  private categoryFromUrl: string | null = null; // Store URL category
+  private categoryFromUrl: string | null = null;
+
+  isBrowser: boolean;
+  userRole: string = '';
 
   constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
     private partsService: PartsService,
     private http: HttpClient,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    if (this.isBrowser) {
+      this.userRole = localStorage.getItem('role') || '';
+    }
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -122,32 +133,25 @@ export class PartsListComponent implements OnInit {
   }
 
   addToCart(part: PartDTO): void {
+    if (!this.isBrowser) return; // bezpieczeństwo
     const quantity = part.selectedQuantity || 1;
-
-    // Pobierz aktualny koszyk z localStorage lub stwórz nowy
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-    // Sprawdź, czy element już istnieje w koszyku
-    const existingItem = cart.find((item: any) => item.partId === part.partId);
-
-    if (existingItem) {
-      existingItem.quantity += quantity;
+    const existing = cart.find((i: any) => i.partId === part.partId);
+    if (existing) {
+      existing.quantity += quantity;
     } else {
       cart.push({
         partId: part.partId,
         partName: part.partName,
         unitPrice: part.unitPrice,
-        quantity: quantity
+        quantity
       });
     }
-
     localStorage.setItem('cart', JSON.stringify(cart));
 
-    this.toastMessage = `Dodano "${part.partName}" do koszyka (ilość: ${quantity})`;
+    this.toastMessage = `Dodano "${part.partName}" (×${quantity})`;
     this.showToast = true;
-
-    setTimeout(() => {
-      this.showToast = false;
-    }, 2000);
+    setTimeout(() => this.showToast = false, 2000);
   }
 }
