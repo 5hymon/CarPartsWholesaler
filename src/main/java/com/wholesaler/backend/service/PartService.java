@@ -71,7 +71,7 @@ public class PartService {
     }
 
     // post new part
-    public Part addPart(String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, Boolean isAvailable, String partDescription, String categoryName) {
+    public Part addPart(String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, String partDescription, String categoryName) {
         Optional<Category> optionalCategory = categoryRepository.findByCategoryName(categoryName);
         if (optionalCategory.isPresent()) {
             Part part = new Part();
@@ -79,7 +79,7 @@ public class PartService {
             part.setUnitPrice(unitPrice);
             part.setQuantityPerUnit(quantityPerUnit);
             part.setLeftOnStock(leftOnStock);
-            part.setAvailable(isAvailable);
+            part.setAvailable(leftOnStock > 0);
             part.setPartDescription(partDescription);
             part.setCategoryName(categoryName);
             part.setCategory(optionalCategory.get());
@@ -95,7 +95,7 @@ public class PartService {
     }
 
     // put
-    public Optional<Part> updatePart(Integer id, String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, Boolean isAvailable, String partDescription, String categoryName) {
+    public Optional<Part> updatePart(Integer id, String partName, Double unitPrice, String quantityPerUnit, Integer leftOnStock, String partDescription, String categoryName) {
         Optional<Category> optionalCategory = categoryRepository.findByCategoryName(categoryName);
         if (optionalCategory.isPresent()) {
             return partRepository.findById(id).map(part -> {
@@ -103,7 +103,7 @@ public class PartService {
                 part.setUnitPrice(unitPrice);
                 part.setQuantityPerUnit(quantityPerUnit);
                 part.setLeftOnStock(leftOnStock);
-                part.setAvailable(isAvailable);
+                part.setAvailable(leftOnStock > 0);
                 part.setPartDescription(partDescription);
                 part.setCategoryName(categoryName);
                 part.setCategory(optionalCategory.get());

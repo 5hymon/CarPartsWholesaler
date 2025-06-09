@@ -111,6 +111,10 @@ public class OrderService {
                 Optional<Part> optionalPart = partRepository.findById(i);
                 if (optionalPart.isPresent()) {
                     Part part = optionalPart.get();
+                    part.setLeftOnStock(part.getLeftOnStock() - quantities.get(i));
+                    if (part.getLeftOnStock() == 0) {
+                        part.setAvailable(false);
+                    }
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setOrderId(orderRepository.getLastOrderId() + 1);
                     orderDetail.setPartId(part.getPartId());
