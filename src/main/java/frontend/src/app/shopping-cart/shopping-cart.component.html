@@ -1,1 +1,35 @@
-<p>shopping-cart works!</p>
+<div class="container">
+  <h2>Koszyk</h2>
+
+  <div *ngIf="cartItems.length === 0">
+    <p>Koszyk jest pusty.</p>
+  </div>
+
+  <div *ngIf="cartItems.length > 0">
+    <div *ngFor="let item of cartItems" class="cart-item d-flex justify-content-between align-items-center">
+      <!-- Lewa kolumna: dane -->
+      <div class="cart-item-info">
+        <h4>{{ item.partName }}</h4>
+        <p>Ilość: {{ item.quantity }}</p>
+        <p>Cena jednostkowa: {{ item.unitPrice | currency:'PLN' }}</p>
+        <p>Wartość: {{ item.quantity * item.unitPrice | currency:'PLN' }}</p>
+      </div>
+
+      <!-- Prawa kolumna: przyciski -->
+      <div class="cart-item-actions text-end">
+        <div class="quantity-control">
+          <button class="btn-qty" (click)="decreaseQuantity(item)">−</button>
+          <button class="btn-qty" (click)="increaseQuantity(item)">+</button>
+        </div>
+        <button class="btn-remove mt-2" (click)="removeItem(item.partId)">Usuń</button>
+      </div>
+    </div>
+  </div>
+
+    <div class="total">
+      <strong>Łączna wartość koszyka:</strong>
+      {{ getTotalPrice() | currency:'PLN':'symbol':'1.2-2' }}
+    </div>
+
+    <button class="btn btn-danger mt-3" (click)="clearCart()">Wyczyść koszyk</button>
+</div>

@@ -150,6 +150,12 @@ h1 {
   filter: brightness(0.9);
 }
 
+.btn-primary:active {
+  background-color: var(--accent-color);
+  color: #fff;
+  filter: brightness(0.9);
+}
+
 .btn-edit {
   background-color: var(--accent-color);
   color: #fff;
