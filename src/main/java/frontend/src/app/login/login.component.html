@@ -2,8 +2,8 @@
   <h2>Zaloguj się</h2>
   <form (submit)="login(); $event.preventDefault()">
     <div>
-      <label for="username">Login:</label><br>
-      <input id="username" type="text" [(ngModel)]="username" name="username" required>
+      <label for="email">Email:</label><br>
+      <input id="email" type="email" [(ngModel)]="email" name="emailAddress" required>
     </div>
     <div style="margin-top: 10px;">
       <label for="password">Hasło:</label><br>

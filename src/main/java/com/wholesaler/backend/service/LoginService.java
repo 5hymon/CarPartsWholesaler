@@ -26,6 +26,8 @@ public class LoginService {
         Optional<Customer> customerOpt = customerRepository.findByEmailAddress(emailAddress);
         if (customerOpt.isPresent()) {
             Customer c = customerOpt.get();
+            System.out.println(c.getEmailAddress());
+            System.out.println(c.getPassword());
             if (passwordEncoder.matches(password, c.getPassword())) {
                 return 1; // zwykły użytkownik
             }
@@ -33,6 +35,8 @@ public class LoginService {
         Optional<Employee> employeeOpt = employeeRepository.findByEmailAddress(emailAddress);
         if (employeeOpt.isPresent()) {
             Employee e = employeeOpt.get();
+            System.out.println(e.getEmailAddress());
+            System.out.println(e.getPassword());
             if (passwordEncoder.matches(password, e.getPassword())) {
                 return 2; // admin
             }

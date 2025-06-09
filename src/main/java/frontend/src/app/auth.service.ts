@@ -1,65 +1,72 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
-  loginStatus$ = this.loggedIn.asObservable();
-
-  private roleSubject = new BehaviorSubject<string>('');
-  role$ = this.roleSubject.asObservable();
+  private loggedIn$ = new BehaviorSubject<boolean>(false);
+  role$ = new BehaviorSubject<'user' | 'admin' | ''>('');
 
   private isBrowser: boolean;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
 
     if (this.isBrowser) {
-      const user = localStorage.getItem('user');
-      const role = localStorage.getItem('role');
-      this.loggedIn.next(!!user);
-      this.roleSubject.next(role ?? '');
-    } else {
-      this.loggedIn.next(false);
-      this.roleSubject.next('');
+      const storedRole = localStorage.getItem('role') as ('user'|'admin'|null);
+      if (storedRole) {
+        this.loggedIn$.next(true);
+        this.role$.next(storedRole);
+      }
     }
   }
 
-  login(username: string, password: string): boolean {
-    if (username === 'admin' && password === 'admin') {
-      if (this.isBrowser) {
-        localStorage.setItem('user', username);
-        localStorage.setItem('role', 'admin');
-      }
-      this.loggedIn.next(true);
-      this.roleSubject.next('admin');
-      return true;
-    }
-    if (username === 'user' && password === 'user') {
-      if (this.isBrowser) {
-        localStorage.setItem('user', username);
-        localStorage.setItem('role', 'user');
-      }
-      this.loggedIn.next(true);
-      this.roleSubject.next('user');
-      return true;
-    }
-    return false;
+  /** Obserwable czy zalogowany */
+  get isLoggedIn$() {
+    return this.loggedIn$.asObservable();
   }
 
-  logout(): void {
+  /** Logowanie: zwraca Observable<void> lub błąd */
+  login(email: string, password: string) {
+    const params = new HttpParams()
+      .set('emailAddress', email)
+      .set('password', password);
+
+    return this.http
+      .get('/login', {
+        params,
+        responseType: 'text'
+      })
+      .pipe(
+        map(res => {
+          console.log('Odpowiedź z backendu:', res); // 👈 DODAJ TO
+
+          const code = Number(res.trim());
+          if (code === 1 || code === 2) {
+            const role = code === 1 ? 'user' : 'admin';
+            if (this.isBrowser) {
+              localStorage.setItem('role', role);
+            }
+            this.role$.next(role);
+            this.loggedIn$.next(true);
+          } else {
+            throw new Error('Nieprawidłowy email lub hasło');
+          }
+        }),
+        catchError(err => throwError(() => err))
+      );
+  }
+
+  logout() {
     if (this.isBrowser) {
-      localStorage.removeItem('user');
       localStorage.removeItem('role');
     }
-    this.loggedIn.next(false);
-    this.roleSubject.next('');
-  }
-
-  getRole(): string {
-    return this.roleSubject.value;
+    this.role$.next('');
+    this.loggedIn$.next(false);
   }
 }
+

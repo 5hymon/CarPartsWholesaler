@@ -9,7 +9,7 @@ import { appConfig} from './app/app.config';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(), // Provides HttpClient with SSR compatibility
+    provideHttpClient(withFetch()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay())

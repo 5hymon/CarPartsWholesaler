@@ -15,7 +15,7 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    // GET - get boolean if login credentials are correct
+    // GET - get Integer (1 or 2) if login credentials are correct or Integer (0) if login credentials are incorrect
     @GetMapping
     @Operation(summary = "Spradź poprawniość danych logowania")
     public Integer isLoginSuccessful(

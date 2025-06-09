@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, RouterOutlet} from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,40 +13,17 @@ import { AuthService } from './auth.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title(title: any) {
-      throw new Error('Method not implemented.');
-  }
   isLoggedIn = false;
-  role = '';
+  role: 'user' | 'admin' | '' = '';
   showUserMenu = false;
-  errorMessage = '';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    this.authService.loginStatus$.subscribe(status => {
-      this.isLoggedIn = status;
-      if (!status) {
-        this.role = '';
-        this.showUserMenu = false;
-      }
-    });
-    this.authService.role$.subscribe(r => {
-      this.role = r;
-    });
+    this.auth.isLoggedIn$.subscribe(v => this.isLoggedIn = v);
+    this.auth.role$.subscribe(r => this.role = r as any);
   }
 
-  toggleUserMenu() {
-    this.showUserMenu = !this.showUserMenu;
-  }
-
-  logout() {
-    this.authService.logout();
-    this.showUserMenu = false;
-    this.router.navigate(['/']);
-    this.errorMessage = 'Wylogowano z konta!';
-  }
+  toggleUserMenu() { this.showUserMenu = !this.showUserMenu; }
+  logout() { this.auth.logout(); this.showUserMenu = false; }
 }

@@ -12,21 +12,20 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username = '';
+  email = '';
   password = '';
   errorMessage = '';
 
   constructor(
-    private router: Router,
-    private authService: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {}
 
   login() {
-    const success = this.authService.login(this.username, this.password);
-    if (success) {
-      this.router.navigate(['/']);
-    } else {
-      this.errorMessage = 'Nieprawidłowy login lub hasło!';
-    }
+    this.errorMessage = '';
+    this.auth.login(this.email, this.password).subscribe({
+      next: () => this.router.navigate(['/']),
+      error: () => this.errorMessage = 'Nieprawidłowy email lub hasło'
+    });
   }
 }
