@@ -90,17 +90,9 @@ public class OrderService {
 
     // post new order
     public Order addOrder(String customerEmailAddress, String orderStatus, String paymentMethod, List<Integer> partsId, List<Integer> quantities, Double discount) {
-        System.out.println(customerEmailAddress);
-        System.out.println(orderStatus);
-        System.out.println(paymentMethod);
-        System.out.println(partsId);
-        System.out.println(quantities);
-
         Random random = new Random();
         Integer employeesCount = employeeRepository.getLastEmployeeId();
         Integer randomEmployeeId = random.nextInt(employeesCount - 1) + 1;
-
-        System.out.println(randomEmployeeId);
 
         Optional<Employee> optionalEmployee = employeeRepository.findById(randomEmployeeId);
         Optional<Customer> optionalCustomer = customerRepository.findByEmailAddress(customerEmailAddress);
@@ -108,8 +100,6 @@ public class OrderService {
         if (optionalEmployee.isPresent() && optionalCustomer.isPresent() && partsId.size() == quantities.size()) {
             Employee employee = optionalEmployee.get();
             Customer customer = optionalCustomer.get();
-
-            System.out.println(employee.getEmailAddress());
 
             Order order = new Order();
             order.setEmployee(employee);
@@ -119,27 +109,19 @@ public class OrderService {
             order.setPaymentMethod(paymentMethod);
 
             List<OrderDetail> orderDetails = new ArrayList<>();
-            for (int i = 0; i < partsId.size(); i++) {
-                Integer partId = partsId.get(i);
-                Integer quantity = quantities.get(i);
-
-                Optional<Part> optionalPart = partRepository.findById(partId);
+            for (Integer i : partsId) {
+                Optional<Part> optionalPart = partRepository.findById(i);
                 if (optionalPart.isPresent()) {
                     Part part = optionalPart.get();
-                    part.setLeftOnStock(part.getLeftOnStock() - quantity);
-                    if (part.getLeftOnStock() == 0) {
-                        part.setAvailable(false);
-                    }
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setOrderId(orderRepository.getLastOrderId() + 1);
                     orderDetail.setPartId(part.getPartId());
                     orderDetail.setUnitPrice(part.getUnitPrice());
-                    orderDetail.setQuantity(quantity);
+                    orderDetail.setQuantity(quantities.get(i));
                     orderDetail.setDiscount(discount);
                     orderDetails.add(orderDetail);
                 }
             }
-
             order.setOrderDetails(orderDetails);
 
             return orderRepository.save(order);

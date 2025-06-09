@@ -49,10 +49,9 @@ public class PartController {
             @RequestParam("unitPrice") Double unitPrice,
             @RequestParam("quantityPerUnit") String quantityPerUnit,
             @RequestParam("leftOnStock") Integer leftOnStock,
-            @RequestParam("isAvailable") Boolean isAvailable,
             @RequestParam("partDescription") String partDescription,
             @RequestParam("categoryName") String categoryName) {
-        return partService.addPart(partName, unitPrice, quantityPerUnit, leftOnStock, isAvailable, partDescription, categoryName);
+        return partService.addPart(partName, unitPrice, quantityPerUnit, leftOnStock, partDescription, categoryName);
     }
 
     // PUT - update part by ID
@@ -64,10 +63,9 @@ public class PartController {
             @RequestParam("unitPrice") Double unitPrice,
             @RequestParam("quantityPerUnit") String quantityPerUnit,
             @RequestParam("leftOnStock") Integer leftOnStock,
-            @RequestParam("isAvailable") Boolean isAvailable,
             @RequestParam("partDescription") String partDescription,
             @RequestParam("categoryName") String categoryName) {
-        Optional<Part> partOptional = partService.updatePart(partId, partName, unitPrice, quantityPerUnit, leftOnStock, isAvailable, partDescription, categoryName);
+        Optional<Part> partOptional = partService.updatePart(partId, partName, unitPrice, quantityPerUnit, leftOnStock, partDescription, categoryName);
         if (partOptional.isPresent()) {
             Part part = partOptional.get();
             return ResponseEntity.ok(partService.savePart(part));
