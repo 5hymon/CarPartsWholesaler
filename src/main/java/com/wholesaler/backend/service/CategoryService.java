@@ -47,7 +47,7 @@ public class CategoryService {
 
     // get all
     public List<CategoryDTO> getAllCategoriesAsDTO() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findByOrderByCategoryNameAsc();
         return categories.stream()
                 .map(this::convertCategoryToDTO)
                 .collect(Collectors.toList());

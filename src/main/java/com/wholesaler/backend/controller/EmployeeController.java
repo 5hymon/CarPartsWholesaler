@@ -47,14 +47,13 @@ public class EmployeeController {
     public Employee addEmployee(
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
-            @RequestParam("emailAddress") String emailAddress,
             @RequestParam("password") String password,
             @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("address") String address,
             @RequestParam("city") String city,
             @RequestParam("postalCode") String postalCode,
             @RequestParam("country") String country) {
-        return employeeService.addEmployee(firstName, lastName, emailAddress, password, phoneNumber, address, city, postalCode, country);
+        return employeeService.addEmployee(firstName, lastName, password, phoneNumber, address, city, postalCode, country);
     }
 
     // PUT - update employee by ID

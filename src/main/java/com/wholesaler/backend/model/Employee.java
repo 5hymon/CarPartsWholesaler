@@ -74,6 +74,10 @@ public class Employee {
         this.emailAddress = emailAddress;
     }
 
+    public void setDefaultEmailAddress() {
+        this.setEmailAddress(getFirstName() + "." + getLastName() + "." + getEmployeeId() + "@autoparts.pl");
+    }
+
     public String getPassword() {
         return password;
     }
