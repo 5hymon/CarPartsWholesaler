@@ -69,7 +69,7 @@ public class EmployeeService {
         Employee employee = new Employee();
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
-        employee.setEmailAddress(emailAddress);
+        employee.setDefaultEmailAddress();
         employee.setPassword(passwordEncoder.encode(password));
         employee.setPhoneNumber(phoneNumber);
         employee.setAddress(address);
