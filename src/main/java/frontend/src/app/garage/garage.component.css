@@ -1,0 +1,285 @@
+/* --- 1. Kontener --- */
+.container {
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  position: relative;
+}
+
+/* Backdrop for dimming the background */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 99; /* Below form but above everything else */
+  display: none; /* Hidden by default */
+  pointer-events: all;
+}
+
+.backdrop.active {
+  display: block; /* Show when form is active */
+}
+
+/* Nagłówek */
+h1 {
+  color: var(--header-bg);
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: filter 0.2s;
+}
+
+.btn-primary:active {
+  background-color: var(--accent-color);
+  filter: brightness(0.8);
+}
+
+.btn-primary:hover {
+  filter: brightness(0.9);
+}
+
+/* --- 2. Dropdown: marki i modele --- */
+ul.menu {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-left: 0;
+}
+
+.nav-item.dropdown {
+  position: relative;
+}
+
+/* Główna nazwa marki (link) */
+.nav-item .dropdown-toggle {
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  color: var(--header-bg);
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.nav-item .dropdown-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Menu pojawia się przy hoverze na <li> */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Domyślnie dropdown ukryte */
+.nav-item .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 160px;
+  padding: 0.5rem 0;
+}
+
+.nav-item .dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-item .dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* --- 3. Układ grid dla kart zamiast Bootstrapa --- */
+.row.g-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* --- 4. Kafelki samochodów --- */
+.car-card {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  min-height: 120px;
+}
+
+.car-card.extended {
+  position: fixed; /* Fixed to stay centered regardless of scroll */
+  width: 400px; /* 2x normal card width */
+  max-width: 90vw;
+  background-color: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  z-index: 100; /* Above backdrop and cards */
+  padding: 0.75rem;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  transition: none; /* Disable hover transitions */
+}
+
+.car-card.extended:hover {
+  transform: translate(-50%, -50%); /* Override hover to stay centered */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Maintain shadow */
+}
+
+.car-card form {
+  background-color: #f9f9f9;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.car-card .btn-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.car-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Disable hover transform for extended form */
+.car-card.extended:hover {
+  transform: translate(-50%, -50%); /* Stay centered */
+}
+
+.car-card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Przyciski */
+.car-card .btn {
+  padding: 0.2rem 0.4rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  border-radius: 0.2rem;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+/* Przycisk Edytuj */
+.btn-edit {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.btn-edit:hover {
+  filter: brightness(0.9);
+}
+
+/* Przycisk Zapisz */
+.btn-save {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.btn-save:hover {
+  filter: brightness(0.9);
+}
+
+/* Przycisk Anuluj */
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  filter: brightness(0.9);
+}
+
+/* Przycisk Usuń */
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  filter: brightness(0.9);
+}
+
+.car-card .form-label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.car-card .form-control {
+  width: 100%;
+  padding: 0.3rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+
+/* --- 5. Responsywność --- */
+@media (max-width: 768px) {
+  .dropdown-toggle {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .dropdown-item {
+    font-size: 0.9rem;
+  }
+
+  .car-card.extended {
+    width: 90vw;
+    max-width: 300px;
+  }
+
+  .row.g-4 {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .car-card {
+    min-height: 100px;
+  }
+
+  .car-card .btn {
+    padding: 0.15rem 0.3rem;
+    font-size: 0.75rem;
+  }
+}

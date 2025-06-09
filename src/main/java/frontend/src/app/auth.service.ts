@@ -49,6 +49,7 @@ export class AuthService {
             const role = code === 1 ? 'user' : 'admin';
             if (this.isBrowser) {
               localStorage.setItem('role', role);
+              localStorage.setItem('email', email);
             }
             this.role$.next(role);
             this.loggedIn$.next(true);
@@ -60,9 +61,14 @@ export class AuthService {
       );
   }
 
+  getCurrentEmail(): string | null {
+    return this.isBrowser ? localStorage.getItem('email') : null;
+  }
+
   logout() {
     if (this.isBrowser) {
       localStorage.removeItem('role');
+      localStorage.removeItem('email');
     }
     this.role$.next('');
     this.loggedIn$.next(false);

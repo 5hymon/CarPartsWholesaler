@@ -64,6 +64,11 @@ public class CustomerService {
         return customerRepository.findById(customerId).map(this::convertCustomerToDTO);
     }
 
+    // get by email
+    public Optional<CustomerDTO> getCustomerByEmailAsDTO(String emailAddress) {
+        return customerRepository.findByEmailAddress(emailAddress).map(this::convertCustomerToDTO);
+    }
+
     // post new customer
     public Customer addCustomer(String firstName, String lastName, String emailAddress, String password, String phoneNumber, String address, String city, String postalCode, String country) {
         Customer customer = new Customer();
