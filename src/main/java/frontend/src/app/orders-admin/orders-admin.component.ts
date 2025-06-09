@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { OrdersService } from '../services/orders.service';
 import { OrderDTO, OrderDetailsDTO } from '../models/order-dto.model';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
 
 interface OrderWithFlags extends OrderDTO {
   isEditing: boolean;
@@ -30,6 +30,13 @@ export class OrdersAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadOrders();
+  }
+
+  calculateTotalValue(order: OrderDTO): number {
+    return order.orderDetails.reduce((total, detail) => {
+      const itemValue = detail.quantity * detail.partUnitPrice * (1 - detail.discount);
+      return total + itemValue;
+    }, 0);
   }
 
   private loadOrders(): void {

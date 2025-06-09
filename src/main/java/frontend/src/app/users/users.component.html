@@ -52,7 +52,12 @@
                type="text"
                class="form-control"
                [(ngModel)]="editedUser.firstName"
-               required />
+               required
+               pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"
+               #firstName="ngModel" />
+        <div *ngIf="firstName.invalid && firstName.touched" class="error">
+          Imię musi zaczynać się z wielkiej litery i zawierać tylko litery.
+        </div>
       </div>
       <div class="mb-2">
         <label for="lastName-{{editingUserId}}" class="form-label">Nazwisko:</label>
@@ -61,7 +66,12 @@
                type="text"
                class="form-control"
                [(ngModel)]="editedUser.lastName"
-               required />
+               required
+               pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"
+               #lastName="ngModel" />
+        <div *ngIf="lastName.invalid && lastName.touched" class="error">
+          Nazwisko musi zaczynać się z wielkiej litery i zawierać tylko litery.
+        </div>
       </div>
       <div class="mb-2">
         <label for="email-{{editingUserId}}" class="form-label">Email:</label>
@@ -70,7 +80,12 @@
                type="email"
                class="form-control"
                [(ngModel)]="editedUser.emailAddress"
-               required />
+               required
+               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+               #emailAddress="ngModel" />
+        <div *ngIf="emailAddress.invalid && emailAddress.touched" class="error">
+          Proszę podać poprawny email.
+        </div>
       </div>
       <div class="mb-2">
         <label for="phone-{{editingUserId}}" class="form-label">Telefon:</label>
@@ -79,7 +94,12 @@
                type="text"
                class="form-control"
                [(ngModel)]="editedUser.phoneNumber"
-               required />
+               required
+               pattern="\d{9}"
+               #phoneNumber="ngModel" />
+        <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="error">
+          Telefon musi zawierać dokładnie 9 cyfr.
+        </div>
       </div>
       <div class="mb-2">
         <label for="address-{{editingUserId}}" class="form-label">Adres:</label>
@@ -88,7 +108,11 @@
                type="text"
                class="form-control"
                [(ngModel)]="editedUser.address"
-               required />
+               required
+               #address="ngModel" />
+        <div *ngIf="address.invalid && address.touched" class="error">
+          Adres jest wymagany.
+        </div>
       </div>
       <div class="mb-2">
         <label for="city-{{editingUserId}}" class="form-label">Miasto:</label>
@@ -97,7 +121,12 @@
                type="text"
                class="form-control"
                [(ngModel)]="editedUser.city"
-               required />
+               required
+               pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"
+               #city="ngModel" />
+        <div *ngIf="city.invalid && city.touched" class="error">
+          Miasto musi zaczynać się z wielkiej litery i zawierać tylko litery.
+        </div>
       </div>
       <div class="mb-2">
         <label for="postal-{{editingUserId}}" class="form-label">Kod pocztowy:</label>
@@ -106,7 +135,12 @@
                type="text"
                class="form-control"
                [(ngModel)]="editedUser.postalCode"
-               required />
+               required
+               pattern="\d{2}-\d{3}"
+               #postalCode="ngModel" />
+        <div *ngIf="postalCode.invalid && postalCode.touched" class="error">
+          Kod pocztowy musi być w formacie 12-345.
+        </div>
       </div>
       <div class="mb-3">
         <label for="country-{{editingUserId}}" class="form-label">Kraj:</label>
@@ -115,15 +149,16 @@
                type="text"
                class="form-control"
                [(ngModel)]="editedUser.country"
-               required />
+               required
+               pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"
+               #country="ngModel" />
+        <div *ngIf="country.invalid && country.touched" class="error">
+          Kraj musi zaczynać się z wielkiej litery i zawierać tylko litery.
+        </div>
       </div>
       <div class="btn-container">
-        <button type="submit" class="btn btn-sm btn-save" [disabled]="editForm.invalid">
-          Zapisz
-        </button>
-        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">
-          Anuluj
-        </button>
+        <button type="submit" class="btn btn-sm btn-save" [disabled]="editForm.invalid">Zapisz</button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">Anuluj</button>
       </div>
     </form>
   </div>

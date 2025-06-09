@@ -9,28 +9,6 @@
     {{ errorMessage }}
   </div>
 
-  <!-- Dropdown: Categories and Part Names -->
-  <ul class="menu">
-    <li *ngFor="let group of groupByCategory()" class="nav-item dropdown">
-      <a href="javascript:void(0)"
-         class="dropdown-toggle"
-         (click)="selectByCategory(group.category)">
-        {{ group.category }}
-      </a>
-      <ul class="dropdown-menu">
-        <li *ngFor="let part of group.parts">
-          <a class="dropdown-item"
-             href="javascript:void(0)"
-             (click)="selectCategoryPart(group.category, part.partName)">
-            {{ part.partName }}
-          </a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-
-  <br />
-
   <div *ngIf="showToast" class="toast-message">
     {{ toastMessage }}
   </div>
@@ -53,7 +31,8 @@
                    [max]="part.leftOnStock"
                    class="form-control"
                    style="width:70px;"
-                   placeholder="Ilość" />
+                   placeholder="Ilość"
+                   (change)="part.selectedQuantity = part.selectedQuantity && (part.selectedQuantity > part.leftOnStock) ? part.leftOnStock : part.selectedQuantity"/>
             <button class="btn btn-primary" (click)="addToCart(part)">
               Dodaj do koszyka
             </button>

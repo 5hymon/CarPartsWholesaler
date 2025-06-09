@@ -6,6 +6,15 @@
   position: relative;
 }
 
+input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+.error {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
 /* Backdrop do przyciemnienia ekranu podczas formularza */
 .backdrop {
   position: fixed;

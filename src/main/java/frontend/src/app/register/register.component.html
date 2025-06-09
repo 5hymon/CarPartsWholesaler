@@ -6,11 +6,11 @@
     <div class="form-row">
       <div class="form-group">
         <label>Imię</label>
-        <input name="firstName" [(ngModel)]="model.firstName" required />
+        <input name="firstName" [(ngModel)]="model.firstName" required pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/>
       </div>
       <div class="form-group">
         <label>Nazwisko</label>
-        <input name="lastName" [(ngModel)]="model.lastName" required />
+        <input name="lastName" [(ngModel)]="model.lastName" required pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/>
       </div>
     </div>
 
@@ -42,24 +42,27 @@
     <div class="form-row">
       <div class="form-group">
         <label>Telefon</label>
-        <input name="phoneNumber" [(ngModel)]="model.phoneNumber" required />
+        <input name="phoneNumber" [(ngModel)]="model.phoneNumber" required pattern="\d{9}" />
+        <div *ngIf="pc.invalid && pc.touched" class="error">
+          Telefon w formacie 123456789.
+        </div>
       </div>
       <div class="form-group">
         <label>Kraj</label>
-        <input name="country" [(ngModel)]="model.country" required />
+        <input name="country" [(ngModel)]="model.country" required pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/>
       </div>
     </div>
 
 
     <div class="form-group">
       <label>Ulica</label>
-      <input name="address" [(ngModel)]="model.address" required />
+      <input name="address" [(ngModel)]="model.address" required pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label>Miasto</label>
-        <input name="city" [(ngModel)]="model.city" required />
+        <input name="city" [(ngModel)]="model.city" required pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/>
       </div>
       <div class="form-group">
         <label>Kod pocztowy</label>

@@ -15,12 +15,13 @@
           <!-- Jeżeli NIE edytujemy: pokaz podsumowanie i przyciski -->
           <ng-container *ngIf="!order.isEditing; else editTpl">
             <div class="order-summary">
-              <div><strong>ID:</strong> {{ order.orderId }}</div>
+              <div><strong>Numer zamówienia:</strong> {{ order.orderId }}</div>
               <div><strong>Data:</strong> {{ order.orderDate | date:'short' }}</div>
               <div><strong>Klient ID:</strong> {{ order.customerId }}</div>
               <div><strong>Pracownik ID:</strong> {{ order.employeeId }}</div>
               <div><strong>Status:</strong> {{ order.orderStatus }}</div>
               <div><strong>Płatność:</strong> {{ order.paymentMethod }}</div>
+              <div><strong>Wartość zamówienia:</strong> {{ calculateTotalValue(order) | number:'1.2-2' }} zł</div>
 
               <div class="btn-container">
                 <button class="btn btn-sm btn-edit" (click)="startEdit(order)">
@@ -54,7 +55,7 @@
                   <td>{{ d.partDescription }}</td>
                   <td>{{ d.partUnitPrice | number:'1.2-2' }}</td>
                   <td>{{ d.quantity }}</td>
-                  <td>{{ d.discount }}%</td>
+                  <td>{{ d.discount*100 }}%</td>
                   <td>{{ d.orderValue | number:'1.2-2' }}</td>
                 </tr>
                 </tbody>

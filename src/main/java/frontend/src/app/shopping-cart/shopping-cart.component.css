@@ -69,15 +69,27 @@
   width: 2rem;
   height: 2rem;
   font-size: 1.2rem;
-  border: 1px solid #007bff;
-  background-color: #007bff;
+  border: none;
+  background-color: var(--accent-color);
   color: #fff;
   border-radius: 0.25rem;
   cursor: pointer;
 }
 
+.btn-primary{
+  background-color: var(--accent-color);
+}
+
+.btn-primary:hover {
+  filter: brightness(0.9);
+}
+
+.btn-primary:active {
+  background-color: var(--page-bg);
+}
+
 .btn-qty:hover {
-  background-color: #0056b3;
+  filter: brightness(0.9);
 }
 
 .btn-remove {
@@ -91,5 +103,5 @@
 }
 
 .btn-remove:hover {
-  background-color: #a71d2a;
+  filter: brightness(0.9);
 }

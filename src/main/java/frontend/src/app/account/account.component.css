@@ -51,7 +51,12 @@ button[type="button"]:hover {
   background-color: #5a6268;
 }
 
+input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
 .error {
-  color: red;
-  margin-top: 1rem;
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
 }

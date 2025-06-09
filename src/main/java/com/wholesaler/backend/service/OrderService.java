@@ -109,15 +109,19 @@ public class OrderService {
             order.setPaymentMethod(paymentMethod);
 
             List<OrderDetail> orderDetails = new ArrayList<>();
-            for (Integer i : partsId) {
-                Optional<Part> optionalPart = partRepository.findById(i);
+            for (int i = 0; i < partsId.size(); i++) {
+                Integer partId = partsId.get(i);
+                Integer quantity = quantities.get(i);
+                Optional<Part> optionalPart = partRepository.findById(partId);
                 if (optionalPart.isPresent()) {
                     Part part = optionalPart.get();
+                    part.setLeftOnStock(part.getLeftOnStock() - quantity);
+                    part.setAvailable(part.getLeftOnStock() > 0);
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setOrderId(orderRepository.getLastOrderId() + 1);
                     orderDetail.setPartId(part.getPartId());
                     orderDetail.setUnitPrice(part.getUnitPrice());
-                    orderDetail.setQuantity(quantities.get(i));
+                    orderDetail.setQuantity(quantity);
                     orderDetail.setDiscount(discount);
                     orderDetails.add(orderDetail);
                 }

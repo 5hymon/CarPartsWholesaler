@@ -133,24 +133,36 @@ export class PartsListComponent implements OnInit {
   }
 
   addToCart(part: PartDTO): void {
-    if (!this.isBrowser) return; // bezpieczeństwo
-    const quantity = part.selectedQuantity || 1;
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (!this.isBrowser) return;
 
-    const existing = cart.find((i: any) => i.partId === part.partId);
+    const wanted = part.selectedQuantity || 1;
+    const cart: any[] = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existing = cart.find(i => i.partId === part.partId);
+
+    const currentInCart = existing ? existing.quantity : 0;
+    const newTotal = currentInCart + wanted;
+
+    if (newTotal > part.leftOnStock) {
+      // Nie można dodać więcej niż na stanie
+      this.toastMessage = `Nie możesz dodać ${wanted} szt. "${part.partName}". Na stanie jest tylko ${part.leftOnStock - currentInCart}.`;
+      this.showToast = true;
+      setTimeout(() => this.showToast = false, 2000);
+      return;
+    }
+
     if (existing) {
-      existing.quantity += quantity;
+      existing.quantity = newTotal;
     } else {
       cart.push({
         partId: part.partId,
         partName: part.partName,
         unitPrice: part.unitPrice,
-        quantity
+        quantity: wanted
       });
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
 
-    this.toastMessage = `Dodano "${part.partName}" (×${quantity})`;
+    localStorage.setItem('cart', JSON.stringify(cart));
+    this.toastMessage = `Dodano ${wanted} × "${part.partName}" do koszyka.`;
     this.showToast = true;
     setTimeout(() => this.showToast = false, 2000);
   }

@@ -14,14 +14,14 @@
 <div *ngIf="editedUser">
   <h2>Edycja danych</h2>
   <form (ngSubmit)="saveEdit()">
-    <label>Imię: <input [(ngModel)]="editedUser.firstName" name="firstName" /></label><br />
-    <label>Nazwisko: <input [(ngModel)]="editedUser.lastName" name="lastName" /></label><br />
-    <label>Email: <input [(ngModel)]="editedUser.emailAddress" name="emailAddress" /></label><br />
-    <label>Telefon: <input [(ngModel)]="editedUser.phoneNumber" name="phoneNumber" /></label><br />
-    <label>Adres: <input [(ngModel)]="editedUser.address" name="address" /></label><br />
-    <label>Miasto: <input [(ngModel)]="editedUser.city" name="city" /></label><br />
-    <label>Kod pocztowy: <input [(ngModel)]="editedUser.postalCode" name="postalCode" /></label><br />
-    <label>Kraj: <input [(ngModel)]="editedUser.country" name="country" /></label><br />
+    <label>Imię: <input [(ngModel)]="editedUser.firstName" name="firstName" pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/></label><br />
+    <label>Nazwisko: <input [(ngModel)]="editedUser.lastName" name="lastName" pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/></label><br />
+    <label>Email: <input [(ngModel)]="editedUser.emailAddress" type="email" name="emailAddress" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"/></label><br />
+    <label>Telefon: <input [(ngModel)]="editedUser.phoneNumber" name="phoneNumber" pattern="\d{9}"/></label><br />
+    <label>Adres: <input [(ngModel)]="editedUser.address" name="address"/></label><br />
+    <label>Miasto: <input [(ngModel)]="editedUser.city" name="city" pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/></label><br />
+    <label>Kod pocztowy: <input [(ngModel)]="editedUser.postalCode" name="postalCode" pattern="\d{2}-\d{3}"/></label><br />
+    <label>Kraj: <input [(ngModel)]="editedUser.country" name="country" pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]*$"/></label><br />
     <button type="submit">Zapisz</button>
     <button type="button" (click)="cancelEdit()">Anuluj</button>
   </form>
