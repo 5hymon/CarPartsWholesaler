@@ -37,15 +37,14 @@ export class AuthService {
       .set('password', password);
 
     return this.http
-      .get('/login', {
-        params,
-        responseType: 'text'
+      .get<number>('http://localhost:8080/login/all', {
+        params
       })
       .pipe(
         map(res => {
           console.log('Odpowiedź z backendu:', res); // 👈 DODAJ TO
 
-          const code = Number(res.trim());
+          const code = Number(res);
           if (code === 1 || code === 2) {
             const role = code === 1 ? 'user' : 'admin';
             if (this.isBrowser) {
