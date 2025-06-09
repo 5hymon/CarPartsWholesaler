@@ -4,14 +4,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-@IdClass(PartCompatibilityId.class)
 @Table(name = "PartCompatibility")
 public class PartCompatibility {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "compatibilityId")
+    private Integer compatibilityId;
+
     @Column(name = "carId")
     private Integer carId;
 
-    @Id
     @Column(name = "partId")
     private Integer partId;
 
@@ -26,12 +28,12 @@ public class PartCompatibility {
     @JsonBackReference
     private Part part;
 
-    public PartCompatibility() {
+    public Integer getCompatibilityId() {
+        return compatibilityId;
     }
 
-    public PartCompatibility(Integer partId, Integer carId) {
-        this.partId = partId;
-        this.carId = carId;
+    public void setCompatibilityId(Integer compatibilityId) {
+        this.compatibilityId = compatibilityId;
     }
 
     public Integer getCarId() {

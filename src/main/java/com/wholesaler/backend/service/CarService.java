@@ -40,6 +40,7 @@ public class CarService {
                     partDTO.setLeftOnStock(part.getLeftOnStock());
                     partDTO.setAvailable(part.getAvailable());
                     partDTO.setPartDescription(part.getPartDescription());
+                    partDTO.setCategoryName(part.getCategoryName());
                     return partDTO;
                 }).collect(Collectors.toList());
 
