@@ -81,6 +81,13 @@ public class OrderService {
         return orderRepository.findById(id).map(this::convertOrderToDTO);
     }
 
+    public List<OrderDTO> getOrdersByEmailAsDTO(String email) {
+        List<Order> orders = orderRepository.findByCustomerEmail(email);
+        return orders.stream()
+                .map(this::convertOrderToDTO)
+                .collect(Collectors.toList());
+    }
+
     // post new order
     public Order addOrder(Integer employeeId, Integer customerId, String orderStatus, String paymentMethod, Integer partId, Integer quantity, Double discount) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);

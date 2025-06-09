@@ -1,1 +1,64 @@
-<p>orders-user works!</p>
+<div class="container">
+  <h1 class="mb-4 text-center">Moje zamówienia</h1>
+
+  <!-- Ładowanie / błąd -->
+  <div *ngIf="loading" class="text-center">
+    <p>Ładowanie zamówień…</p>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Lista zamówień -->
+  <div *ngIf="!loading && !errorMessage">
+    <div class="row g-4">
+      <ng-container *ngFor="let order of orders">
+        <div class="order-card">
+          <div class="order-summary">
+            <div><strong>ID:</strong> {{ order.orderId }}</div>
+            <div><strong>Data:</strong> {{ order.orderDate | date:'short' }}</div>
+            <div><strong>Status:</strong> {{ order.orderStatus }}</div>
+            <div><strong>Płatność:</strong> {{ order.paymentMethod }}</div>
+            <div class="btn-container">
+              <button class="btn btn-sm btn-secondary details-toggle"
+                      (click)="toggleDetails(order)">
+                {{ order.showDetails ? 'Ukryj szczegóły' : 'Pokaż szczegóły' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="order-details" *ngIf="order.showDetails">
+            <table>
+              <thead>
+              <tr>
+                <th>ID części</th>
+                <th>Nazwa</th>
+                <th>Opis</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+                <th>Rabat</th>
+                <th>Wartość</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let d of order.orderDetails">
+                <td>{{ d.partID }}</td>
+                <td>{{ d.partName }}</td>
+                <td>{{ d.partDescription }}</td>
+                <td>{{ d.partUnitPrice | number:'1.2-2' }}</td>
+                <td>{{ d.quantity }}</td>
+                <td>{{ d.discount }}%</td>
+                <td>{{ d.orderValue | number:'1.2-2' }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ng-container>
+
+      <div *ngIf="!loading && orders.length === 0" class="text-center">
+        <p>Nie masz jeszcze żadnych zamówień.</p>
+      </div>
+    </div>
+  </div>
+</div>

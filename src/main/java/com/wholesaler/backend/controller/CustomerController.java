@@ -41,6 +41,7 @@ public class CustomerController {
         }
     }
 
+    // GET /customers/email/{emailAddress} - get customer by ID
     @GetMapping("/email/{emailAddress}")
     @Operation(summary = "Pobierz klienta po email")
     public ResponseEntity<CustomerDTO> getCustomer(@PathVariable("emailAddress") String emailAddress) {

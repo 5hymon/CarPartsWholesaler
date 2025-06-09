@@ -41,6 +41,16 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    // GET /orders/byemail/{emailAddress} - get order by email
+    @GetMapping("/byemail/{emailAddress}")
+    @Operation(summary = "Pobierz zamówienia klienta po adresie email")
+    public ResponseEntity<List<OrderDTO>> getOrdersByEmail(@PathVariable String emailAddress) {
+        List<OrderDTO> orders = orderService.getOrdersByEmailAsDTO(emailAddress);
+        if (orders.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(orders);
+    }
 
     // POST - add new order
     @PostMapping
