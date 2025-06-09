@@ -17,7 +17,7 @@ public class LoginController {
 
     // GET - get boolean if login credentials are correct
     @GetMapping("/all")
-    @Operation(summary = "Spradź poprawniość danych logowania")
+    @Operation(summary = "Sprawdź poprawniość danych logowania")
     public Integer isLoginSuccessful(
             @RequestParam("emailAddress") String emailAddress,
             @RequestParam("password") String password

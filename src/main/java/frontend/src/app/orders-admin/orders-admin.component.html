@@ -51,7 +51,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let d of order.orderDetails">
-                  <td>{{ d.partID }}</td>
+                  <td>{{ d.partId }}</td>
                   <td>{{ d.partName }}</td>
                   <td>{{ d.partDescription }}</td>
                   <td>{{ d.partUnitPrice | number:'1.2-2' }}</td>
@@ -105,14 +105,14 @@
                              class="form-control-inline"
                              [(ngModel)]="order.editableDetails[i].quantity"
                              name="qty-{{ order.orderId }}-{{ i }}"
-                             required />
+                             required/>
                       <span class="label-inline">Rabat (%):</span>
                       <input type="number"
                              min="0" max="100"
                              class="form-control-inline"
                              [(ngModel)]="order.editableDetails[i].discount"
                              name="disc-{{ order.orderId }}-{{ i }}"
-                             required />
+                             required/>
                     </div>
                   </li>
                 </ul>

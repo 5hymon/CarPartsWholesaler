@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { OrdersService } from '../services/orders.service';
-import { OrderDTO, OrderDetailsDTO } from '../models/order-dto.model';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {OrdersService} from '../services/orders.service';
+import {OrderDTO, OrderDetailsDTO} from '../models/order-dto.model';
 
 interface OrderWithView extends OrderDTO {
   showDetails: boolean;
@@ -19,7 +19,8 @@ export class OrdersUserComponent implements OnInit {
   loading = false;
   errorMessage = '';
 
-  constructor(private ordersService: OrdersService) {}
+  constructor(private ordersService: OrdersService) {
+  }
 
   ngOnInit(): void {
     this.loadUserOrders();

@@ -17,7 +17,7 @@ export interface OrderDTO {
 // src/app/models/order-dto.model.ts
 
 export interface OrderDetailsDTO {
-  partID: number;
+  partId: number;
   partName: string;
   partDescription: string;
   partUnitPrice: number;

@@ -34,7 +34,7 @@ public class LoginService {
             if (passwordEncoder.matches(password, c.getPassword())) {
                 return 1; // zwykły użytkownik
             } else if (password.equals(c.getPassword())) {
-                return 2;
+                return 1;
             }
         }
         Optional<Employee> employeeOpt = employeeRepository.findByEmailAddress(emailAddress);

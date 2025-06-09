@@ -58,7 +58,7 @@ public class OrderService {
         OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
         orderDetailDTO.setDetailId(detail.getDetailId());
         orderDetailDTO.setOrderId(detail.getOrderId());
-        orderDetailDTO.setPartId(part.getPartId());
+        orderDetailDTO.setPartId(detail.getPartId());
         orderDetailDTO.setPartName(part.getPartName());
         orderDetailDTO.setPartDescription(part.getPartDescription());
         orderDetailDTO.setPartUnitPrice(part.getUnitPrice());
