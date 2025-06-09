@@ -65,7 +65,7 @@ public class EmployeeService {
     }
 
     // post new employee
-    public Employee addEmployee(String firstName, String lastName, String emailAddress, String password, String phoneNumber, String address, String city, String postalCode, String country) {
+    public Employee addEmployee(String firstName, String lastName, String password, String phoneNumber, String address, String city, String postalCode, String country) {
         Employee employee = new Employee();
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
