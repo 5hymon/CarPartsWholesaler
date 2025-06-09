@@ -8,6 +8,7 @@ export interface EmployeeDTO {
   firstName: string;
   lastName: string;
   emailAddress: string;
+  password: string;
   phoneNumber: string;
   address: string;
   city: string;
@@ -38,6 +39,7 @@ export class EmployeesComponent implements OnInit {
     firstName: '',
     lastName: '',
     emailAddress: '',
+    password: '',
     phoneNumber: '',
     address: '',
     city: '',
@@ -135,6 +137,7 @@ export class EmployeesComponent implements OnInit {
       firstName: '',
       lastName: '',
       emailAddress: '',
+      password: '',
       phoneNumber: '',
       address: '',
       city: '',
@@ -153,6 +156,7 @@ export class EmployeesComponent implements OnInit {
       !this.newEmployee.firstName ||
       !this.newEmployee.lastName ||
       !this.newEmployee.emailAddress ||
+      !this.newEmployee.password ||
       !this.newEmployee.phoneNumber ||
       !this.newEmployee.address ||
       !this.newEmployee.city ||
@@ -166,6 +170,7 @@ export class EmployeesComponent implements OnInit {
       .set('firstName', this.newEmployee.firstName)
       .set('lastName', this.newEmployee.lastName)
       .set('emailAddress', this.newEmployee.emailAddress)
+      .set('password', this.newEmployee.password)
       .set('phoneNumber', this.newEmployee.phoneNumber)
       .set('address', this.newEmployee.address)
       .set('city', this.newEmployee.city)

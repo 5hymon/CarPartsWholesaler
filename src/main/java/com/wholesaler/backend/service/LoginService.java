@@ -24,24 +24,28 @@ public class LoginService {
     // log in
     public Integer areLogCredentialsCorrect(String emailAddress, String password) {
         Optional<Customer> customerOpt = customerRepository.findByEmailAddress(emailAddress);
-        System.out.println("Given Email: " + emailAddress);
-        System.out.println("Given Password: " + password);
+//        System.out.println("Given Email: " + emailAddress);
+//        System.out.println("Given Password: " + password);
 
         if (customerOpt.isPresent()) {
             Customer c = customerOpt.get();
-            System.out.println("USR: " + c.getEmailAddress());
-            System.out.println("USR: " + c.getPassword());
+//            System.out.println("USR: " + c.getEmailAddress());
+//            System.out.println("USR: " + c.getPassword());
             if (passwordEncoder.matches(password, c.getPassword())) {
                 return 1; // zwykły użytkownik
+            } else if (password.equals(c.getPassword())) {
+                return 2;
             }
         }
         Optional<Employee> employeeOpt = employeeRepository.findByEmailAddress(emailAddress);
         if (employeeOpt.isPresent()) {
             Employee e = employeeOpt.get();
-            System.out.println("EMP: " + e.getEmailAddress());
-            System.out.println("EMP: " + e.getPassword());
+//            System.out.println("EMP: " + e.getEmailAddress());
+//            System.out.println("EMP: " + e.getPassword());
             if (passwordEncoder.matches(password, e.getPassword())) {
                 return 2; // admin
+            } else if (password.equals(e.getPassword())) {
+                return 2;
             }
         }
         return 0; // nieudane logowanie

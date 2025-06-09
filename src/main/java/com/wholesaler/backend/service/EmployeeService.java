@@ -5,6 +5,7 @@ import com.wholesaler.backend.dto.OrderSimpleDTO;
 import com.wholesaler.backend.model.Employee;
 import com.wholesaler.backend.model.Order;
 import com.wholesaler.backend.repository.EmployeeRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private EmployeeDTO convertEmployeeToDTO(Employee employee) {
@@ -62,18 +65,18 @@ public class EmployeeService {
     }
 
     // post new employee
-    public Employee addEmployee(String firstName, String lastName, String emailAddress, String phoneNumber, String address, String city, String postalCode, String country) {
+    public Employee addEmployee(String firstName, String lastName, String emailAddress, String password, String phoneNumber, String address, String city, String postalCode, String country) {
         Employee employee = new Employee();
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setEmailAddress(emailAddress);
+        employee.setPassword(passwordEncoder.encode(password));
         employee.setPhoneNumber(phoneNumber);
         employee.setAddress(address);
         employee.setCity(city);
         employee.setPostalCode(postalCode);
         employee.setCountry(country);
         employee.setOrders(null);
-        employee.setFistPassword();
         return employeeRepository.save(employee);
     }
 
