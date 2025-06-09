@@ -41,6 +41,7 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     // GET /orders/byemail/{emailAddress} - get order by email
     @GetMapping("/byemail/{emailAddress}")
     @Operation(summary = "Pobierz zamówienia klienta po adresie email")
@@ -56,14 +57,11 @@ public class OrderController {
     @PostMapping
     @Operation(summary = "Dodaj nowe zamówienie")
     public ResponseEntity<Order> addOrder(
-            @RequestParam("employeeId") Integer employeeId,
-            @RequestParam("customerId") Integer customerId,
-            @RequestParam("orderStatus") String orderStatus,
+            @RequestParam("customerEmailAddress") String customerEmailAddress,
             @RequestParam("paymentMethod") String paymentMethod,
-            @RequestParam("partId") Integer partId,
-            @RequestParam("quantity") Integer quantity,
-            @RequestParam("discount") Double discount) {
-        Order order = orderService.addOrder(employeeId, customerId, orderStatus, paymentMethod, partId, quantity, discount);
+            @RequestParam("partId") List<Integer> partsId,
+            @RequestParam("quantity") List<Integer> quantities) {
+        Order order = orderService.addOrder(customerEmailAddress, "W trakcie", paymentMethod, partsId, quantities, 0.0);
         if (order != null) {
             return ResponseEntity.ok(orderService.saveOrder(order));
         } else {

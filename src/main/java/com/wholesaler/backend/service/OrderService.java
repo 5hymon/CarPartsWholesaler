@@ -14,9 +14,7 @@ import com.wholesaler.backend.repository.PartRepository;
 import com.wholesaler.backend.repository.OrderDetailsRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,30 +87,40 @@ public class OrderService {
     }
 
     // post new order
-    public Order addOrder(Integer employeeId, Integer customerId, String orderStatus, String paymentMethod, Integer partId, Integer quantity, Double discount) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
-        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        Optional<Part> optionalPart = partRepository.findById(partId);
+    public Order addOrder(String customerEmailAddress, String orderStatus, String paymentMethod, List<Integer> partsId, List<Integer> quantities, Double discount) {
+        Random random = new Random();
+        Integer employeesCount = employeeRepository.getLastEmployeeId();
+        Integer randomEmployeeId = random.nextInt(employeesCount - 1) + 1;
 
-        if (optionalEmployee.isPresent() && optionalCustomer.isPresent() && optionalPart.isPresent()) {
-            Date date = new Date();
+        Optional<Employee> optionalEmployee = employeeRepository.findById(randomEmployeeId);
+        Optional<Customer> optionalCustomer = customerRepository.findByEmailAddress(customerEmailAddress);
+
+        if (optionalEmployee.isPresent() && optionalCustomer.isPresent() && partsId.size() == quantities.size()) {
             Employee employee = optionalEmployee.get();
             Customer customer = optionalCustomer.get();
-            Part part = optionalPart.get();
+
             Order order = new Order();
             order.setEmployee(employee);
             order.setCustomer(customer);
-            order.setOrderDate(date);
+            order.setOrderDate(new Date());
             order.setOrderStatus(orderStatus);
             order.setPaymentMethod(paymentMethod);
 
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setOrderId(orderRepository.getLastOrderId() + 1);
-            orderDetail.setPartId(partId);
-            orderDetail.setUnitPrice(part.getUnitPrice());
-            orderDetail.setQuantity(quantity);
-            orderDetail.setDiscount(discount);
-            order.addOrderDetail(orderDetail);
+            List<OrderDetail> orderDetails = new ArrayList<>();
+            for (Integer i : partsId) {
+                Optional<Part> optionalPart = partRepository.findById(i);
+                if (optionalPart.isPresent()) {
+                    Part part = optionalPart.get();
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setOrderId(orderRepository.getLastOrderId() + 1);
+                    orderDetail.setPartId(part.getPartId());
+                    orderDetail.setUnitPrice(part.getUnitPrice());
+                    orderDetail.setQuantity(quantities.get(i));
+                    orderDetail.setDiscount(discount);
+                    orderDetails.add(orderDetail);
+                }
+            }
+            order.setOrderDetails(orderDetails);
 
             return orderRepository.save(order);
         } else {

@@ -91,7 +91,7 @@ public class OrderDetailDTO {
     }
 
     public Double getOrderValue() {
-        orderValue = getPartUnitPrice() * getQuantity();
+        orderValue = getPartUnitPrice() * getQuantity() * (1 - getDiscount());
         orderValue = Math.round(orderValue * 100.0) / 100.0;
         return orderValue;
     }
