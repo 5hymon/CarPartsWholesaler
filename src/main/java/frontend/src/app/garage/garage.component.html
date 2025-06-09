@@ -59,7 +59,7 @@
         </div>
       </div>
 
-      <!-- Formularz edycji (wysyłany jako x-www-form-urlencoded) -->
+      <!-- Formularz edycji -->
       <div *ngIf="editingCarId === car.carId && editedCar" class="car-card extended">
         <h5 class="mb-3">Edytuj dane samochodu</h5>
         <form (ngSubmit)="saveEdit()" #editForm="ngForm">
@@ -71,7 +71,11 @@
                    type="text"
                    class="form-control"
                    [(ngModel)]="editedCar.carMake"
-                   required />
+                   required
+                   #carMake="ngModel" />
+            <div *ngIf="carMake.invalid && carMake.touched" class="error">
+              Marka jest wymagana.
+            </div>
           </div>
           <div class="mb-2">
             <label for="model-{{car.carId}}" class="form-label">Model:</label>
@@ -80,7 +84,11 @@
                    type="text"
                    class="form-control"
                    [(ngModel)]="editedCar.carModel"
-                   required />
+                   required
+                   #carModel="ngModel" />
+            <div *ngIf="carModel.invalid && carModel.touched" class="error">
+              Model jest wymagany.
+            </div>
           </div>
           <div class="mb-2">
             <label for="years-{{car.carId}}" class="form-label">Lata produkcji:</label>
@@ -89,25 +97,43 @@
                    type="text"
                    class="form-control"
                    [(ngModel)]="editedCar.productionYears"
-                   required />
+                   required
+                   pattern="^\d{4}-\d{4}$"
+                   #productionYears="ngModel" />
+            <div *ngIf="productionYears.invalid && productionYears.touched" class="error">
+              Lata produkcji muszą być w formacie xxxx-xxxx, np. 2000-2005.
+            </div>
           </div>
           <div class="mb-2">
-            <label for="body-{{car.carId}}" class="form-label">Nadwozie:</label>
-            <input id="body-{{car.carId}}"
-                   name="bodyType"
-                   type="text"
-                   class="form-control"
-                   [(ngModel)]="editedCar.carModel"
-                   required />
+            <label for="body-new" class="form-label">Nadwozie:</label>
+            <select id="body-{{car.carId}}"
+                    name="bodyType"
+                    class="form-control"
+                    [(ngModel)]="editedCar.bodyType"
+                    required>
+              <option value="" disabled selected>Typ nadwozia</option>
+              <option value="Sedan">Sedan</option>
+              <option value="Kombi">Kombi</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Coupe">Coupe</option>
+              <option value="Kabriolet">Kabriolet</option>
+              <option value="SUV">SUV</option>
+              <option value="Crossover">Crossover</option>
+            </select>
           </div>
           <div class="mb-2">
-            <label for="fuel-{{car.carId}}" class="form-label">Rodzaj paliwa:</label>
-            <input id="fuel-{{car.carId}}"
-                   name="fuelType"
-                   type="text"
-                   class="form-control"
-                   [(ngModel)]="editedCar.fuelType"
-                   required />
+            <label for="fuel-{{car.carId}}" class="form-label">Paliwo:</label>
+            <select id="fuel-{{car.carId}}"
+                    name="fuelType"
+                    class="form-control"
+                    [(ngModel)]="editedCar.fuelType"
+                    required>
+              <option value="" disabled selected>Rodzaj paliwa</option>
+              <option value="Benzyna">Benzyna</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybryda">Hybryda</option>
+              <option value="Elektryczny">Elektryczny</option>
+            </select>
           </div>
           <div class="mb-3">
             <label for="engine-{{car.carId}}" class="form-label">Typ silnika:</label>
@@ -116,7 +142,11 @@
                    type="text"
                    class="form-control"
                    [(ngModel)]="editedCar.engineType"
-                   required />
+                   required
+                   #engineType="ngModel" />
+            <div *ngIf="engineType.invalid && engineType.touched" class="error">
+              Typ silnika jest wymagany.
+            </div>
           </div>
           <div class="btn-container">
             <button type="submit" class="btn btn-sm btn-save" [disabled]="editForm.invalid">
@@ -136,6 +166,7 @@
     </div>
   </div>
 
+  <!-- Formularz dodawania -->
   <div *ngIf="addingCar" class="car-card extended">
     <h5 class="mb-3">Dodaj nowy samochód</h5>
     <form (ngSubmit)="saveAdd()" #addForm="ngForm">
@@ -146,7 +177,11 @@
                type="text"
                class="form-control"
                [(ngModel)]="newCar.carMake"
-               required />
+               required
+               #carMake="ngModel" />
+        <div *ngIf="carMake.invalid && carMake.touched" class="error">
+          Marka jest wymagana.
+        </div>
       </div>
       <div class="mb-2">
         <label for="model-new" class="form-label">Model:</label>
@@ -155,7 +190,11 @@
                type="text"
                class="form-control"
                [(ngModel)]="newCar.carModel"
-               required />
+               required
+               #carModel="ngModel" />
+        <div *ngIf="carModel.invalid && carModel.touched" class="error">
+          Model jest wymagany.
+        </div>
       </div>
       <div class="mb-2">
         <label for="years-new" class="form-label">Lata produkcji:</label>
@@ -164,25 +203,43 @@
                type="text"
                class="form-control"
                [(ngModel)]="newCar.productionYears"
-               required />
+               required
+               pattern="^\d{4}-\d{4}$"
+               #productionYears="ngModel" />
+        <div *ngIf="productionYears.invalid && productionYears.touched" class="error">
+          Lata produkcji muszą być w formacie xxxx-xxxx, np. 2000-2005.
+        </div>
       </div>
       <div class="mb-2">
         <label for="body-new" class="form-label">Nadwozie:</label>
-        <input id="body-new"
-               name="bodyType"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newCar.bodyType"
-               required />
+        <select id="body-new"
+                name="bodyType"
+                class="form-control"
+                [(ngModel)]="newCar.bodyType"
+                required>
+          <option value="" disabled selected>Typ nadwozia</option>
+          <option value="Sedan">Sedan</option>
+          <option value="Kombi">Kombi</option>
+          <option value="Hatchback">Hatchback</option>
+          <option value="Coupe">Coupe</option>
+          <option value="Kabriolet">Kabriolet</option>
+          <option value="SUV">SUV</option>
+          <option value="Crossover">Crossover</option>
+        </select>
       </div>
       <div class="mb-2">
-        <label for="fuel-new" class="form-label">Rodzaj paliwa:</label>
-        <input id="fuel-new"
-               name="fuelType"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newCar.fuelType"
-               required />
+        <label for="fuel-new" class="form-label">Paliwo:</label>
+        <select id="fuel-new"
+                name="fuelType"
+                class="form-control"
+                [(ngModel)]="newCar.fuelType"
+                required>
+          <option value="" disabled selected>Rodzaj paliwa</option>
+          <option value="Benzyna">Benzyna</option>
+          <option value="Diesel">Diesel</option>
+          <option value="Hybryda">Hybryda</option>
+          <option value="Elektryczny">Elektryczny</option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="engine-new" class="form-label">Typ silnika:</label>
@@ -191,7 +248,11 @@
                type="text"
                class="form-control"
                [(ngModel)]="newCar.engineType"
-               required />
+               required
+               #engineType="ngModel" />
+        <div *ngIf="engineType.invalid && engineType.touched" class="error">
+          Typ silnika jest wymagany.
+        </div>
       </div>
       <div class="btn-container">
         <button type="submit" class="btn btn-sm btn-save" [disabled]="addForm.invalid">
