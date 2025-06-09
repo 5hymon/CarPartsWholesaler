@@ -2,11 +2,6 @@
 <div class="container">
   <h1 class="mb-4 text-center">Hurtownia części – lista klientów</h1>
 
-  <!-- Przyciski: Dodaj Klienta -->
-  <div class="mb-3 text-center">
-    <button class="btn btn-primary" (click)="startAdd()">Dodaj klienta</button>
-  </div>
-
   <!-- Backdrop do przyciemnienia tła przy edycji/dodawaniu -->
   <div class="backdrop" [class.active]="editingUserId !== null || addingUser"></div>
 
@@ -127,93 +122,6 @@
           Zapisz
         </button>
         <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">
-          Anuluj
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Formularz Dodawania -->
-  <div *ngIf="addingUser" class="edit-form">
-    <h5 class="mb-3">Dodaj nowego klienta</h5>
-    <form (ngSubmit)="saveAdd()" #addForm="ngForm">
-      <div class="mb-2">
-        <label for="firstName-new" class="form-label">Imię:</label>
-        <input id="firstName-new"
-               name="firstName"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newUser.firstName"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="lastName-new" class="form-label">Nazwisko:</label>
-        <input id="lastName-new"
-               name="lastName"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newUser.lastName"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="email-new" class="form-label">Email:</label>
-        <input id="email-new"
-               name="emailAddress"
-               type="email"
-               class="form-control"
-               [(ngModel)]="newUser.emailAddress"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="phone-new" class="form-label">Telefon:</label>
-        <input id="phone-new"
-               name="phoneNumber"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newUser.phoneNumber"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="address-new" class="form-label">Adres:</label>
-        <input id="address-new"
-               name="address"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newUser.address"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="city-new" class="form-label">Miasto:</label>
-        <input id="city-new"
-               name="city"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newUser.city"
-               required />
-      </div>
-      <div class="mb-2">
-        <label for="postal-new" class="form-label">Kod pocztowy:</label>
-        <input id="postal-new"
-               name="postalCode"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newUser.postalCode"
-               required />
-      </div>
-      <div class="mb-3">
-        <label for="country-new" class="form-label">Kraj:</label>
-        <input id="country-new"
-               name="country"
-               type="text"
-               class="form-control"
-               [(ngModel)]="newUser.country"
-               required />
-      </div>
-      <div class="btn-container">
-        <button type="submit" class="btn btn-sm btn-save" [disabled]="addForm.invalid">
-          Utwórz
-        </button>
-        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelAdd()">
           Anuluj
         </button>
       </div>

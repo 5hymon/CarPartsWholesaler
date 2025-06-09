@@ -11,6 +11,7 @@ import { UsersComponent } from './users/users.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { RegisterComponent } from './register/register.component';
+import { GarageComponent } from './garage/garage.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -26,5 +27,6 @@ export const routes: Routes = [
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'employees', component: EmployeesComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'garage', component: GarageComponent },
   { path: '**', redirectTo: 'main' }
 ];

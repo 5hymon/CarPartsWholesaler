@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   role: 'user' | 'admin' | '' = '';
   showUserMenu = false;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.auth.isLoggedIn$.subscribe(v => this.isLoggedIn = v);
@@ -25,5 +25,5 @@ export class AppComponent implements OnInit {
   }
 
   toggleUserMenu() { this.showUserMenu = !this.showUserMenu; }
-  logout() { this.auth.logout(); this.showUserMenu = false; }
+  logout() { this.auth.logout(); this.showUserMenu = false; this.router.navigate(['/main']) }
 }

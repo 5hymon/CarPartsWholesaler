@@ -41,6 +41,18 @@ public class CustomerController {
         }
     }
 
+    // GET /customers/email/{emailAddress} - get customer by ID
+    @GetMapping("/email/{emailAddress}")
+    @Operation(summary = "Pobierz klienta po email")
+    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable("emailAddress") String emailAddress) {
+        Optional<CustomerDTO> customer = customerService.getCustomerByEmailAsDTO(emailAddress);
+        if (customer.isPresent()) {
+            return new ResponseEntity<>(customer.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     // POST - add new customer
     @PostMapping
     @Operation(summary = "Dodaj nowego klienta")

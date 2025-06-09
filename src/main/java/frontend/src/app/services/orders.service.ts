@@ -18,6 +18,10 @@ export class OrdersService {
     return this.http.get<OrderDTO[]>(`${this.baseUrl}/all`);
   }
 
+  getOrdersByUser(email: string): Observable<OrderDTO[]> {
+    return this.http.get<OrderDTO[]>(`${this.baseUrl}/byemail/${email}`);
+  }
+
   /**
    * Zaktualizuj całe zamówienie (wysyłamy JSON Body).
    * Endpoint: PUT /orders/{orderId}

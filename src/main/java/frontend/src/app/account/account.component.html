@@ -1,1 +1,28 @@
-<p>account works!</p>
+<div *ngIf="loading">Ładowanie danych...</div>
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<div *ngIf="user && !editedUser">
+  <h2>Twoje dane</h2>
+  <p><strong>Imię:</strong> {{ user.firstName }}</p>
+  <p><strong>Nazwisko:</strong> {{ user.lastName }}</p>
+  <p><strong>Email:</strong> {{ user.emailAddress }}</p>
+  <p><strong>Telefon:</strong> {{ user.phoneNumber }}</p>
+  <p><strong>Adres:</strong> {{ user.address }}, {{ user.postalCode }} {{ user.city }}, {{ user.country }}</p>
+  <button (click)="startEdit()">Edytuj</button>
+</div>
+
+<div *ngIf="editedUser">
+  <h2>Edycja danych</h2>
+  <form (ngSubmit)="saveEdit()">
+    <label>Imię: <input [(ngModel)]="editedUser.firstName" name="firstName" /></label><br />
+    <label>Nazwisko: <input [(ngModel)]="editedUser.lastName" name="lastName" /></label><br />
+    <label>Email: <input [(ngModel)]="editedUser.emailAddress" name="emailAddress" /></label><br />
+    <label>Telefon: <input [(ngModel)]="editedUser.phoneNumber" name="phoneNumber" /></label><br />
+    <label>Adres: <input [(ngModel)]="editedUser.address" name="address" /></label><br />
+    <label>Miasto: <input [(ngModel)]="editedUser.city" name="city" /></label><br />
+    <label>Kod pocztowy: <input [(ngModel)]="editedUser.postalCode" name="postalCode" /></label><br />
+    <label>Kraj: <input [(ngModel)]="editedUser.country" name="country" /></label><br />
+    <button type="submit">Zapisz</button>
+    <button type="button" (click)="cancelEdit()">Anuluj</button>
+  </form>
+</div>
