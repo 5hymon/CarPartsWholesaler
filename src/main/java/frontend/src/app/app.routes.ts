@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { MainPageComponent } from './main-page/main-page.component';
 import { PartsListComponent } from './parts-list/parts-list.component';
 import { LoginComponent } from './login/login.component';
@@ -12,6 +12,8 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { RegisterComponent } from './register/register.component';
 import { GarageComponent } from './garage/garage.component';
+import { CarDetailsComponent } from './car-details/car-details.component';
+import { PartDetailsComponent } from './part-details/part-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -28,5 +30,7 @@ export const routes: Routes = [
   { path: 'employees', component: EmployeesComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'garage', component: GarageComponent },
+  { path: 'car-details/:id', component: CarDetailsComponent },
+  { path: 'part-details/:id', component: PartDetailsComponent },
   { path: '**', redirectTo: 'main' }
 ];

@@ -82,22 +82,17 @@ export class WarehouseComponent implements OnInit {
     });
   }
 
-  // Ta metoda agreguje wszystkie warunki filtrowania:
   private applyFilter(): void {
-    // Jeśli nie ma części załadowanych, nic nie rób
     if (!this.parts || this.parts.length === 0) {
       return;
     }
 
     let result = [...this.parts];
 
-    // 1) Najpierw ograniczamy po kategorii, jeżeli jest ustawiona
     if (this.activeCategory) {
       result = result.filter(part => part.categoryName === this.activeCategory);
     }
 
-    // 2) Następnie, jeżeli ktoś wybrał konkretną nazwę części,
-    //    możemy jeszcze dodatkowo filtrować:
     if (this.activePartName) {
       result = result.filter(part => part.partName === this.activePartName);
     }
@@ -217,7 +212,6 @@ export class WarehouseComponent implements OnInit {
   }
 
   saveAdd(): void {
-    // Sprawdźmy, czy wszystkie wymagane pola są wypełnione
     if (!this.newPart.partName ||
       !this.newPart.unitPrice ||
       !this.newPart.quantityPerUnit ||
@@ -227,7 +221,6 @@ export class WarehouseComponent implements OnInit {
       return;
     }
 
-    // 1) Budujemy body jako application/x-www-form-urlencoded
     const body = new HttpParams()
       .set('partName', this.newPart.partName)
       .set('unitPrice', this.newPart.unitPrice.toString())
@@ -237,19 +230,16 @@ export class WarehouseComponent implements OnInit {
       .set('categoryName', this.newPart.categoryName)
       .set('isAvailable', true.toString());
 
-    // 2) Ustawiamy odpowiedni nagłówek
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    // 3) Wysyłamy POST do Springa (endpoint: /cars)
     this.http.post<PartDTO>(
       'http://localhost:8080/parts',
       body.toString(),
       { headers }
     ).subscribe({
       next: created => {
-        // Po sukcesie: zamknij formularz i odśwież listę
         this.addingPart = false;
         this.loadParts();
       },

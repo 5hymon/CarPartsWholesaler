@@ -71,19 +71,16 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   placeOrder() {
-    // wyciągamy email zalogowanego
     const email = localStorage.getItem('email');
     if (!email) {
       alert('Brak informacji o użytkowniku.');
       return;
     }
 
-    // budujemy body jako x-www-form-urlencoded
     let body = new HttpParams()
       .set('customerEmailAddress', email)
       .set('paymentMethod', this.paymentMethod);
 
-    // dla każdego itema dorzucamy parametry
     this.cartItems.forEach(item => {
       body = body.append('partId', item.partId.toString());
       body = body.append('quantity', item.quantity.toString());

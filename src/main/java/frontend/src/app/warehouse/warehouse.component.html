@@ -5,10 +5,8 @@
     <button class="btn btn-primary" (click)="startAdd()">Dodaj część</button>
   </div>
 
-  <!-- Backdrop for dimming -->
   <div class="backdrop" [class.active]="editingPartId !== null || addingPart"></div>
 
-  <!-- Loading / Error -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
   </div>
@@ -16,7 +14,6 @@
     {{ errorMessage }}
   </div>
 
-  <!-- Dropdown: Categories and Part Names -->
   <ul class="menu">
     <li *ngFor="let group of groupByCategory()" class="nav-item dropdown">
       <a href="javascript:void(0)"
@@ -60,7 +57,6 @@
       </div>
     </ng-container>
 
-    <!-- No Parts Message -->
     <div *ngIf="!loading && filteredParts.length === 0" class="text-center">
       <p>Brak części do wyświetlenia.</p>
     </div>

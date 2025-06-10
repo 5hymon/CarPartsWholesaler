@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   role: 'user' | 'admin' | '' = '';
   showUserMenu = false;
+  title: 'frontend' | undefined;
 
   constructor(private auth: AuthService, private router: Router) {}
 

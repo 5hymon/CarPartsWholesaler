@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
 import { PartsService } from '../services/parts.service';
@@ -11,7 +11,7 @@ import { PartDTO } from '../models/part-dto.model';
 @Component({
   selector: 'app-parts-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './parts-list.component.html',
   styleUrls: ['./parts-list.component.css']
 })
@@ -58,29 +58,28 @@ export class PartsListComponent implements OnInit {
   }
 
     private loadParts(): void {
-    this.loading = true;
-    this.partsService.getAllParts().subscribe({
-      next: (data: PartDTO[]) => {
-        this.parts = data.map(part => ({ ...part, selectedQuantity: 1 }));
-        this.filteredParts = [...this.parts];
+      this.loading = true;
+      this.partsService.getAllParts().subscribe({
+        next: (data: PartDTO[]) => {
+          this.parts = data.map(part => ({ ...part, selectedQuantity: 1 }));
+          this.filteredParts = [...this.parts];
 
-        if (this.categoryFromUrl) {
-          this.activeCategory = this.categoryFromUrl;
-          this.activePartName = null;
-          this.applyFilter();
+          if (this.categoryFromUrl) {
+            this.activeCategory = this.categoryFromUrl;
+            this.activePartName = null;
+            this.applyFilter();
+          }
+
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Błąd przy pobieraniu części:', err);
+          this.errorMessage = 'Nie udało się pobrać listy części.';
+          this.loading = false;
         }
+      });
+    }
 
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Błąd przy pobieraniu części:', err);
-        this.errorMessage = 'Nie udało się pobrać listy części.';
-        this.loading = false;
-      }
-    });
-  }
-
-  // Ta metoda agreguje wszystkie warunki filtrowania:
   private applyFilter(): void {
     if (!this.parts || this.parts.length === 0) {
       return;
@@ -99,40 +98,8 @@ export class PartsListComponent implements OnInit {
     this.filteredParts = result;
   }
 
-  groupByCategory(): { category: string; parts: PartDTO[] }[] {
-    const map: Record<string, PartDTO[]> = {};
-    this.parts.forEach(part => {
-      const cat = part.categoryName;
-      if (!map[cat]) {
-        map[cat] = [];
-      }
-      map[cat].push(part);
-    });
-    return Object.keys(map).map(category => ({
-      category,
-      parts: map[category]
-    }));
-  }
-
-  selectByCategory(category: string): void {
-    this.activeCategory = category;
-    this.activePartName = null;
-    this.applyFilter();
-  }
-
-  selectCategoryPart(category: string, partName: string): void {
-    if (this.activeCategory === category && this.activePartName === partName) {
-      this.activeCategory = null;
-      this.activePartName = null;
-      this.filteredParts = [...this.parts];
-    } else {
-      this.activeCategory = category;
-      this.activePartName = partName;
-      this.applyFilter();
-    }
-  }
-
-  addToCart(part: PartDTO): void {
+  addToCart(event: Event, part: PartDTO): void {
+    event.stopPropagation();
     if (!this.isBrowser) return;
 
     const wanted = part.selectedQuantity || 1;
@@ -143,7 +110,6 @@ export class PartsListComponent implements OnInit {
     const newTotal = currentInCart + wanted;
 
     if (newTotal > part.leftOnStock) {
-      // Nie można dodać więcej niż na stanie
       this.toastMessage = `Nie możesz dodać ${wanted} szt. "${part.partName}". Na stanie jest tylko ${part.leftOnStock - currentInCart}.`;
       this.showToast = true;
       setTimeout(() => this.showToast = false, 2000);

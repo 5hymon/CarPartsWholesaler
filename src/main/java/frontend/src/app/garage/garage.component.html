@@ -5,10 +5,8 @@
     <button class="btn btn-primary" (click)="startAdd()">Dodaj samochód</button>
   </div>
 
-  <!-- Backdrop for dimming -->
   <div class="backdrop" [class.active]="editingCarId !== null || addingCar"></div>
 
-  <!-- Ładowanie / błąd -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
   </div>
@@ -160,7 +158,6 @@
       </div>
     </ng-container>
 
-    <!-- Gdy po filtrze brak -->
     <div *ngIf="!loading && filteredCars.length === 0" class="text-center">
       <p>Brak samochodów do wyświetlenia.</p>
     </div>
@@ -264,5 +261,4 @@
       </div>
     </form>
   </div>
-
 </div>

@@ -44,28 +44,33 @@ img {
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 .hero::after {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
 .hero-content {
   position: relative;
   z-index: 1;
   max-width: 800px;
   padding: 0 1rem;
 }
+
 .hero h1 {
   color: white;
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1rem;
 }
+
 .hero p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
 }
+
 .hero .btn-cta {
   background-color: var(--accent-color);
   color: var(--header-bg);
@@ -77,6 +82,7 @@ img {
   cursor: pointer;
   transition: filter 0.2s;
 }
+
 .hero .btn-cta:hover {
   filter: brightness(0.9);
 }
@@ -89,6 +95,7 @@ img {
   margin: 3rem auto;
   padding: 0 1rem;
 }
+
 .feature-card {
   background-color: #fff;
   border-radius: 1rem;
@@ -97,19 +104,23 @@ img {
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .feature-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
 .feature-icon {
   font-size: 3rem;
   color: var(--primary-color);
   margin-bottom: 1rem;
 }
+
 .feature-card h3 {
   font-size: 1.5rem;
   margin-bottom: 0.75rem;
 }
+
 .feature-card p {
   font-size: 1rem;
   color: #555;
@@ -120,17 +131,20 @@ img {
   margin: 3rem auto 4rem;
   padding: 0 1rem;
 }
+
 .categories h2 {
   font-size: 2rem;
   text-align: center;
   margin-bottom: 2rem;
   color: var(--header-bg);
 }
+
 .categories-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
 }
+
 .category-card {
   background-color: #fff;
   border-radius: 0.75rem;
@@ -139,15 +153,18 @@ img {
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
+
 .category-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
 .category-card img {
   width: 100%;
   height: 140px;
   object-fit: cover;
 }
+
 .category-card h4 {
   font-size: 1.2rem;
   padding: 1rem;

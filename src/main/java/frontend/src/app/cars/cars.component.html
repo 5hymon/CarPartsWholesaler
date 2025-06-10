@@ -1,7 +1,6 @@
 <div class="container">
   <h1 class="mb-4 text-center">Samochody do których znajdziesz części</h1>
 
-  <!-- Ładowanie / błąd -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
   </div>
@@ -9,7 +8,6 @@
     {{ errorMessage }}
   </div>
 
-  <!-- Dropdown marek i modeli -->
   <ul class="menu">
     <li *ngFor="let group of groupByMake()" class="nav-item dropdown">
       <a href="javascript:void(0)"
@@ -33,7 +31,7 @@
 
   <div class="row g-4">
     <ng-container *ngFor="let car of filteredCars">
-      <div class="car-card" *ngIf="editingCarId !== car.carId">
+      <div class="car-card" *ngIf="editingCarId !== car.carId" [routerLink]="['/car-details', car.carId]">
         <p>
           <strong>{{ car.carMake }}<br />
             {{ car.carModel }}</strong><br />
@@ -45,7 +43,6 @@
       </div>
     </ng-container>
 
-    <!-- Gdy po filtrze brak -->
     <div *ngIf="!loading && filteredCars.length === 0" class="text-center">
       <p>Brak samochodów do wyświetlenia.</p>
     </div>

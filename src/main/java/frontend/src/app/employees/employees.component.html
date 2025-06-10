@@ -1,15 +1,12 @@
 <div class="container">
   <h1 class="mb-4 text-center">Lista Pracowników</h1>
 
-  <!-- Backdrop do przyciemnienia tła podczas formularza -->
   <div class="backdrop" [class.active]="editingEmployeeId !== null || addingEmployee"></div>
 
-  <!-- Przycisk Dodaj Pracownika -->
   <div class="mb-3 text-center">
     <button class="btn btn-primary" (click)="startAdd()">Dodaj Pracownika</button>
   </div>
 
-  <!-- Loading / Error -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
   </div>
@@ -17,7 +14,6 @@
     {{ errorMessage }}
   </div>
 
-  <!-- Karty Pracowników -->
   <div class="row g-4">
     <ng-container *ngFor="let emp of employees">
       <div class="user-card" *ngIf="editingEmployeeId !== emp.employeeId">
@@ -142,7 +138,6 @@
       </div>
     </ng-container>
 
-    <!-- Komunikat, gdy brak pracowników -->
     <div *ngIf="!loading && employees.length === 0" class="text-center">
       <p>Brak pracowników do wyświetlenia.</p>
     </div>

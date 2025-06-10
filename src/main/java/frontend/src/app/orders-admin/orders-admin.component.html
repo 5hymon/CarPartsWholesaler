@@ -1,5 +1,4 @@
 <div class="container">
-  <!-- Ładowanie / błąd -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie zamówień…</p>
   </div>
@@ -34,7 +33,6 @@
               </div>
             </div>
 
-            <!-- Wyświetlanie szczegółów pozycji, jeśli showDetails = true -->
             <div class="order-details" *ngIf="order.showDetails">
               <table>
                 <thead>
@@ -141,7 +139,6 @@
         </div>
       </ng-container>
 
-      <!-- Komunikat, gdy brak zamówień -->
       <div *ngIf="!loading && orders.length === 0" class="text-center">
         <p>Brak zamówień do wyświetlenia.</p>
       </div>

@@ -25,12 +25,10 @@ export class AuthService {
     }
   }
 
-  /** Obserwable czy zalogowany */
   get isLoggedIn$() {
     return this.loggedIn$.asObservable();
   }
 
-  /** Logowanie: zwraca Observable<void> lub błąd */
   login(email: string, password: string) {
     const params = new HttpParams()
       .set('emailAddress', email)
@@ -59,10 +57,6 @@ export class AuthService {
         }),
         catchError(err => throwError(() => err))
       );
-  }
-
-  getCurrentEmail(): string | null {
-    return this.isBrowser ? localStorage.getItem('email') : null;
   }
 
   logout() {

@@ -1,1 +1,26 @@
-<p>part-details works!</p>
+<div class="container">
+  <div *ngIf="loading" class="text-center">
+    <p>Ładowanie danych części…</p>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="part">
+    <h2 class="mt-4">{{ part.partName }}</h2>
+    <p><strong>Cena:</strong> {{ part.unitPrice | currency:'PLN':'symbol':'1.2-2' }}</p>
+    <p><strong>Ilość w jednostce:</strong> {{ part.quantityPerUnit }}</p>
+    <p><strong>Pozostało:</strong> {{ part.leftOnStock }}</p>
+    <p><strong>Opis:</strong> {{ part.partDescription }}</p>
+
+    <hr/>
+
+    <h3>Kompatybilne samochody</h3>
+    <div *ngIf="!part.compatibleCars?.length" class="text-muted">
+      Brak kompatybilnych samochodów.
+    </div>
+    <ul *ngIf="part.compatibleCars?.length">
+      <li *ngFor="let car of part.compatibleCars">
+        {{ car.carMake }} {{ car.carModel }} ({{ car.productionYears }}) {{ car.bodyType }} <br> {{ car.engineType }} {{ car.fuelType }}<hr>
+      </li>
+    </ul>
+  </div>
+</div>

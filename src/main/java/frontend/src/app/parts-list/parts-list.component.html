@@ -1,7 +1,6 @@
 <div class="container" xmlns="http://www.w3.org/1999/html">
   <h1 class="mb-4 text-center">Lista dostepnych części</h1>
 
-  <!-- Loading / Error -->
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
   </div>
@@ -12,10 +11,10 @@
   <div *ngIf="showToast" class="toast-message">
     {{ toastMessage }}
   </div>
-  <!-- Part Cards -->
+
   <div class="row g-4">
     <ng-container *ngFor="let part of filteredParts">
-      <div class="part-card">
+      <div class="part-card" [routerLink]="['/part-details', part.partId]">
         <p>
           <strong>{{ part.partName }}</strong><br />
           Cena: {{ part.unitPrice }} – {{ part.quantityPerUnit }}<br />
@@ -32,8 +31,9 @@
                    class="form-control"
                    style="width:70px;"
                    placeholder="Ilość"
-                   (change)="part.selectedQuantity = part.selectedQuantity && (part.selectedQuantity > part.leftOnStock) ? part.leftOnStock : part.selectedQuantity"/>
-            <button class="btn btn-primary" (click)="addToCart(part)">
+                   (change)="part.selectedQuantity = part.selectedQuantity && (part.selectedQuantity > part.leftOnStock) ? part.leftOnStock : part.selectedQuantity"
+                   (click)="$event.stopPropagation()"/>
+            <button class="btn btn-primary" (click)="addToCart($event, part)">
               Dodaj do koszyka
             </button>
           </div>
@@ -41,7 +41,6 @@
       </div>
     </ng-container>
 
-    <!-- No Parts Message -->
     <div *ngIf="!loading && filteredParts.length === 0" class="text-center">
       <p>Brak części do wyświetlenia.</p>
     </div>

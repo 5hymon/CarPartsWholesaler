@@ -117,25 +117,20 @@ export class GarageComponent {
     }
   }
 
-  /** Rozpoczynamy edycję: ustawiamy editedCar na kopię obiektu */
   startEdit(car: CarDTO): void {
     this.editingCarId = car.carId!;
-    // Płytka kopia – żeby formularz nie nadpisywał od razu oryginału
     this.editedCar = { ...car };
   }
 
-  /** Anulujemy edycję i ukrywamy formularz */
   cancelEdit(): void {
     this.editingCarId = null;
     this.editedCar = null;
   }
 
-  /** Zapisujemy zmiany: wysyłamy PUT, a po sukcesie odświeżamy listę */
   saveEdit(): void {
     if (!this.editedCar || this.editingCarId == null) {
       return;
     }
-    // Budujemy body jako x-www-form-urlencoded
     let body = new HttpParams()
       .set('carMake', this.editedCar.carMake)
       .set('carModel', this.editedCar.carModel)
@@ -144,19 +139,16 @@ export class GarageComponent {
       .set('fuelType', this.editedCar.fuelType)
       .set('engineType', this.editedCar.engineType);
 
-    // Ustawiamy nagłówek
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    // Wysyłamy PUT do Springa
     this.http.put<CarDTO>(
       `http://localhost:8080/cars/${this.editingCarId}`,
       body.toString(),
       { headers }
     ).subscribe({
       next: updated => {
-        // Po sukcesie odświeżamy listę i zamykamy formularz
         this.editingCarId = null;
         this.editedCar = null;
         this.loadCars();
@@ -189,7 +181,6 @@ export class GarageComponent {
   }
 
   saveAdd(): void {
-    // Sprawdźmy, czy wszystkie wymagane pola są wypełnione
     if (!this.newCar.carMake ||
       !this.newCar.carModel ||
       !this.newCar.productionYears ||
@@ -199,7 +190,6 @@ export class GarageComponent {
       return;
     }
 
-    // 1) Budujemy body jako application/x-www-form-urlencoded
     const body = new HttpParams()
       .set('carMake', this.newCar.carMake)
       .set('carModel', this.newCar.carModel)
@@ -208,19 +198,15 @@ export class GarageComponent {
       .set('fuelType', this.newCar.fuelType)
       .set('engineType', this.newCar.engineType);
 
-    // 2) Ustawiamy odpowiedni nagłówek
     const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    // 3) Wysyłamy POST do Springa (endpoint: /cars)
     this.http.post<CarDTO>(
       'http://localhost:8080/cars',
       body.toString(),
       { headers }
     ).subscribe({
       next: created => {
-        // Po sukcesie: zamknij formularz i odśwież listę
         this.addingCar = false;
         this.loadCars();
       },

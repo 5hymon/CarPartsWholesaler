@@ -9,20 +9,17 @@
   margin-bottom: 1rem;
 }
 
-/* Lewa kolumna */
 .cart-item-info {
   flex: 1;
   padding-right: 1rem;
 }
 
-/* Prawa kolumna */
 .cart-item-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
-/* Kontrola ilości */
 .quantity-control {
   display: flex;
   gap: 0.5rem;
@@ -48,13 +45,11 @@
   gap: 0.5rem;
 }
 
-/* Ograniczona szerokość selecta i wyrównanie */
 .order-controls select {
   width: 150px;
   height: 2.2rem;
 }
 
-/* Przyciski tej samej wysokości i minimalnej szerokości */
 .btn {
   min-width: 140px;
   height: 2.4rem;

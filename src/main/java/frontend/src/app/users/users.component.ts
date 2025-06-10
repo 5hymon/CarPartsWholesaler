@@ -21,17 +21,6 @@ export class UsersComponent implements OnInit {
   editedUser: CustomerDTO | null = null;
 
   addingUser = false;
-  newUser: CustomerDTO = {
-    customerId: 0,
-    firstName: '',
-    lastName: '',
-    emailAddress: '',
-    phoneNumber: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    country: ''
-  };
 
   private baseUrl = 'http://localhost:8080/customers';
 
@@ -113,68 +102,6 @@ export class UsersComponent implements OnInit {
         this.editingUserId = null;
         this.editedUser = null;
         this.loadUsers();
-      }
-    });
-  }
-
-  startAdd(): void {
-    this.addingUser = true;
-    this.newUser = {
-      customerId: 0,
-      firstName: '',
-      lastName: '',
-      emailAddress: '',
-      phoneNumber: '',
-      address: '',
-      city: '',
-      postalCode: '',
-      country: ''
-    };
-  }
-
-  cancelAdd(): void {
-    this.addingUser = false;
-  }
-
-  saveAdd(): void {
-    if (
-      !this.newUser.firstName.trim() ||
-      !this.newUser.lastName.trim() ||
-      !this.newUser.emailAddress.trim() ||
-      !this.newUser.phoneNumber.trim() ||
-      !this.newUser.address.trim() ||
-      !this.newUser.city.trim() ||
-      !this.newUser.postalCode.trim() ||
-      !this.newUser.country.trim()
-    ) {
-      return;
-    }
-
-    const body = new HttpParams()
-      .set('firstName', this.newUser.firstName.trim())
-      .set('lastName', this.newUser.lastName.trim())
-      .set('emailAddress', this.newUser.emailAddress.trim())
-      .set('phoneNumber', this.newUser.phoneNumber.trim())
-      .set('address', this.newUser.address.trim())
-      .set('city', this.newUser.city.trim())
-      .set('postalCode', this.newUser.postalCode.trim())
-      .set('country', this.newUser.country.trim());
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-
-    this.http.post<CustomerDTO>(
-      `${this.baseUrl}`,
-      body.toString(),
-      { headers }
-    ).subscribe({
-      next: _ => {
-        this.addingUser = false;
-        this.loadUsers();
-      },
-      error: err => {
-        console.error('Błąd przy tworzeniu klienta:', err);
       }
     });
   }

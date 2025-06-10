@@ -1,1 +1,39 @@
-<p>car-details works!</p>
+<div class="container">
+  <div *ngIf="loading" class="text-center">
+    <p>Ładowanie danych samochodu…</p>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="showToast" class="toast-message">
+    {{ toastMessage }}
+  </div>
+
+  <div *ngIf="car">
+    <h2 class="mt-4">{{ car.carMake }} {{ car.carModel }}</h2>
+    <p><strong>Lata produkcji:</strong> {{ car.productionYears }}</p>
+    <p><strong>Nadwozie:</strong> {{ car.bodyType }}</p>
+    <p><strong>Silnik:</strong> {{ car.engineType }}</p>
+    <p><strong>Paliwo:</strong> {{ car.fuelType }}</p>
+
+    <hr/>
+
+    <h3>Kompatybilne części</h3>
+    <div *ngIf="!car.compatibleParts?.length" class="text-muted">
+      Brak kompatybilnych części.
+    </div>
+    <ul *ngIf="car.compatibleParts?.length">
+      <ng-container *ngIf="isBrowser && userRole === 'user'">
+      <li *ngFor="let car of car.compatibleParts">
+        <strong>{{ car.partName }}</strong> <br>
+        <strong>Cena: </strong>{{ car.unitPrice }} - {{ car.quantityPerUnit }} <br>
+        <strong>Pozostało: </strong>{{ car.leftOnStock }} <br>
+        <strong>Kategoria: </strong>{{ car.categoryName }} <br>
+        <strong>Opis: </strong>{{ car.partDescription }} <br>
+        <button class="btn btn-primary" (click)="addToCart(car)">
+          Dodaj do koszyka
+        </button><hr>
+      </li>
+      </ng-container>
+    </ul>
+  </div>
+</div>

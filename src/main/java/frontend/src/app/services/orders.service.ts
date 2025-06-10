@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OrderDTO } from '../models/order-dto.model';
 
@@ -11,25 +11,12 @@ export class OrdersService {
 
   constructor(private http: HttpClient) {}
 
-  /** Pobierz wszystkie zamówienia */
   getAllOrders(): Observable<OrderDTO[]> {
     return this.http.get<OrderDTO[]>(`${this.baseUrl}/all`);
   }
 
   getOrdersByUser(email: string): Observable<OrderDTO[]> {
     return this.http.get<OrderDTO[]>(`${this.baseUrl}/byemail/${email}`);
-  }
-
-  /**
-   * Zaktualizuj całe zamówienie (wysyłamy JSON Body).
-   * Endpoint: PUT /orders/{orderId}
-   * Przyjmuje pełny obiekt OrderDTO w JSON.
-   */
-  updateOrder(order: OrderDTO): Observable<OrderDTO> {
-    return this.http.put<OrderDTO>(
-      `${this.baseUrl}/${order.orderId}`,
-      order
-    );
   }
 
   updateOrderFormUrlEncoded(

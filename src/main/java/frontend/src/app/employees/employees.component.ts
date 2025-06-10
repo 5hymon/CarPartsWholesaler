@@ -96,7 +96,6 @@ export class EmployeesComponent implements OnInit {
       return;
     }
 
-    // Tworzymy body w formacie application/x-www-form-urlencoded
     const body = new HttpParams()
       .set('firstName', this.editedEmployee.firstName)
       .set('lastName', this.editedEmployee.lastName)
@@ -147,7 +146,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   saveAdd(): void {
-    // Walidacja wymaganych pól
     if (
       !this.newEmployee.firstName ||
       !this.newEmployee.lastName ||
