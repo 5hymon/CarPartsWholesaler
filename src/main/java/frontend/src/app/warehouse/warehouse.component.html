@@ -58,27 +58,28 @@
           </button>
         </div>
       </div>
+      <!-- Compatibility Form -->
+      <div *ngIf="compatFormPartId === part.partId" class="compat-form">
+        <h6>Dodaj kompatybilne auto</h6>
+        <form (ngSubmit)="addCompatibility(part.partId)" #cf="ngForm">
+          <select name="carId" [(ngModel)]="newCompatCarId"
+                  class="form-control" required>
+            <option value="" disabled selected>Wybierz auto</option>
+            <option *ngFor="let car of cars" [value]="car.carId">
+              {{ car.carMake }} {{ car.carModel }}
+            </option>
+          </select>
+          <button type="submit" class="btn btn-sm btn-save mt-2" [disabled]="cf.invalid">
+            Dodaj
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary mt-2"
+                  (click)="toggleCompatForm(part.partId)">
+            Anuluj
+          </button>
+        </form>
+      </div>
     </ng-container>
-    <!-- Compatibility Form -->
-    <div *ngIf="compatFormPartId === part.partId" class="compat-form">
-      <h6>Dodaj kompatybilne auto</h6>
-      <form (ngSubmit)="addCompatibility(part.partId)" #cf="ngForm">
-        <select name="carId" [(ngModel)]="newCompatCarId"
-                class="form-control" required>
-          <option value="" disabled selected>Wybierz auto</option>
-          <option *ngFor="let car of cars" [value]="car.carId">
-            {{ car.carMake }} {{ car.carModel }}
-          </option>
-        </select>
-        <button type="submit" class="btn btn-sm btn-save mt-2" [disabled]="cf.invalid">
-          Dodaj
-        </button>
-        <button type="button" class="btn btn-sm btn-secondary mt-2"
-                (click)="toggleCompatForm(part.partId)">
-          Anuluj
-        </button>
-      </form>
-    </div>
+
 
     <div *ngIf="!loading && filteredParts.length === 0" class="text-center">
       <p>Brak części do wyświetlenia.</p>
