@@ -36,8 +36,9 @@
   <br />
 
   <!-- Part Cards -->
+  <ng-container *ngFor="let part of filteredParts">
   <div class="row g-4">
-    <ng-container *ngFor="let part of filteredParts">
+
       <div class="part-card">
         <p>
           <strong>{{ part.partName }}</strong><br />
@@ -50,12 +51,15 @@
           <button class="btn btn-sm btn-edit" (click)="startEdit(part)">
             Edytuj
           </button>
+          <button class="btn btn-sm btn-config" type="button" (click)="toggleCompatForm(part.partId)">
+            ⚙️
+          </button>
           <button class="btn btn-sm btn-danger" (click)="deletePart(part.partId)">
             Usuń
           </button>
         </div>
       </div>
-    </ng-container>
+
 
     <div *ngIf="!loading && filteredParts.length === 0" class="text-center">
       <p>Brak części do wyświetlenia.</p>
@@ -215,4 +219,25 @@
       </div>
     </form>
   </div>
+
+  <div *ngIf="compatFormPartId === part.partId" class="compat-form">
+    <h6>Dodaj kompatybilne auto</h6>
+    <form (ngSubmit)="addCompatibility(part.partId)" #cf="ngForm">
+      <select name="carId" [(ngModel)]="newCompatCarId"
+              class="form-control" required>
+        <option value="" disabled selected>Wybierz auto</option>
+        <option *ngFor="let car of cars" [value]="car.carId">
+          {{ car.carMake }} {{ car.carModel }}
+        </option>
+      </select>
+      <button type="submit" class="btn btn-sm btn-save mt-2" [disabled]="cf.invalid">
+        Dodaj
+      </button>
+      <button type="button" class="btn btn-sm btn-secondary mt-2"
+              (click)="toggleCompatForm(part.partId)">
+        Anuluj
+      </button>
+    </form>
+  </div>
+  </ng-container>
 </div>

@@ -1,5 +1,6 @@
 <div class="container" xmlns="http://www.w3.org/1999/html">
-  <h1 class="mb-4 text-center">Lista dostepnych części</h1>
+  <h1 class="mb-4 text-center">Lista dostępnych części</h1>
+  <p *ngIf="isBrowser" class="text-center"><i>(Składanie zamówień dostępne tylko dla zalogowanych użytkowników)</i></p>
 
   <div *ngIf="loading" class="text-center">
     <p>Ładowanie danych…</p>
@@ -17,6 +18,7 @@
       <div class="part-card" [routerLink]="['/part-details', part.partId]">
         <p>
           <strong>{{ part.partName }}</strong><br />
+          Kategoria: {{ part.categoryName }}<br />
           Cena: {{ part.unitPrice }} – {{ part.quantityPerUnit }}<br />
           Pozostało: {{ part.leftOnStock }}
           <span class="hr-line"></span>

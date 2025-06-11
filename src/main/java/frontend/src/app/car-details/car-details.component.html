@@ -22,18 +22,20 @@
       Brak kompatybilnych części.
     </div>
     <ul *ngIf="car.compatibleParts?.length">
-      <ng-container *ngIf="isBrowser && userRole === 'user'">
+
       <li *ngFor="let car of car.compatibleParts">
         <strong>{{ car.partName }}</strong> <br>
         <strong>Cena: </strong>{{ car.unitPrice }} - {{ car.quantityPerUnit }} <br>
         <strong>Pozostało: </strong>{{ car.leftOnStock }} <br>
         <strong>Kategoria: </strong>{{ car.categoryName }} <br>
         <strong>Opis: </strong>{{ car.partDescription }} <br>
+        <ng-container *ngIf="isBrowser && userRole === 'user'">
         <button class="btn btn-primary" (click)="addToCart(car)">
           Dodaj do koszyka
         </button><hr>
+        </ng-container>
+        <hr>
       </li>
-      </ng-container>
     </ul>
   </div>
 </div>

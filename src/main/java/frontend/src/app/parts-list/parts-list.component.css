@@ -111,6 +111,10 @@ ul.menu {
   align-items: start;
 }
 
+.info p {
+  text-align: center;
+}
+
 .part-card {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -120,7 +124,7 @@ ul.menu {
   width: 100%;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  min-height: 200px;
+  min-height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

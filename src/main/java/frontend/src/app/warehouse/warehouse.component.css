@@ -282,6 +282,34 @@ ul.menu {
   font-size: 0.9rem;
 }
 
+.btn-config {
+  margin: 0 .5rem;
+  background: var(--page-bg);
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+}
+.btn-config:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.compat-form {
+  background: #f9f9f9;
+  padding: 1rem;
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  border-radius: .5rem;
+}
+
+
+.compat-form select.form-control {
+  width: 100%;
+}
+
+.compat-form .btn {
+  margin-right: .5rem;
+}
+
 @media (max-width: 768px) {
   .dropdown-toggle {
     font-size: 0.9rem;

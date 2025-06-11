@@ -7,9 +7,12 @@
   <div *ngIf="errorMessage" class="alert alert-danger text-center">
     {{ errorMessage }}
   </div>
+  <div *ngIf="!loading && !errorMessage && orders.length === 0" class="text-center no-orders">
+    <p>Nie masz jeszcze żadnych zamówień.</p>
+  </div>
 
   <!-- Lista zamówień -->
-  <div *ngIf="!loading && !errorMessage">
+  <div *ngIf="!loading && !errorMessage && orders.length > 0">
     <div class="row g-4">
       <ng-container *ngFor="let order of orders">
         <div class="order-card">
@@ -54,10 +57,6 @@
           </div>
         </div>
       </ng-container>
-
-      <div *ngIf="!loading && orders.length === 0" class="text-center">
-        <p>Nie masz jeszcze żadnych zamówień.</p>
-      </div>
     </div>
   </div>
 </div>

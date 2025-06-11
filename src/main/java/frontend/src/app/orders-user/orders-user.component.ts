@@ -48,6 +48,7 @@ export class OrdersUserComponent implements OnInit {
         this.loading = false;
       }
     });
+    this.loading = false
   }
 
   toggleDetails(order: OrderWithView): void {

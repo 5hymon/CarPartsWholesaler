@@ -199,6 +199,7 @@ export class GarageComponent {
       .set('engineType', this.newCar.engineType);
 
     const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
     });
 
     this.http.post<CarDTO>(

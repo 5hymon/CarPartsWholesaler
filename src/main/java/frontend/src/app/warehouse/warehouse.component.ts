@@ -4,8 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
+import { PartCompatibilityService } from '../services/part-compatibility.service';
 import { PartsService } from '../services/parts.service';
 import { PartDTO } from '../models/part-dto.model';
+import { CarDTO } from '../models/car-dto.model';
 
 @Component({
   selector: 'app-warehouse',
@@ -17,6 +19,10 @@ import { PartDTO } from '../models/part-dto.model';
 export class WarehouseComponent implements OnInit {
   parts: PartDTO[] = [];
   filteredParts: PartDTO[] = [];
+  cars: CarDTO[] = [];
+
+  compatFormPartId: number | null = null;
+  newCompatCarId!: number;
 
   loading = false;
   errorMessage = '';
@@ -44,6 +50,7 @@ export class WarehouseComponent implements OnInit {
 
   constructor(
     private partsService: PartsService,
+    private compatService: PartCompatibilityService,
     private http: HttpClient,
     private route: ActivatedRoute
   ) {}
@@ -57,6 +64,32 @@ export class WarehouseComponent implements OnInit {
     });
 
     this.loadParts();
+    this.loadCars();
+  }
+
+  private loadCars() {
+    this.compatService.getAllCars().subscribe({
+      next: list => this.cars = list,
+      error: err => console.error('Błąd pobierania aut:', err)
+    });
+  }
+
+  toggleCompatForm(partId: number | null) {
+    this.compatFormPartId = this.compatFormPartId === partId ? null : partId;
+    this.newCompatCarId = NaN;
+  }
+
+  addCompatibility(partId: number) {
+    if (!this.newCompatCarId) { return; }
+    this.compatService.addCompatibility(this.newCompatCarId, partId)
+      .subscribe({
+        next: () => {
+          this.toggleCompatForm(partId);
+        },
+        error: err => {
+          console.error(err);
+        }
+      });
   }
 
   private loadParts(): void {
